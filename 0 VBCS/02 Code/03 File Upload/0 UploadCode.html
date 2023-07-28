@@ -1,0 +1,8 @@
+<oj-file-picker style="margin-left:0.5%;margin-right:0.5%" class="oj-flex-bar-start">
+<oj-button style="margin-left:0.5%;margin-right:0.5%" label="Upload Template" chroming="outlined" slot="trigger"></oj-button>
+</oj-file-picker>
+---
+<oj-button chroming="outlined" class="oj-button-sm" on-oj-action="[[$listeners.buttonAction3]]"><oj-bind-text value="[[$application.translations.app.download]]"></oj-bind-text>
+<img slot="startIcon" alt="Archive Data" width="16" height="16"
+:src="[[ $application.path + 'resources/images/xl.png' ]]" style="object-fit: fill;"/>
+</oj-button>
