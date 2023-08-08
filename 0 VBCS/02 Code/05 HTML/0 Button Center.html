@@ -1,0 +1,10 @@
+    <div class="oj-flex oj-sm-justify-content-center">
+      <oj-bind-if test="[[ !$variables.schoolRole ]]">
+        <oj-toolbar chroming="solid" class="oj-flex-item oj-sm-flex-initial">
+
+          <oj-button label="Save" chroming="callToAction"></oj-button>
+          <oj-button label="Submit For Approval"
+            disabled="[[ $variables.makeDisabledUploadButton || $variables.formDisable ]]" chroming="callToAction"> </oj-button>
+        </oj-toolbar>
+      </oj-bind-if>
+    </div>
