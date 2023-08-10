@@ -1,0 +1,48 @@
+<!-- style="column-count: 0;margin-top: 70px;" -->
+<div class="oj-flex">
+  <div class="oj-flex-item oj-sm-12 oj-md-12">
+      <div class="oj-panel oj-panel-shadow-md oj-selected">
+<h4 style="color: #740b40; font-size: larger; font-weight: bold;">Employee Detail</h4>
+    <oj-form-layout max-columns="2" label-edge="start" columns="2" direction="column" colspan-wrap="wrap">
+      <oj-input-text disabled="true" label-hint="[[$application.translations.app.EmployeeNumber]]"
+        value="{{ $variables.empobj.person_number }}"></oj-input-text>
+  <oj-input-date label-hint="[[$application.translations.app.DateofJoining]]" 
+    converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' disabled="true"
+    value="{{ $variables.empobj.date_of_join }}"
+      ></oj-input-date>
+      <oj-input-text label-hint="[[$application.translations.app.ParentDepartment]]" disabled="true"
+        value="{{ $variables.empobj.dept_name }}"
+       ></oj-input-text>
+    <!-- <oj-input-date label-hint="[[$application.translations.app.ReviewPeriod]]" disabled="true"
+      value="{{ $variables.empobj.date_probation_end }}"
+      converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' 
+       ></oj-input-date> -->
+
+       <!-- DATE FUNCTION -->
+    <oj-form-layout columns="2" max-columns="2" label-width="40%">
+      <oj-label style="margin-left:70%; "id="11" for="oj-input-date-1820599107-1">Review Period</oj-label>
+      <oj-input-date style="margin-left:52%;" id="oj-input-date-1820599107-1"
+        value="{{ $variables.empobj.date_probation_end }}"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' disabled="true"></oj-input-date>
+      <oj-input-date style="margin-right:75%;" label-hint="-" value="{{ $variables.empobj.date_probation_end }}"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' disabled="true"></oj-input-date>
+    </oj-form-layout>
+
+      <oj-input-text label-hint="[[$application.translations.app.EmployeeName]]" disabled="true"
+        value="{{ $variables.empobj.full_name }}"
+       ></oj-input-text>
+      <oj-input-text label-hint="[[$application.translations.app.Position]]" disabled="true"
+        value="{{ $variables.empobj.position_name }}"
+        ></oj-input-text>
+     
+      <oj-input-text label-hint="[[$application.translations.app.LineManager]]" disabled="true"
+        value="{{ $variables.empobj.man_full_name }}"
+      ></oj-input-text>
+
+         <!-- <oj-input-text label-hint="[[$application.translations.app.status]]" disabled="true"
+         
+       ></oj-input-text> -->
+    </oj-form-layout>
+  </div>
+</div>
+</div>
