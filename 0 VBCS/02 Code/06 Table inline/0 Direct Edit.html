@@ -1,0 +1,37 @@
+<div class="oj-flex">
+  <oj-sp-detail-panel class="oj-flex-item oj-sm-12 oj-md-12">
+<div class="oj-flex">
+  <oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12" selection-mode.row="single"
+    id="lookupTable" edit-mode="rowEdit" data="[[ $variables.getLookupADP ]]"
+    columns='[{"headerText":"lookup_value_name","field":"lookup_value_name","template":"lookup_value_name"},{"headerText":"lookup_value_code","field":"lookup_value_code","template":"lookup_value_code"},{"headerText":"last_updated_by","field":"last_updated_by","template":"last_updated_by"}]'
+    on-oj-before-row-edit="[[$listeners.lookupTableBeforeRowEdit]]"
+    on-oj-before-row-edit-end="[[$listeners.lookupTableBeforeRowEditEnd]]">
+    <template slot="lookup_value_name">
+        <oj-bind-if test='[[$current.mode=="navigation"]]'>
+          <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+        </oj-bind-if>
+        <oj-bind-if test='[[$current.mode=="edit"]]'>
+          <oj-input-text id="it1" value="{{ $variables.rowData.lookup_value_name }}" class="editable"></oj-input-text>
+        </oj-bind-if>
+    </template>
+    <template slot="lookup_value_code">
+        <oj-bind-if test='[[$current.mode=="navigation"]]'>
+          <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+        </oj-bind-if>
+        <oj-bind-if test='[[$current.mode=="edit"]]'>
+          <oj-input-text id="it2" value="{{ $variables.rowData.lookup_value_code }}" class="editable"></oj-input-text>
+        </oj-bind-if>
+    </template>
+    <template slot="last_updated_by">
+      <oj-bind-if test='[[$current.mode=="navigation"]]'>
+          <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+        </oj-bind-if>
+        <oj-bind-if test='[[$current.mode=="edit"]]'>
+          <oj-input-text id="it3" value="{{ $variables.rowData.last_updated_by }}" class="editable"></oj-input-text>
+      </oj-bind-if>
+    </template>
+  </oj-table>
+</div>
+
+  </oj-sp-detail-panel>
+</div>
