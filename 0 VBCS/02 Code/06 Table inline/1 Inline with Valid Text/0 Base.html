@@ -1,0 +1,97 @@
+-- no table action
+<div>
+  <oj-button label="Add Row" chroming="callToAction" on-oj-action="[[$listeners.buttonAction]]"></oj-button>
+
+  <oj-button label="Save" chroming="danger" on-oj-action="[[$listeners.buttonAction2]]"></oj-button>
+</div>
+
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+<div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+<div id="mainContent">
+
+<oj-validation-group id="tableValid" >
+<oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12" display="grid"
+  data="[[ $variables.lookupTypeADP ]]"
+  columns='[
+  {"headerText":"lookup_value_code","field":"lookup_value_code","template":"lookup_value_code"},
+  {"headerText":"lookup_value_name","field":"lookup_value_name","template":"lookup_value_name"},
+  {"headerText":"created_by","field":"created_by","template":"created_by"}
+  ]'
+  selection-mode.row="single">
+
+  <template slot="lookup_value_code">
+  <oj-input-text :id="[['lookup_value_code'+$current.index]]" value="[[ $current.row.lookup_value_code ]]" required="true"  >
+  </oj-input-text>
+  </template>
+
+  <template slot="lookup_value_name">
+  <oj-input-text :id="[['lookup_value_name'+$current.index]]" value="[[ $current.row.lookup_value_name ]]" required="true"  >
+  </oj-input-text>
+  </template>
+
+  <template slot="created_by">
+  <oj-input-text :id="[['created_by'+$current.index]]" value="[[ $current.row.created_by ]]" required="true"  >
+  </oj-input-text>
+  </template>
+
+</oj-table>
+
+</oj-validation-group>
+
+</div>
+</div>
+</div>  
+
+
+
+------------------------
+
+    /**
+     *
+     * @param {String} arg1
+     * @return {String}
+     */
+    generateJsonObj(array, loginuser, sysdate) {
+      //console.log("XX2----1>" + JSON.stringify(array));
+      var payload = {};
+      var final = {};
+      let isValid = "true";
+      let message = null;
+      let ldata = 0;
+
+      for (var i = 0; i < array.length; i++) {
+         array[i].lookup_value_code = document.getElementById('lookup_value_code' + i) == null ? null : document.getElementById('lookup_value_code' + i).value;
+         array[i].lookup_value_name = document.getElementById('lookup_value_name' + i) == null ? null : document.getElementById('lookup_value_name' + i).value;
+         array[i].created_by = document.getElementById('created_by' + i) == null ? null : document.getElementById('created_by' + i).value;
+         array[i].lookup_type_id = 1;
+         array[i].created_by = document.getElementById('created_by' + i) == null ? null : document.getElementById('created_by' + i).value;
+         array[i].creation_date = document.getElementById('creation_date' + i) == null ? null : document.getElementById('creation_date' + i).value;
+         array[i].last_updated_by = loginuser;
+         array[i].last_update_date = sysdate;
+         array[i].last_update_login = loginuser;
+
+        ldata = ldata + 1;
+      }
+
+      payload.item = array; 
+      final["items"]=array;
+      console.log("ldata==>list count==>" + ldata);
+      console.log("XX5----1>payload.item==>3" + JSON.stringify(payload.item));
+      console.log("Final Items" + JSON.stringify(final));
+
+
+      return {
+        'isValid': isValid,
+        'message': message,
+        'payload': payload,
+        'final'  : final
+      };
+      
+    }
+
+
+
+
+
+
+
