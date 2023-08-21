@@ -1,0 +1,4 @@
+AD User login
+IDCS USer login
+----------------------
+AD User login - enable only SSO login [AD / ADFS login ]
