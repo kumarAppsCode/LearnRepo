@@ -1,0 +1,17 @@
+        <template slot="status">
+          <oj-bind-if test='[[ $current.data==="Approved" ]]'>
+          <oj-bind-text style="color: green;font-weight: bold;">Approved<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Pending" ]]'>
+            <oj-bind-text style="color: blue;font-weight: bold;">Pending<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Draft" ]]'>
+            <oj-bind-text style="color: black;font-weight: bold;">Draft<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Rejected" ]]'>
+            <oj-bind-text style="color: red;font-weight: bold;">Rejected<oj-bind-text>
+          </oj-bind-if>
+        </template>
