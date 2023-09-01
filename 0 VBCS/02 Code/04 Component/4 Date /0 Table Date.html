@@ -1,0 +1,140 @@
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+==============================================================================================================================
+[
+    {
+        "headerText": "Competencies",
+        "field": "competencies_name",
+        "template": "CompetenciesName",
+        "width": 175,
+        "resizable": "enabled"
+    },
+    {
+        "headerText": "Target competency level to be achieved",
+        "field": "target_competency_level",
+        "template": "TragetLevel",
+        "width": 250,
+        "resizable": "enabled"
+    },
+    {
+        "headerText": "Recommended Activities",
+        "field": "recommended_activities_disp",
+        "template": "resourceActive",
+        "width": 250,
+        "resizable": "enabled"
+    },
+    {
+        "headerText": "Recommended Resources",
+        "field": "recommended_resources",
+        "template": "Recommendedre",
+        "width": 250,
+        "resizable": "enabled"
+    },
+    {
+        "headerText": "Start Date",
+        "field": "start_date",
+        "template": "lstartdate",
+        "width": 156
+    },
+    {
+        "headerText": "End  Date",
+        "field": "end_date",
+        "template": "lenddate",
+        "width": 156
+    },
+    {
+        "headerText": "Update",
+        "field": "",
+        "template": "edit",
+        "width": 110
+    },
+    {
+        "headerText": "Delete",
+        "field": "",
+        "template": "downloadDelete",
+        "width": 110
+    }
+]
+
+    <oj-table scroll-policy="loadMoreOnScroll" 
+          class="oj-sm-width-full oj-bg-body oj-search-table"
+          columns="{{ $variables.columnList }}"
+          selection-mode.row="single" edit-mode="rowEdit" data="[[ $variables.trainingLine ]]"
+          id="attachmentTable" display="grid">
+          <template slot="download">
+            <div>
+              <oj-bind-if test='true'>
+                <div class="oj-flex">
+                  <oj-label for="oj-input-text--706204795-1" class="oj-flex-item oj-sm-12 oj-md-2"></oj-label>
+                  <!-- <a target="_blank"><oj-bind-text value="[[ $current.data ]]"></oj-bind-text></a> -->
+                  <oj-button chroming="borderless">
+                  <img slot="startIcon" :src="[[ $application.path + 'resources/images/downgreenplus_status.png' ]]">
+                  </oj-button>
+                </div>
+              </oj-bind-if>
+            </div>
+          </template>
+          
+        <template slot="lstartdate">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+
+        <template slot="lenddate">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+
+
+        <template slot="resourceActive">
+          <oj-text-area value="[[$current.data]]" readonly="true" rows="2">
+
+          </oj-text-area>
+        </template>
+        <template slot="TragetLevel">
+          <oj-text-area value="[[$current.data]]" readonly="true" rows="2">
+
+          </oj-text-area>
+        </template>
+        <template slot="CompetenciesName">
+          <oj-text-area value="[[$current.data]]" readonly="true" rows="2">
+
+          </oj-text-area>
+        </template>
+
+        <template slot="Recommendedre">
+          <oj-text-area value="[[$current.data]]" readonly="true" rows="2">
+
+          </oj-text-area>
+        </template>
+
+         <!-- edit -->
+        <template slot="edit">
+          <oj-bind-if test="[[ (($variables.postHeaderTraning.request_status==='Pending'||$variables.postHeaderTraning.request_status==='Approved'))?true:false ]]">
+            <oj-button display="icons" chroming="borderless">
+            <img slot="startIcon" :src="[[ $application.path + 'resources/images/edit_dis.png' ]]">Button
+              </oj-button>
+          </oj-bind-if>
+
+          <oj-bind-if test="[[ (($variables.postHeaderTraning.request_status==='Pending'||$variables.postHeaderTraning.request_status==='Approved'))?false:true ]]">
+            <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction13]]" >
+            <img slot="startIcon" :src="[[ $application.path + 'resources/images/edit_ena.png' ]]">Button
+              </oj-button>
+          </oj-bind-if> 
+        </template>
+        
+          <!--Delete  -->
+          <template slot="downloadDelete">
+            <oj-bind-if test="[[ (($variables.postHeaderTraning.request_status==='Pending'||$variables.postHeaderTraning.request_status==='Approved'))?false:true ]]">
+                <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction10]]">
+                  <img :src="[[ $application.path + 'resources/images/delete_ena.png' ]]" slot="startIcon">
+                </oj-button>
+            </oj-bind-if>
+
+            <oj-bind-if test="[[ (($variables.postHeaderTraning.request_status==='Pending'||$variables.postHeaderTraning.request_status==='Approved'))?true:false ]]">
+                <oj-button display="icons" chroming="borderless">
+                  <img :src="[[ $application.path + 'resources/images/delete_dis.png' ]]" slot="startIcon">
+                </oj-button>
+            </oj-bind-if>
+          </template>
+    </oj-table>
