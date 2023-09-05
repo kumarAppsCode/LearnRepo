@@ -1,0 +1,118 @@
+BEGIN
+  XX_PERIOD_CLOSE_SAVE(
+  P_DATA => :body,
+  X_STATUS=>:X_STATUS,
+  X_STATUS_MESSAGE=>:X_STATUS_MESSAGE);
+END;
+
+/
+ADPDataJs(arrayJs) {
+    var parts = [];
+	var final = {};
+    console.log("Array==>"+JSON.stringify(arrayJs));  
+    final["parts"] = arrayJs;
+    console.log("Array 2==>"+JSON.stringify(final));  
+    }
+  }
+/  
+
+
+create or replace PROCEDURE xx_period_close_save (
+        p_data     IN BLOB,
+        x_status   OUT VARCHAR2,
+        x_status_message OUT VARCHAR2
+    ) IS
+
+--SELECT * FROM xx_period_close_dash_board
+
+        CURSOR ldata IS
+        SELECT
+            dash_board_id,
+            bu_id,
+            bu_name,
+            period_close_month,
+            purchasing_bus_auth,
+            purchasing_head_off_auth,
+            payables_bus_auth,
+            payables_head_off_auth,
+            receivables_bus_auth,
+            receivables_head_off_auth,
+            project_accounting_bus_auth,
+            project_accounting_head_off_auth,
+            fixed_assets_bus_auth,
+            fixed_assets_head_off_auth,
+            general_ledger_bus_auth,
+            general_ledger_head_off_auth,
+            created_by,
+            creation_date,
+            last_updated_by,
+            last_update_date,
+            last_update_login
+        FROM
+            JSON_TABLE ( p_data FORMAT JSON, '$.parts[*]'
+                COLUMNS (
+                    dash_board_id                     number       PATH '$.dash_board_id',                     
+                    bu_id                             number       PATH '$.bu_id',                             
+                    bu_name                           varchar2     PATH '$.bu_name',                          
+                    period_close_month                varchar2     PATH '$.period_close_month',               
+                    purchasing_bus_auth               varchar2     PATH '$.purchasing_bus_auth',              
+                    purchasing_head_off_auth          varchar2     PATH '$.purchasing_head_off_auth',         
+                    payables_bus_auth                 varchar2     PATH '$.payables_bus_auth',                
+                    payables_head_off_auth            varchar2     PATH '$.payables_head_off_auth',           
+                    receivables_bus_auth              varchar2     PATH '$.receivables_bus_auth',             
+                    receivables_head_off_auth         varchar2     PATH '$.receivables_head_off_auth',        
+                    project_accounting_bus_auth       varchar2     PATH '$.project_accounting_bus_auth',      
+                    project_accounting_head_off_auth  varchar2     PATH '$.project_accounting_head_off_auth', 
+                    fixed_assets_bus_auth             varchar2     PATH '$.fixed_assets_bus_auth',            
+                    fixed_assets_head_off_auth        varchar2     PATH '$.fixed_assets_head_off_auth',       
+                    general_ledger_bus_auth           varchar2     PATH '$.general_ledger_bus_auth',          
+                    general_ledger_head_off_auth      varchar2     PATH '$.general_ledger_head_off_auth',     
+                    created_by                        varchar2     PATH '$.created_by',                       
+                    creation_date                     timestamp    PATH '$.creation_date',                    
+                    last_updated_by                   varchar2     PATH '$.last_updated_by',                  
+                    last_update_date                  timestamp    PATH '$.last_update_date',                
+                    last_update_login                 varchar2     PATH '$.last_update_login'                
+                )
+            );
+
+        l_count    NUMBER := 0;
+--        x_status   VARCHAR2(60);
+--        x_status_message VARCHAR2(240);
+
+    BEGIN
+
+        FOR i IN ldata LOOP
+            l_count := l_count + 1;
+            UPDATE xx_period_close_dash_board
+            SET 
+--            bu_id                                    =i.bu_id                             	
+--           ,bu_name                                  =i.bu_name                           
+--           period_close_month                       =i.period_close_month                
+             purchasing_bus_auth                      =i.purchasing_bus_auth               
+            ,purchasing_head_off_auth                 =i.purchasing_head_off_auth          
+            ,payables_bus_auth                        =i.payables_bus_auth                 
+            ,payables_head_off_auth                   =i.payables_head_off_auth            
+            ,receivables_bus_auth                     =i.receivables_bus_auth              
+            ,receivables_head_off_auth                =i.receivables_head_off_auth         
+            ,project_accounting_bus_auth              =i.project_accounting_bus_auth       
+            ,project_accounting_head_off_auth         =i.project_accounting_head_off_auth  
+            ,fixed_assets_bus_auth                    =i.fixed_assets_bus_auth             
+            ,fixed_assets_head_off_auth               =i.fixed_assets_head_off_auth        
+            ,general_ledger_bus_auth                  =i.general_ledger_bus_auth           
+            ,general_ledger_head_off_auth             =i.general_ledger_head_off_auth      
+            ,last_updated_by                          =i.last_updated_by                   
+            ,last_update_date                         =sysdate                  
+            ,last_update_login                        =i.last_update_login                   
+WHERE
+bu_id=i.bu_id
+and upper(period_close_month)=upper(i.period_close_month);
+commit;
+END LOOP;
+        x_status   := 'Y';
+        x_status_message := 'Success';
+
+    EXCEPTION
+        WHEN OTHERS THEN
+        x_status   := 'N';
+        x_status_message := SQLERRM;
+    END xx_period_close_save;
