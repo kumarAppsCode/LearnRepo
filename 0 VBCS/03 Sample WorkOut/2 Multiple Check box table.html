@@ -1,0 +1,241 @@
+<h1 id="h4" style="font-size: larger; font-weight: bold;color:#740b40">Month-End Period Close Dashboard</h1>
+<oj-validation-group id="SearchForm">
+  <oj-form-layout label-edge="start" columns="2" style="margin-top:10px;">
+  <oj-radioset label-hint="[[$application.translations.app.EntityScope]]"
+    value="{{ $variables.searchObj.entity_Scope }}">
+    <oj-option value="INV_ORG">Inventory Organization</oj-option>
+    <oj-option value="BU">Business Unit</oj-option>
+  </oj-radioset>
+    <oj-select-single id="oj-select-single-28918854-2" label-hint="[[$application.translations.app.Period]]"
+      value="{{ $variables.searchObj.period_month }}" required="true" data="[[$variables.getPeriodMonthLovListSDP]]"
+      item-text="period_close_month_name">
+    </oj-select-single>    
+  </oj-form-layout>
+  <oj-validation-group>
+<div style="display:flex;justify-content:flex-end;">
+      <oj-form-layout columns="2" label-edge="start" direction="column" max-columns="2" label-width="100%">
+        <oj-button label="[[$application.translations.app.search]]" style="margin-left:0.5%;margin-right:0.5%"
+          chroming="outlined" class="oj-button-sm oj-button-full-width" on-oj-action="[[$listeners.buttonAction]]">
+        </oj-button>
+        <oj-button label="[[$application.translations.app.Reset]]" style="margin-left:0.5%;margin-right:0.5%"
+          chroming="outlined" class="oj-button-sm oj-button-full-width">
+        </oj-button>
+      </oj-form-layout>
+    </div>
+    <br>
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+      <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+        <div id="mainContent">
+          <oj-button chroming="outlined" class="oj-button-sm">
+            <oj-bind-text value="[[$application.translations.app.PeriodClosureIndicativeDays]]"></oj-bind-text>
+          </oj-button>
+          <oj-button chroming="outlined" class="oj-button-sm" label="[[$application.translations.app.save]]"
+            on-oj-action="[[$listeners.buttonAction2]]">
+            
+          </oj-button>
+<oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+  data="[[ $variables.getDashBoardPeriodADP ]]" horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+  selection-mode.row="single" selection-mode.column="none" class="oj-sm-width-full" columns='[
+  {"headerText":"Business Unit","field":"bu_name","sortable":"disabled"},
+  {"headerText":"Purchasing Business Authority","field":"purchasing_bus_auth","template":"Purchasing Business Authority","sortable":"disabled"},
+  {"headerText":"Purchasing Head Office Authority","field":"purchasing_head_off_auth","template":"Purchasing Head Office Authority","sortable":"disabled"},
+  {"headerText":"Payables Business Authority","field":"payables_bus_auth","template":"Payables Business Authority","sortable":"disabled"},
+  {"headerText":"Payables Head Office Authority","field":"payables_head_off_auth","template":"Payables Head Office Authority","sortable":"disabled"},
+  {"headerText":"Receivables Business Authority","field":"receivables_bus_auth","template":"Receivables Business Authority","sortable":"disabled"},
+  {"headerText":"Receivables Head Office Authority","field":"receivables_head_off_auth","template":"Receivables Head Office Authority","sortable":"disabled"},
+  {"headerText":"Project_accounting Business Authority","field":"project_accounting_bus_auth","template":"Project_accounting Business Authority","sortable":"disabled"},
+  {"headerText":"Project_accounting Head Office Authority","field":"project_accounting_head_off_auth","template":"Project_accounting Head Office Authority","sortable":"disabled"},
+  {"headerText":"Fixed_assets Business Authority","field":"fixed_assets_bus_auth","template":"Fixed_assets Business Authority","sortable":"disabled"},
+  {"headerText":"Fixed_assets Head Office Authority","field":"fixed_assets_head_off_auth","template":"Fixed_assets Head Office Authority","sortable":"disabled"},
+  {"headerText":"General_ledger Business Authority","field":"general_ledger_bus_auth","template":"General_ledger Business Authority","sortable":"disabled"},
+  {"headerText":"General_ledger Head Office Authority","field":"general_ledger_head_off_auth","template":"General_ledger Head Office Authority","sortable":"disabled"}
+  ]' edit-mode="rowEdit"
+  on-oj-before-row-edit="[[$listeners.tableBeforeRowEdit]]"
+  on-oj-before-row-edit-end="[[$listeners.tableBeforeRowEditEnd]]">
+
+  <template slot="Purchasing Business Authority">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.purchasing_bus_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>    
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.purchasing_bus_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue]]"></oj-sample-checkbox-switch>    
+      </oj-bind-if>
+  </template>
+  <template slot="Purchasing Head Office Authority">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.purchasing_head_off_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-bind-if test='[[ ($variables.currentRow.purchasing_bus_auth==="Y")?true:false ]]'>
+          <oj-sample-checkbox-switch value="{{ $variables.currentRow.purchasing_head_off_auth==='Y'?true:false }}"
+            on-value-changed="[[$listeners.booleanCheckboxComponentValue2]]"
+            ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+
+        <oj-bind-if test='[[ ($variables.currentRow.purchasing_bus_auth==="Y")?false:true ]]'>
+          <oj-sample-checkbox-switch readonly="true" ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+      </oj-bind-if>
+  </template>
+<!--  -->
+  <template slot="Payables Business Authority">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.payables_bus_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+      <oj-sample-checkbox-switch value="{{ $variables.currentRow.payables_bus_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue3]]"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+  </template>
+<!--  -->
+  <template slot="Payables Head Office Authority">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.payables_head_off_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+              <oj-bind-if test='[[ ($variables.currentRow.payables_bus_auth==="Y")?true:false ]]'>
+              <oj-sample-checkbox-switch value="{{ $variables.currentRow.payables_head_off_auth==='Y'?true:false }}"
+              on-value-changed="[[$listeners.booleanCheckboxComponentValue4]]"
+              ></oj-sample-checkbox-switch>
+              </oj-bind-if>
+      
+        <oj-bind-if test='[[ ($variables.currentRow.payables_bus_auth==="Y")?false:true ]]'>
+          <oj-sample-checkbox-switch readonly="true" ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+      </oj-bind-if>
+  </template>
+<!--  -->
+  <template slot="Receivables Business Authority">
+  <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.receivables_bus_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.receivables_bus_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue5]]"
+          ></oj-sample-checkbox-switch>
+      </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.receivables_bus_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+<!--  -->
+  <template slot="Receivables Head Office Authority">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.receivables_head_off_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+     
+      <oj-bind-if test='[[ ($variables.currentRow.receivables_bus_auth==="Y")?true:false ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.receivables_head_off_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue6]]"
+          ></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      
+      <oj-bind-if test='[[ ($variables.currentRow.receivables_bus_auth==="Y")?false:true ]]'>
+          <oj-sample-checkbox-switch readonly="true" ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+
+      </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.receivables_head_off_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+<!--  -->
+  <template slot="Project_accounting Business Authority">
+    <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.project_accounting_bus_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.project_accounting_bus_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue7]]"
+          ></oj-sample-checkbox-switch>
+    </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.project_accounting_bus_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+<!--  -->
+  <template slot="Project_accounting Head Office Authority">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.project_accounting_head_off_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+            <oj-bind-if test='[[ ($variables.currentRow.project_accounting_bus_auth==="Y")?true:false ]]'>
+                <oj-sample-checkbox-switch value="{{ $variables.currentRow.project_accounting_head_off_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue8]]"
+        ></oj-sample-checkbox-switch>
+            </oj-bind-if>
+        <oj-bind-if test='[[ ($variables.currentRow.project_accounting_bus_auth==="Y")?false:true ]]'>
+          <oj-sample-checkbox-switch readonly="true" ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+    
+    </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.project_accounting_head_off_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+<!--  -->
+  <template slot="Fixed_assets Business Authority">
+    <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.fixed_assets_bus_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+      </oj-bind-if>
+    <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.fixed_assets_bus_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue9]]"
+    ></oj-sample-checkbox-switch>
+    </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.fixed_assets_bus_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+  <!--  -->
+  <template slot="Fixed_assets Head Office Authority">
+    <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.fixed_assets_head_off_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+    </oj-bind-if>
+    <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+            <oj-bind-if test='[[ ($variables.currentRow.fixed_assets_bus_auth==="Y")?true:false ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.fixed_assets_head_off_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue10]]"
+    ></oj-sample-checkbox-switch>
+            </oj-bind-if>
+    
+        <oj-bind-if test='[[ ($variables.currentRow.fixed_assets_bus_auth==="Y")?false:true ]]'>
+          <oj-sample-checkbox-switch readonly="true" ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+    
+    </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.fixed_assets_head_off_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+  <template slot="General_ledger Business Authority">
+    <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.general_ledger_bus_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+    </oj-bind-if>
+    <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.general_ledger_bus_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue11]]"
+    ></oj-sample-checkbox-switch>
+    </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.general_ledger_bus_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+  <template slot="General_ledger Head Office Authority">
+    <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-sample-checkbox-switch value="{{ $current.row.general_ledger_head_off_auth==='Y'?true:false }}" readonly="true"></oj-sample-checkbox-switch>
+    </oj-bind-if>
+    <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+            <oj-bind-if test='[[ ($variables.currentRow.general_ledger_bus_auth==="Y")?true:false ]]'>
+        <oj-sample-checkbox-switch value="{{ $variables.currentRow.general_ledger_head_off_auth==='Y'?true:false }}"
+          on-value-changed="[[$listeners.booleanCheckboxComponentValue12]]"
+    ></oj-sample-checkbox-switch>
+            </oj-bind-if>
+            <oj-bind-if test='[[ ($variables.currentRow.general_ledger_bus_auth==="Y")?false:true ]]'>
+          <oj-sample-checkbox-switch readonly="true" ></oj-sample-checkbox-switch>
+        </oj-bind-if>
+    </oj-bind-if>
+    <!-- <oj-sample-checkbox-switch value="{{ $current.row.general_ledger_head_off_auth==='Y'?true:false }}"></oj-sample-checkbox-switch> -->
+  </template>
+          </oj-table>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+<oj-dialog dialog-title="Please wait..." id="progressMsg" class="wd200">
+  <div slot="body">
+    <div class="oj-flex full_stretch lg_button_width">
+      <oj-progress-bar class="full_stretch oj-flex-item oj-sm-12 oj-md-12" value="-1"></oj-progress-bar>
+    </div>
+  </div>
+</oj-dialog>
