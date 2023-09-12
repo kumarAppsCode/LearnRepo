@@ -1,0 +1,3 @@
+.oj-forme-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient, .oj-form.oj-enabled .oj-user-assistance-inline-container.oj-efficient {
+    min-height: 0.4rem;
+}
