@@ -1,0 +1,1293 @@
+<!-- -- Header Tool --> 
+<div class="oj-flex">
+  <!-- row 1st layer -->
+  <div class="oj-flex-item oj-sm-12 oj-md-12 oj-lg-4  oj-xl-4">
+    <!-- <h1>Service Request</h1> -->
+    <h1 style="color: #740b40; font-weight: bold; font-size: larger;"><oj-bind-text value='[[ "Travel Application -" + $variables.postTravelApplHdr.application_number ]]'></oj-bind-text></h1>
+  </div>
+  <!-- 2nd layer -->
+  <div class="oj-flex-item oj-sm-12 oj-md-12 oj-lg-2  oj-xl-4">
+  </div>
+  <!-- 3rd layer -->
+  <div class="oj-flex-item oj-sm-12 oj-md-12 oj-lg-6  oj-xl-4"
+  style="display:flex; justify-content:flex-end; margin-bottom:1%;">
+      <!-- <oj-button class="oj-button-sm" chroming="solid" style="margin-left:0.5%;margin-right:1.5%;"
+        on-oj-action="[[$listeners.buttonAction30]]">Reassign</oj-button>    -->
+      <!-- Reassign -->
+      <oj-button class="oj-button-sm" chroming="solid" style="margin-left:0.5%;margin-right:1.5%;"
+        :hidden="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.category==='Approver')?false:true ]]"
+        on-oj-action="[[$listeners.buttonAction30]]">Reassign</oj-button>      
+      <!--Approve -->
+      <oj-button class="oj-button-sm" chroming="solid"
+        style="margin-left:0.5%;margin-right:1.5%;"
+        :hidden="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.category==='Approver')?false:true ]]"
+        on-oj-action="[[$listeners.buttonAction21]]"
+        >Approve</oj-button>
+      <!--Reject  -->
+      <oj-button class="oj-button-sm" chroming="solid"
+        style="margin-left:0.5%;margin-right:1.5%;"
+        :hidden="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.category==='Approver')?false:true ]]"
+        on-oj-action="[[$listeners.buttonAction22]]"
+        >Reject</oj-button>
+      <!--Save and Close  -->
+
+<oj-bind-if test='[[ ($application.variables.datavalidation==="VIEW")?false:true ]]'>
+
+    <oj-bind-if test='[[ ($variables.postTravelApplHdr.travel_source==="Manual")?true:false ]]'>
+      <oj-button class="oj-button-sm" 
+      style="margin-left:0.5%;margin-right:1.5%;"
+      :hidden='[[ ($variables.pageNavigation==="CREATE" || ($variables.postTravelApplHdr.application_status==="Draft"))?false:true ]]'
+      chroming="solid" on-oj-action="[[$listeners.buttonAction27]]">Submit</oj-button>
+    </oj-bind-if>
+
+    <oj-bind-if test='[[ ($variables.postTravelApplHdr.travel_source==="TRAINING" ||$variables.postTravelApplHdr.travel_source==="Secondment_Travel" )?true:false ]]'>
+      <oj-button class="oj-button-sm" 
+      style="margin-left:0.5%;margin-right:1.5%;"
+      :hidden='[[ ($variables.pageNavigation==="CREATE" || ($variables.postTravelApplHdr.application_status==="Draft"))?false:true ]]'
+      chroming="solid" on-oj-action="[[$listeners.buttonAction35]]">Submit</oj-button>
+    </oj-bind-if>
+
+
+      <!--Save  -->
+      <oj-button class="oj-button-sm" chroming="solid" 
+      style="margin-left:0.5%;margin-right:1.5%;"
+      :hidden='[[ ($variables.pageNavigation==="CREATE" || ($variables.postTravelApplHdr.application_status==="Draft"))?false:true ]]'
+      on-oj-action="[[$listeners.buttonAction18]]" >Save & Close</oj-button>
+      <!--Save  -->
+      <oj-button class="oj-button-sm" 
+      style="margin-left:0.5%;margin-right:1.5%;"
+      :hidden='[[ ($variables.pageNavigation==="CREATE" || ($variables.postTravelApplHdr.application_status==="Draft"))?false:true ]]'
+      chroming="solid" on-oj-action="[[$listeners.buttonAction17]]">Save</oj-button>
+</oj-bind-if>      
+      
+      
+      <!--Cancel -->
+      <!-- <oj-button class="oj-button-sm" chroming="solid" 
+      style="margin-left:0.5%;margin-right:1.5%;"
+      :hidden="[[ ($variables.taskId!=null)?true:false ]]" on-oj-action="[[$listeners.buttonAction29]]"
+      >Print</oj-button> -->
+      
+      <oj-button class="oj-button-sm" chroming="solid" 
+      style="margin-left:0.5%;margin-right:1.5%;"
+      :hidden="[[ ($variables.taskId!=null)?true:false ]]"
+      on-oj-action="[[$listeners.buttonAction]]">Close</oj-button>
+     
+  </div>
+</div>
+<!--  -->
+<!-- Train -->
+<div class="oj-flex">
+  <oj-train
+    steps='[[ 
+    [{"id":"ONE","label":"Travel Header Application"},
+    {"id":"TWO","label":"Assignment Details"},
+    {"id":"THREE","label":"Advance Details","disabled":$variables.hdrId!=0?false:true},
+    {"id":"FOUR","label":"Attachments","disabled":$variables.hdrId!=0?false:true},
+    {"id":"FIVE","label":"Ticket Details","disabled":$variables.hdrId!=0?false:true},
+    {"id":"SIX","label":"Preview" ,"disabled":$variables.hdrId!=0?false:true}] ]]'
+    class="oj-flex-item oj-sm-12 oj-md-11 oj-train-stretch" selected-step="{{ $variables.varSelectedStep }}"
+    id="oj-train--272061849-1"></oj-train>
+</div>
+<!-- <oj-bind-if test="[[ $variables.varSelectedStep==null||$variables.varSelectedStep==='ONE'||$variables.varSelectedStep==='SIX' ]]"></oj-bind-if> 
+<oj-bind-if test="[[ $variables.varSelectedStep==null||$variables.varSelectedStep==='TWO'||$variables.varSelectedStep==='SIX' ]]"></oj-bind-if> 
+<oj-bind-if test="[[ $variables.varSelectedStep==null||$variables.varSelectedStep==='THREE'||$variables.varSelectedStep==='SIX' ]]"></oj-bind-if> 
+<oj-bind-if test="[[ $variables.varSelectedStep==null||$variables.varSelectedStep==='FOUR'||$variables.varSelectedStep==='SIX' ]]"></oj-bind-if> 
+<oj-bind-if test="[[ $variables.varSelectedStep==null||$variables.varSelectedStep==='FIVE'||$variables.varSelectedStep==='SIX' ]]"></oj-bind-if>  -->
+<!--  -->
+<br>
+<h6 style="color: #740b40; font-size: larger; font-weight: bold;">Employee Detail</h6>
+
+<div class="oj-flex-item  oj-sm-12 oj-md-12 oj-lg-12  oj-xl-12 oj-panel">
+<oj-validation-group id="travelHdrsForm">
+<oj-form-layout max-columns="2" columns="2" label-edge="start">
+
+<oj-bind-if
+  test="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.user_group==='QIA_ADM_TEAM_TR') ?true:false ]]">
+    <oj-input-date id="oj-input-text-651077415-1"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px; border-radius:7px;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' label-hint="Application Date"
+          placeholder="Application Date" value="{{ $variables.postTravelApplHdr.application_date }}" required="true">
+    </oj-input-date>
+</oj-bind-if>
+
+<!-- disabled="[[ (($variables.postTravelApplHdr.application_status==='Pending'|| $variables.postTravelApplHdr.application_status==='Approved') )?true:false ]]" -->
+<oj-bind-if
+  test="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.user_group==='QIA_ADM_TEAM_TR') ?false:true ]]">
+    <oj-input-date id="oj-input-text-651077415-1"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px; border-radius:7px;"
+          disabled="true"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' label-hint="Application Date"
+          placeholder="Application Date" value="{{ $variables.postTravelApplHdr.application_date }}" required="true">
+    </oj-input-date>
+</oj-bind-if>
+
+<!--  -->
+         <oj-input-text id="oj-input-text-651077415-6" disabled="true"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelApplHdr.application_status }}" label-hint="Status" placeholder="Status"></oj-input-text>
+
+<!--  -->
+<oj-bind-if test="true">
+         <oj-input-text id="oj-input-text-651077415-1"
+           style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" disabled="true" required="true"
+           value="{{ $variables.postTravelApplHdr.employee_number }}" label-hint="Employee Number"
+           placeholder="Employee Number"></oj-input-text>
+</oj-bind-if>
+<!--  -->
+          <oj-input-text id="oj-input-text-651077415-6" disabled="true"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelApplHdr.full_name }}" label-hint="Employee Name" placeholder="Employee Name"></oj-input-text>
+<!--  -->
+          <oj-input-text id="oj-input-text-651077415-6" disabled="true"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelApplHdr.attribute_data.department }}" label-hint="Department"
+            placeholder="Department"></oj-input-text>
+<!--  -->
+<!--  -->
+          <oj-input-text id="oj-input-text-651077415-6" disabled="true"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelApplHdr.grade }}" label-hint="Grade"
+            placeholder="Grade"></oj-input-text>
+<!--  -->
+
+              <!-- <oj-input-text id="oj-input-text-651077415-1"
+                style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" disabled="true"
+                value="{{ $variables.postTravelApplHdr.travel_source }}" label-hint="Travel Source"
+                placeholder="Travel Source"></oj-input-text> -->
+
+            <oj-combobox-one style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" disabled="true"
+              value="{{ $variables.postTravelApplHdr.travel_source }}" label-hint="Travel Source"
+              placeholder="Travel Source">
+                <oj-option value="Manual">Business Trip Oracle</oj-option>
+                <oj-option value="TRAINING">External Training Oracle</oj-option>
+                <oj-option value="Amex-GBT">Amex-GBT</oj-option>
+                <oj-option value="Secondment_Travel">Secondment Travel</oj-option>
+              </oj-combobox-one>
+              
+              <oj-input-text id="oj-input-text-651077415-139"
+                style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" disabled="true"
+                value="{{ $variables.postTravelApplHdr.reference_num }}" label-hint="Reference Number"
+                placeholder="Reference Number"></oj-input-text>
+
+</oj-form-layout>
+
+  
+</oj-validation-group>
+</div>
+<br/>
+<div class="oj-flex-item  oj-sm-12 oj-md-12 oj-lg-12  oj-xl-12 oj-panel">
+  <h6 style="color: #740b40; font-size: larger; font-weight: bold;">Travel Application Detail</h6>
+<oj-bind-if
+  test="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.user_group==='QIA_ADM_TEAM_TR') ?true:false ]]">
+<oj-validation-group id="travelHdrForm">
+<oj-form-layout max-columns="2" label-edge="start" columns="2">
+        <oj-select-single id="oj-input-text-651077415-1"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+          value="{{ $variables.postTravelApplHdr.attribute_data.project_owner_dep }}"
+          data="[[$variables.getProjectDtlListSDP]]" item-text="department_name" required="true"
+          label-hint="Project Owner Department">
+            <template slot="collectionTemplate" data-oj-as="collection">
+              <br>
+              <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                        vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                        columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                        class="oj-select-results" 
+                        columns='[{"headerText":"Department Name","field":"department_name"}]' 
+                        on-oj-row-action="[[collection.handleRowAction]]"
+                        data="[[collection.data]]" selected.row="[[collection.selected]]"
+                        current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+              <template slot="cellTemplate" data-oj-as="cell">
+                <oj-highlight-text text='[[String(cell.data)]]' >
+                </oj-highlight-text>
+              </template>
+         </oj-select-single> 
+<!--  -->
+<oj-bind-if test="true"> 
+          <oj-input-text id="oj-input-text-651077415-6"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+            value="{{ $variables.postTravelApplHdr.attribute_data.projectName }}" label-hint="Assignment Name"
+            placeholder="Assignment Name"></oj-input-text>
+</oj-bind-if>
+
+<oj-bind-if test="true"> 
+         <oj-input-text id="oj-input-text-651077415-1"
+           style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+           value="{{ $variables.postTravelApplHdr.destination }}" label-hint="Destination"></oj-input-text>
+</oj-bind-if>
+
+          <oj-select-single id="oj-input-text-4545-6"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelApplHdr.ticket_type }}" data="[[$variables.getLookupDtlListSDP9]]"
+            item-text="lookup_value_name_dis" required="true"
+            on-value-item-changed="[[$listeners.ojInputText45456ValueItem]]" label-hint="Ticketing Arrangements"
+            placeholder="Ticketing Arrangements" >
+            </oj-select-single>
+
+<oj-bind-if test='[[ ($variables.postTravelApplHdr.travel_source==="Manual")?true:false ]]'>  
+        <oj-select-single id="oj-input-text-651077415-1"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+          data="[[$variables.getLookupDtlListSDP3]]" item-text="lookup_value_name_dis"
+          value="{{ $variables.postTravelApplHdr.perdiem_yes_no }}"
+          on-value-item-changed="[[$listeners.ojInputText6510774151ValueItem2]]" label-hint="Perdiem Required"
+          placeholder="Perdiem Required">
+        </oj-select-single>
+</oj-bind-if>
+
+
+    <oj-text-area id="oj-input-text-651077415-6"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+            value="{{ $variables.postTravelApplHdr.attribute_data.projectDetails }}" rows="3"
+            label-hint="Assignment Details">
+    </oj-text-area>
+          <oj-sample-checkbox-switch id="oj-input-text-651077415-336"
+            style="margin-left:10px;" value="{{ $variables.transientCheckBox }}"
+            label-hint="Assignment During Annual Leave">
+          </oj-sample-checkbox-switch>
+</oj-form-layout>
+</oj-validation-group>
+  </oj-bind-if>
+
+<!-- disabled="[[ ($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved')?true:false ]]" -->
+  <oj-bind-if
+  test="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.user_group==='QIA_ADM_TEAM_TR') ?false:true ]]">
+<oj-validation-group id="travelHdrForm">
+<oj-form-layout max-columns="2" label-edge="start" columns="2">
+        <oj-select-single id="oj-input-text-651077415-1"
+          disabled="[[ $variables.validateFields ]]"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+          value="{{ $variables.postTravelApplHdr.attribute_data.project_owner_dep }}"
+          data="[[$variables.getProjectDtlListSDP]]" item-text="department_name" required="true"
+          label-hint="Project Owner Department">
+            <template slot="collectionTemplate" data-oj-as="collection">
+              <br>
+              <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                        vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                        columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                        class="oj-select-results" 
+                        columns='[{"headerText":"Department Name","field":"department_name"}]' 
+                        on-oj-row-action="[[collection.handleRowAction]]"
+                        data="[[collection.data]]" selected.row="[[collection.selected]]"
+                        current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+              <template slot="cellTemplate" data-oj-as="cell">
+                <oj-highlight-text text='[[String(cell.data)]]' >
+                </oj-highlight-text>
+              </template>
+         </oj-select-single> 
+<!--  -->
+          <oj-input-text id="oj-input-text-651077415-6"
+            disabled="[[ $variables.validateFields ]]"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+            value="{{ $variables.postTravelApplHdr.attribute_data.projectName }}" label-hint="Assignment Name"
+            ></oj-input-text>
+
+<oj-bind-if test="true"> 
+         <oj-input-text id="oj-input-text-651077415-1"
+           disabled="[[ $variables.validateFields ]]"
+           style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+           value="{{ $variables.postTravelApplHdr.destination }}" label-hint="Destination"></oj-input-text>
+</oj-bind-if>
+
+          <oj-select-single id="oj-input-text-4545-6"
+            disabled="[[ $variables.validateFields ]]"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelApplHdr.ticket_type }}" data="[[$variables.getLookupDtlListSDP9]]"
+            item-text="lookup_value_name_dis" required="true"
+            on-value-item-changed="[[$listeners.ojInputText45456ValueItem]]" label-hint="Ticketing Arrangements"
+            placeholder="Ticketing Arrangements" >
+            </oj-select-single>
+
+<oj-bind-if test='[[ ($variables.postTravelApplHdr.travel_source==="TRAINING"||$variables.postTravelApplHdr.travel_source==="Secondment_Travel")?true:false ]]'> 
+<!-- <oj-bind-if test="true">      -->
+        <oj-select-single id="oj-input-text-651077415-1"
+          disabled="[[ $variables.validateFields ]]"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" data="[[$variables.getLookupDtlListSDP3]]"
+          item-text="lookup_value_name_dis" value="{{ $variables.postTravelApplHdr.perdiem_yes_no }}"
+          on-value-item-changed="[[$listeners.ojInputText6510774151ValueItem2]]" label-hint="Perdiem"
+          placeholder="Perdiem">
+        </oj-select-single>
+</oj-bind-if>
+
+<oj-bind-if test='[[ ($variables.postTravelApplHdr.travel_source==="TRAINING"||$variables.postTravelApplHdr.travel_source==="Secondment_Travel")?false:true ]]'>
+<!-- <oj-bind-if test="true">      -->
+      <oj-input-text id="oj-input-text-651077415-284"
+          disabled="true"
+          style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+          value="{{ $variables.postTravelApplHdr.perdiem_yes_no }}"
+          label-hint="Perdiem"
+          placeholder="Perdiem">
+      </oj-input-text>
+</oj-bind-if>
+        <!-- <oj-bind-text style="color: #3b50f7; margin-left: 34%; font-size: 10px;">Perdiem in Advance -> Perdiem fro travel days to be paid as as advance before travel</oj-bind-text> -->
+    <oj-text-area id="oj-input-text-651077415-6"
+            disabled="[[ $variables.validateFields ]]"
+            style="width: 22rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+            value="{{ $variables.postTravelApplHdr.attribute_data.projectDetails }}" rows="3"
+            label-hint="Assignment Details">
+    </oj-text-area>
+
+          <oj-sample-checkbox-switch id="oj-input-text-651077415-336" style="margin-left:10px;"
+            value="{{ $variables.transientCheckBox }}" label-hint="Assignment During Annual Leave"
+            :aria-disabled="[[ $variables.validateFields ]]">
+          </oj-sample-checkbox-switch>
+</oj-form-layout>
+</oj-validation-group>
+
+  </oj-bind-if>
+
+
+
+</div>
+<br>
+<div class="oj-flex-item  oj-sm-12 oj-md-12 oj-lg-12  oj-xl-12">
+<oj-form-layout id="commentsform" label-edge="start" columns="2" max-columns="2">  
+    <oj-text-area id="oj-input-text-651077415-210"
+    disabled="[[ $variables.validateFields ]]"
+    value="{{ $variables.postTravelApplHdr.comments }}"
+    style="width: 52rem;border: solid 1px #7F949F; border-radius:7px;" placeholder="Comments" label-hint="Comments"
+    rows="4">
+  </oj-text-area>
+</oj-form-layout>
+</div>
+<!--Line  popup -->
+<oj-dialog dialog-title="Travel Assignment Detail" id="TravelAssignDtlPopup" style="width: 1297px; height: 375px;">
+<!--assing form -->
+<div class="oj-flex-item  oj-sm-12 oj-md-12 oj-lg-12  oj-xl-12 oj-panel">
+<oj-validation-group id="travelAssignForm">
+<oj-form-layout>
+  <h6 style="color: #740b40; font-size: larger; font-weight: bold;">Assignment Details</h6>
+  <table>
+<!--Row 0  -->
+    <!-- <tr>
+      <td align="right"></td>
+      <td align="left" style="width:2px;"></td>
+      <td style="width: 8rem;"></td> 
+      <td align="right"></td>
+      <td align="left"></td>
+    </tr> -->
+<!--Row 1  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Date From</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+        <oj-input-date id="oj-input-text-651077415-1"
+          style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' label-hint="Date From"
+          placeholder="Date From" value="{{ $variables.postTravelAssign.date_from }}" required="true"></oj-input-date>
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Date To</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+        <oj-input-date id="oj-input-text-651077415-1"
+          style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' label-hint="Date To"
+          placeholder="Date To" value="{{ $variables.postTravelAssign.date_to }}" required="true"
+          min="{{ $variables.postTravelAssign.date_from }}"></oj-input-date>
+      </td>
+    </tr>
+<!--Row 2  -->    
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-375" style="font-weight: bold;" show-required="true">Country</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+          <!--  -->
+        <oj-bind-if test='[[ $variables.postTravelApplHdr.travel_source==="TRAINING" ||$variables.postTravelApplHdr.travel_source==="Secondment_Travel"]]'>
+            <oj-input-text id="oj-input-text-651077415-375" disabled="true"
+              style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+              value="{{ $variables.postTravelAssign.destination }}">
+            </oj-input-text>          
+        </oj-bind-if>
+
+        <oj-bind-if test='[[ $variables.postTravelApplHdr.travel_source!=="TRAINING" ]]'>
+          <oj-select-single id="oj-input-text-651077415-1"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+            data="[[$variables.getLookupDtlListSDP]]" item-text="lookup_value_name_dis"
+            value="{{ $variables.postTravelAssign.destination }}"
+            on-value-item-changed="[[$listeners.ojInputText6510774151ValueItem]]">
+          <template slot="collectionTemplate" data-oj-as="collection">
+              <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                        vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                        columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                        class="oj-select-results" 
+                        columns='  [
+                                {"headerText":"Country","field":"lookup_value_name_dis"}
+                              ]' 
+                        on-oj-row-action="[[collection.handleRowAction]]"
+                        data="[[collection.data]]" selected.row="[[collection.selected]]"
+                        current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+              <template slot="cellTemplate" data-oj-as="cell">
+                <oj-highlight-text text='[[String(cell.data)]]' >
+                </oj-highlight-text>
+            </template>
+            </oj-select-single>          
+        </oj-bind-if>
+
+
+     </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" show-required="true" style="font-weight:bold;">City</oj-label>
+      </td>
+      <td align="left">
+          <!--  -->
+
+        <oj-bind-if test='[[ $variables.postTravelApplHdr.travel_source==="TRAINING" ||$variables.postTravelApplHdr.travel_source==="Secondment_Travel"]]'>
+            <oj-input-text id="oj-input-text-651077415-375" disabled="true"
+              style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+              value="{{ $variables.postTravelAssign.attribute_data.city }}">
+            </oj-input-text>          
+        </oj-bind-if>
+
+        <oj-bind-if test='[[ $variables.postTravelApplHdr.travel_source!=="TRAINING" ]]'>
+          <oj-select-single id="oj-input-text-651077415-6" required="true"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelAssign.attribute_data.city }}" data="[[$variables.getCityListListSDP]]"
+            item-text="city_name">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                            vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                            columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                            class="oj-select-results" 
+                            columns='  [
+                                    {"headerText":"City Name","field":"city_name"}
+                                  ]' 
+                            on-oj-row-action="[[collection.handleRowAction]]"
+                            data="[[collection.data]]" selected.row="[[collection.selected]]"
+                            current-row="{{collection.currentRow}}"></oj-table>
+                  </template>
+                  <template slot="cellTemplate" data-oj-as="cell">
+                    <oj-highlight-text text='[[String(cell.data)]]' >
+                    </oj-highlight-text>
+                </template>
+          </oj-select-single>            
+        </oj-bind-if>
+      </td>
+    </tr>
+<!--Row 3  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" show-required="true" style="font-weight:bold;">Assigment Category</oj-label>
+      </td>
+      <td align="left">
+          <!--  -->
+          <oj-select-single id="oj-input-text-651077415-6" required="true"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelAssign.assigment_category }}" data="[[$variables.getLookupDtlListSDP2]]"
+            item-text="lookup_value_name_dis">
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <br>
+            <!-- <oj-label for="oj-input-text-651077415-3" style="font-weight: bold;">Search</oj-label> -->
+            <!-- <oj-input-text id="oj-input-text-651077415-3" value="{{ $variables.filterObj.searchAssigCategory }}"></oj-input-text> -->
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                      vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                      columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                      class="oj-select-results" 
+                      columns='  [
+                              {"headerText":"Assigment Category","field":"lookup_value_name_dis"}
+                            ]' 
+                      on-oj-row-action="[[collection.handleRowAction]]"
+                      data="[[collection.data]]" selected.row="[[collection.selected]]"
+                      current-row="{{collection.currentRow}}"></oj-table>
+            </template>
+            <template slot="cellTemplate" data-oj-as="cell">
+              <oj-highlight-text text='[[String(cell.data)]]' >
+              </oj-highlight-text>
+          </template>
+        </oj-select-single>
+          <!-- <oj-input-text id="oj-input-text-651077415-6" required="true"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelAssign.assigment_category }}"></oj-input-text> -->
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" show-required="true" style="font-weight:bold;">Assigment Nature</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+          <!--  -->
+          <oj-input-text id="oj-input-text-651077415-6" required="true"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            value="{{ $variables.postTravelAssign.assigment_nature }}"></oj-input-text>
+      </td>
+    </tr>
+<!--Row 4  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-3" style="font-weight:bold;" show-required="true">Hosting Type</oj-label>
+      </td>
+      <td align="left">
+        <!--  -->
+        <oj-combobox-one id="oj-input-text-651077415-3"
+          style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+          value="{{ $variables.postTravelAssign.perdiem_type }}"
+          options="[[$variables.getPerdiemTypeListListSDP]]" options-keys.value="per_diem_type_code"
+          options-keys.label="per_diem_type_disp"
+        ></oj-combobox-one>
+      </td>
+     <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;">Type</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+          <!--  -->
+         <oj-input-text id="oj-input-text-651077415-1"
+           style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" disabled="true"
+           value="{{ $variables.postTravelAssign.destionation_type }}"></oj-input-text>
+      </td>
+   </tr>
+<!--4 a  -->
+    <tr>
+      <td align="right">
+      </td>
+      <td align="left" style="width:2px;">
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+      </td>
+      <td align="left" style="color: red;">
+        <oj-bind-text value="[[ $variables.messageObj.assignmentMsg ]]"></oj-bind-text>
+      </td>
+    </tr>    
+<!--Row 5  -->
+    <tr>
+      <td align="right">
+      </td>
+      <td align="left" style="width:2px;">
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+      </td>
+      <td align="left">
+        <oj-validation-group>
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction5]]"
+          :hidden='[[ $variables.NavigationAssignPage==="CREATE"?false:true ]]' >Save and Add Another</oj-button>
+        <oj-button chroming="solid" 
+        on-oj-action="[[$listeners.buttonAction4]]" >Save</oj-button>
+        <oj-button chroming="solid" 
+        on-oj-action="[[$listeners.buttonAction3]]" >Cancel</oj-button>
+        </oj-validation-group>
+      </td>
+    </tr>    
+</table>
+</oj-form-layout>
+</oj-validation-group>
+</div>
+</oj-dialog>
+
+
+
+<!--Advance form -->
+<div class="oj-flex-item  oj-sm-12 oj-md-12 oj-lg-12  oj-xl-12 oj-panel" hidden="true">
+<oj-validation-group id="travelAdvanceForm">
+<oj-form-layout>
+  <h6 style="color: #740b40; font-size: larger; font-weight: bold;">Advance Details</h6>
+  <table>
+<!--Row 0  -->
+    <!-- <tr>
+      <td align="right"></td>
+      <td align="left" style="width:2px;"></td>
+      <td style="width: 8rem;"></td>
+      <td align="right"></td>
+      <td align="left"></td>
+    </tr> -->
+<!--Row 1  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;">Date From</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+        <oj-input-date id="oj-input-text-651077415-1" style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" 
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+        label-hint="Date From" placeholder="Date From"></oj-input-date>
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" show-required="true" style="font-weight:bold;">Perdiem Type</oj-label>
+      </td>
+      <td align="left">
+          <!--  -->
+          <oj-input-text  id="oj-input-text-651077415-6"  required="true" style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"></oj-input-text>
+      </td>
+    </tr>
+<!--Row 2  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;">Date To</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+        <oj-input-date id="oj-input-text-651077415-1" style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" 
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+        label-hint="Date To" placeholder="Date To"></oj-input-date>
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" show-required="true" style="font-weight:bold;">Perdiem Rate</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+          <!--  -->
+          <oj-input-text  id="oj-input-text-651077415-6"  required="true" style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"></oj-input-text>
+      </td>
+    </tr>
+<!--Row 3  -->    
+  <tr>
+        <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Country</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+          <!--  -->
+         <oj-input-text id="oj-input-text-651077415-1"
+           style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"></oj-input-text>
+      </td>  
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" show-required="true" style="font-weight:bold;">Type</oj-label>
+      </td>
+      <td align="left">
+          <!--  -->
+          <oj-input-text id="oj-input-text-651077415-6" disabled="true" style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"></oj-input-text>
+      </td>
+    </tr>
+<!--Row 4  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;">No of Days</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+          <!--  -->
+         <oj-input-text id="oj-input-text-651077415-1" style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" disabled="true"></oj-input-text>
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-6" style="font-weight:bold;" show-required="true"></oj-label>
+      </td>
+      <td align="left">
+          <!--  -->
+      </td>
+    </tr>
+<!--Row 5  -->
+    <tr>
+      <td align="right">
+      </td>
+      <td align="left" style="width:2px;">
+      </td>
+      <td style="width: 8rem;"></td>
+      <td align="right">
+      </td>
+      <td align="left">
+        <oj-validation-group>
+        <oj-button chroming="solid" >Save and Add Another</oj-button>
+        <oj-button chroming="solid" >Save</oj-button>
+        <oj-button chroming="solid" >Cancel</oj-button>
+        </oj-validation-group>
+      </td>
+    </tr>    
+</table>
+</oj-form-layout>
+</oj-validation-group>
+</div>
+<!--============-->
+
+
+<!--Ticket  -->
+<oj-dialog dialog-title="Travel Ticket Detail" id="TravelTicketDtlPopup" style="width: 602px; height: 300px;">
+<!--Ticket Form  -->
+<div class="oj-flex-item  oj-sm-12 oj-md-12 oj-lg-12  oj-xl-12 oj-panel">
+<oj-validation-group id="travelticketForm">
+<oj-form-layout>
+  <!-- <h6 style="font-size: larger; font-weight: bold;">Ticket Details</h6> -->
+  <table>
+<!--Row 0  -->
+    <!-- <tr>
+      <td align="right"></td>
+      <td align="left" style="width:2px;"></td>
+      <td style="width: 8rem;"></td>
+      <td align="right"></td>
+      <td align="left">
+      </td>
+    </tr> -->
+<!--Row 1  -->
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Ticket Description</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+      <oj-bind-if test='[[ ($variables.postTravelApplHdr.attribute_data.gender==="FEMALE")?true:false ]]' >
+        <oj-select-single id="oj-input-text-651077415-6"
+          style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+          data="[[$variables.getLookupDtlListSDP4]]" item-text="lookup_value_name_dis"
+          disabled="[[ $variables.validateFields ]]"
+          value="{{ $variables.postTravelTicketReq.ticket_type }}">
+        </oj-select-single>
+      </oj-bind-if>
+      <oj-bind-if test='[[ ($variables.postTravelApplHdr.attribute_data.gender==="MALE")?true:false ]]'>
+        <oj-select-single id="oj-input-text-651077415-6"
+          style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+          disabled="[[ $variables.validateFields ]]"
+          value="{{ $variables.postTravelTicketReq.ticket_type }}" data="[[$variables.getLookupDtlListSDP5]]"
+          item-text="lookup_value_name_dis">
+        </oj-select-single>
+      </oj-bind-if>
+      </td>
+      <!-- <td style="width: 8rem;"></td> -->
+    </tr>
+    <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Travel Destination</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+          <oj-input-text id="oj-input-text-651077415-6"
+            disabled="[[ $variables.validateFields ]]"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+            value="{{ $variables.postTravelTicketReq.destination }}"
+            ></oj-input-text>
+          <oj-bind-text style="color: #3b50f7; margin-left: 1%; font-size: 10px;">Please enter the travel sectors, ex. Doha-Dubai-Doha</oj-bind-text>  
+      </td>
+    </tr>
+        <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Ticket Class</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+          <!-- <oj-input-text id="oj-input-text-651077415-6"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            disabled='[[ ($variables.postTravelApplHdr.user_group==="QIA_ADM_TEAM_TR")?false:true ]]'
+            value="{{ $variables.postTravelTicketReq.ticket_class }}" required="true"
+            ></oj-input-text> -->
+          <oj-combobox-one id="oj-input-text-651077415-6"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            disabled='[[ ($variables.postTravelApplHdr.user_group==="QIA_ADM_TEAM_TR")?false:true ]]'
+            value="{{ $variables.postTravelTicketReq.ticket_class }}" required="true"
+            options="[[$variables.getLookupDtlListSDP6]]" options-keys.value="lookup_value_name"
+            options-keys.label="lookup_value_name">
+          </oj-combobox-one>
+      </td>
+    </tr>
+        <tr>
+      <td align="right">
+          <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">Travel Amount</oj-label>
+      </td>
+      <td align="left" style="width:2px;">
+        <!--  -->
+        
+          <oj-input-number id="oj-input-text-651077415-6"
+            style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+            disabled='[[ ($variables.postTravelApplHdr.user_group==="QIA_ADM_TEAM_TR")?false:true ]]'
+            value="{{ $variables.postTravelTicketReq.ticket_rate }}" step="0" min="1" required="true"
+            ></oj-input-number>
+      </td>
+    </tr>
+<!--Row 5  -->
+    <tr>
+      <td align="right">
+      </td>
+      <td align="left">
+        <oj-validation-group>
+        <oj-button chroming="solid" 
+        :hidden='[[ $variables.NavigationTicketPage==="CREATE"?false:true ]]'
+        on-oj-action="[[$listeners.buttonAction10]]" >Save and Add Another</oj-button>
+        <oj-button chroming="solid" 
+        disabled="[[ ($variables.postTravelApplHdr.application_status==='Approved')?true:false ]]"
+        on-oj-action="[[$listeners.buttonAction9]]" >Save</oj-button>
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction8]]" >Cancel</oj-button>
+        </oj-validation-group>
+      </td>
+    </tr>    
+</table>
+</oj-form-layout>
+</oj-validation-group>
+</div>
+</oj-dialog>
+
+<!--============-->
+
+<oj-dialog style="display:none; width: 550px; height: 380px;" dialog-title="Attachment" id="attachmentPopUp">
+<oj-validation-group id="travelAttachForm">
+<oj-form-layout label-edge="inside" style="margin-left: 20px;">
+  <oj-bind-if test="true">
+    <oj-label for="oj-file-picker–0001" style="font-weight: bold;" show-required="true">Upload</oj-label>
+    <oj-file-picker id="oj-file-picker–0001" selection-mode="single"
+      on-oj-select="[[$listeners.ojFilePicker0001Select]]"></oj-file-picker>
+  </oj-bind-if> 
+    <oj-bind-if test="true">
+      <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">File Name</oj-label>
+      <oj-input-text id="oj-input-text-651077415-6" disabled="true"
+        style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+        value="{{ $variables.attachmentObj.document_name }}"></oj-input-text>
+  </oj-bind-if> 
+      <oj-bind-if test="true">
+      <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">File Content</oj-label>
+      <oj-input-text id="oj-input-text-651077415-6" disabled="true"
+        style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;" required="true"
+        value="{{ $variables.attachmentObj.document_type }}"></oj-input-text>
+  </oj-bind-if>   
+  <oj-validation-group>
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction15]]">Save and Add Another</oj-button>
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction12]]"  >Save</oj-button>
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction11]]"  >Cancel</oj-button>
+        </oj-validation-group>
+</oj-form-layout>
+</oj-validation-group>
+</oj-dialog>
+
+<!--Attachment  -->
+<!--============-->
+<!--  -->
+<br/>
+<br/>
+<div class="demo-tabbar-container oj-panel">
+                <oj-tab-bar id="hnavlist" edge="top" selection="{{ $variables.selectedTab }}">
+                  <ul>
+                    <li id="detail-tab1">
+                      <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="detail-tab-panel" id="detail-tab">Travel Assignment Detail</a>
+                    </li>
+                    <li id="attachment-tab2">
+                      <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="attachment-tab-panel" id="attachment-tab">Attachment Detail</a>
+                    </li>
+                    <li id="approval-tab3">
+                      <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="approval-tab-panel" id="approval-tab">Approval History</a>
+                    </li>
+                  </ul>
+                </oj-tab-bar>
+              </div>
+
+<div class="demo-switcher-container oj-panel">
+                <oj-switcher value="[[ $variables.selectedTab ]]">
+                  <div slot="detail-tab1" id="detail-tab-panel" role="tabpanel" aria-labelledby="detail-tab">
+                    <div class="demo-tab-content">
+<!--Line  -->
+<!--============-->
+<!-- <h6 style="font-size: larger; font-weight: bold;">Travel Assignment Detail</h6> -->
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+  <div id="mainContent">
+    <oj-bind-if test='[[ $variables.postTravelApplHdr.travel_source!=="TRAINING" ]]'>
+      <oj-button  chroming="half" on-oj-action="[[$listeners.buttonAction2]]" 
+        disabled="[[ $variables.validateFields ]]">
+        <img slot="startIcon" :src="[[ $application.path + 'resources/images/add.png' ]]">Add
+      </oj-button>      
+    </oj-bind-if>  
+  <!--  -->
+    <oj-button chroming="half"
+      disabled="[[ $variables.validateFields ]]"
+      on-oj-action="[[$listeners.buttonAction33]]">
+      <img slot="startIcon" :src="[[ $application.path + 'resources/images/refresh_ena.png' ]]">Refresh</oj-button>
+  <!-- oj Table -->
+  <oj-table scroll-policy="loadMoreOnScroll" 
+        class="oj-sm-width-full oj-bg-body oj-search-table"
+        columns='[
+        {"headerText":"Date From","field":"date_from","template":"datefrom"},
+        {"headerText":"Date To","field":"date_to","template":"dateto"},
+        {"headerText":"Country","field":"destination"},
+        {"headerText":"City","field":"city"},
+        {"headerText":"Type","field":"destionation_type"},
+        {"headerText":"Assigment Category","field":"assigment_category"},
+        {"headerText":"Assigment Nature","field":"assigment_nature"},
+        {"headerText":"Hosting Type","field":"perdiem_type_dis"},
+        {"headerText":"Delete","field":"","template":"delete"},
+        {"headerText":"Update","field":"","template":"edit"},
+        {"headerText":"Duplicate","field":"","template":"duplicate"}
+        ]'
+        selection-mode.row="single" edit-mode="rowEdit" data="[[ $variables.pagingTravelAssign ]]"
+        id="searchInvoiceTable" display="grid">
+
+        <!-- edit -->
+        <template slot="edit">
+            <oj-bind-if test="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.user_group==='QIA_ADM_TEAM_TR') ?true:false ]]">
+              <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction6]]">
+                <img slot="startIcon" :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">Button
+              </oj-button>            
+            </oj-bind-if>
+              <oj-bind-if test="[[ ($variables.taskId!=null && $variables.postTravelApplHdr.user_group==='QIA_ADM_TEAM_TR') ?false:true ]]">
+                  <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?false:true ]]">
+                      <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction6]]">
+                      <img slot="startIcon" :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">Button
+                      </oj-button>
+                  </oj-bind-if> 
+                  <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?true:false ]]">
+                  <oj-button display="icons" chroming="borderless">
+                  <img slot="startIcon" :src="[[ $application.path + 'resources/images/submitrequest_rtl_dis.png' ]]">Button
+                  </oj-button>
+              </oj-bind-if>
+              </oj-bind-if>
+        </template>
+
+        <template slot="datefrom">
+          <oj-input-date class="sampletable" value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+
+        <template slot="dateto">
+          <oj-input-date class="sampletable" value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+
+       <template slot="delete"> 
+          <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?false:true ]]">
+            <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction28]]">
+              <img :src="[[ $application.path + 'resources/images/delete_ena.png' ]]" slot="startIcon">
+            </oj-button>
+          </oj-bind-if>
+          <!--Delete Disable -->
+          <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?true:false ]]">
+            <oj-button display="icons" chroming="borderless">
+              <img :src="[[ $application.path + 'resources/images/delete_dis.png' ]]" slot="startIcon">
+            </oj-button>
+          </oj-bind-if>
+        </template>
+
+        <template slot="duplicate">
+            <oj-bind-if test='[[ ($variables.validateFields==="true")?true:false ]]'>
+              <oj-button display="icons" chroming="borderless">
+                <img slot="startIcon" :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">Button
+              </oj-button>            
+            </oj-bind-if>
+              <oj-bind-if test='[[ ($variables.validateFields==="true")?false:true ]]'>
+                  <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?false:true ]]">
+                      <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction34]]">
+                      <img slot="startIcon" :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">Button
+                      </oj-button>
+                  </oj-bind-if> 
+                  <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?true:false ]]">
+                  <oj-button display="icons" chroming="borderless">
+                  <img slot="startIcon" :src="[[ $application.path + 'resources/images/submitrequest_rtl_dis.png' ]]">Button
+                  </oj-button>
+              </oj-bind-if>
+              </oj-bind-if>
+        </template>
+
+      </oj-table>
+        <oj-paging-control id="pagingdtl" class="oj-sm-width-full" data="[[ $variables.pagingTravelAssign ]]" page-size="8">
+        </oj-paging-control>
+    </div>
+  </div>
+</div>
+<!--Advance  -->
+<h6 style="color: #740b40; font-size: larger; font-weight: bold;">Travel Advance Detail</h6>
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+  <div id="mainContent">
+  <!-- <oj-button   chroming="solid">Create</oj-button> -->
+    <oj-button  chroming="half" hidden="true" >
+      <img slot="startIcon" :src="[[ $application.path + 'resources/images/add.png' ]]">Create
+    </oj-button>
+  <!-- oj Table -->
+  <oj-table scroll-policy="loadMoreOnScroll" 
+        class="oj-sm-width-full oj-bg-body oj-search-table"
+        columns='[
+        {"headerText":"Date From","field":"date_from","template":"datefrom"},
+        {"headerText":"Date To","field":"date_to","template":"dateto"},
+        {"headerText":"Country","field":"destination"},
+        {"headerText":"Type","field":"destionation_type"},
+        {"headerText":"No Of Days","field":"no_of_days"},
+        {"headerText":"Perdiem Type","field":"perdiem_type_dis"},
+        {"headerText":"Perdiem Rate","field":"perdiem_rate","template":"rateAmt"},
+        {"headerText":"Amount","field":"line_amount","template":"lnsAmt"}
+        ]'
+        selection-mode.row="single" edit-mode="rowEdit" data="[[ $variables.pagingTravelAdvance ]]"
+        id="searchInvoiceTable" display="grid">
+
+        <!-- edit ,{"headerText":"Update","field":"","template":"edit"} -->
+        <template slot="edit">
+          <oj-button display="icons" chroming="borderless">Button
+          <span class="vb-icon vb-icon-paper-lines" slot="startIcon">
+          </oj-button>
+        </template>
+
+        <template slot="datefrom">
+          <oj-input-date class="sampletable" value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+
+        <template slot="dateto">
+          <oj-input-date class="sampletable" value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+        
+        <template slot="rateAmt">
+          <oj-input-number 
+          style="text-align: left;"
+          class="sampletable" value="[[$current.data]]" readonly="true" step="0" placeholder="0.00"
+            converter='{"options":{"decimalFormat":"standard","minimumIntegerDigits":2,"minimumFractionDigits":2,"maximumFractionDigits":2},"type":"number"}'
+            ></oj-input-number>
+        </template>
+
+        <template slot="lnsAmt">
+          <oj-input-number 
+          style="text-align: left;"
+          class="sampletable" value="[[$current.data]]" readonly="true" step="0" placeholder="0.00"
+            converter='{"options":{"decimalFormat":"standard","minimumIntegerDigits":2,"minimumFractionDigits":2,"maximumFractionDigits":2},"type":"number"}'
+            ></oj-input-number>
+        </template>
+
+      </oj-table>
+        <oj-paging-control id="pagingdtl" class="oj-sm-width-full" data="[[ $variables.pagingTravelAdvance ]]" page-size="8">
+        </oj-paging-control>
+    </div>
+  </div>
+</div>
+<!--  -->
+<oj-bind-if test="false">
+<!--Ticket  -->
+<h6 style="color: #740b40; font-size: larger; font-weight: bold;">Travel Ticket Detail</h6>
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+  <div id="mainContent">
+  <!-- <oj-button   chroming="solid">Create</oj-button> -->
+  <oj-bind-if test="false">
+    <oj-button  chroming="half" on-oj-action="[[$listeners.buttonAction7]]" 
+    disabled="[[ $variables.validateFields ]]">
+  <img slot="startIcon" :src="[[ $application.path + 'resources/images/add.png' ]]">Add
+    </oj-button>
+  </oj-bind-if>  
+  <!-- oj Table -->
+  <oj-table scroll-policy="loadMoreOnScroll" 
+        class="oj-sm-width-full oj-bg-body oj-search-table"
+        columns='[
+        {"headerText":"Ticket Type","field":"ticket_type"},
+        {"headerText":"Travel Destination","field":"destination"},
+        {"headerText":"Travel Class","field":"ticket_class"},
+        {"headerText":"Travel Amount","field":"ticket_rate"},
+        {"headerText":"Update","field":"","template":"edit"}
+        ]'
+        selection-mode.row="single" edit-mode="rowEdit" data="[[ $variables.pagingTicket ]]"
+        id="searchInvoiceTable" display="grid">
+
+        <!-- edit -->
+        <template slot="edit">
+          <oj-button display="icons" chroming="borderless" 
+          on-oj-action="[[$listeners.buttonAction16]]">
+            <img slot="startIcon" :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">Button
+          </oj-button>
+        </template>
+      </oj-table>
+        <oj-paging-control id="pagingdtl" class="oj-sm-width-full" data="[[ $variables.pagingTicket ]]" page-size="8">
+        </oj-paging-control>
+    </div>
+  </div>
+</div>
+</oj-bind-if> 
+<!--  -->
+
+<oj-form-layout label-edge="start" style="margin-left: 60%;">
+<!--  -->
+        <oj-input-number label-hint="Advance Amount :" placeholder="0.00" 
+          style="text-align: end; font-size: medium; width: 15rem; border: solid 1px #7F949F; font-size: 14px; border-radius:7px;"
+          value="{{ $variables.postTravelApplHdr.advance_amount }}" min="0" virtual-keyboard="number"
+          readonly="true"
+          converter='{"options":{"decimalFormat":"standard","minimumIntegerDigits":2,"minimumFractionDigits":2,"maximumFractionDigits":2},"type":"number"}' step="0">
+        </oj-input-number>
+<!--  -->
+        <oj-input-number label-hint="Ticket Amount :" placeholder="0.00"
+          style="text-align: end; font-size: medium; width: 15rem; border: solid 1px #7F949F; font-size: 14px; border-radius:7px;"
+          value="{{ $variables.postTravelApplHdr.ticket_amount }}" min="0" virtual-keyboard="number"
+          readonly="true"
+          converter='{"options":{"decimalFormat":"standard","minimumIntegerDigits":2,"minimumFractionDigits":2,"maximumFractionDigits":2},"type":"number"}' step="0">
+        </oj-input-number>
+<!--  -->
+        <oj-input-number label-hint="Net Amount :" placeholder="0.00"
+          style="text-align: end; font-size: medium; width: 15rem; border: solid 1px #7F949F; font-size: 14px; border-radius:7px;"
+          value="{{ $variables.postTravelApplHdr.net_amount }}" min="0" virtual-keyboard="number"
+          readonly="true"
+          converter='{"options":{"decimalFormat":"standard","minimumIntegerDigits":2,"minimumFractionDigits":2,"maximumFractionDigits":2},"type":"number"}' step="0">
+        </oj-input-number>
+<!--  -->
+
+</oj-form-layout>
+
+                    </div>
+                  </div>
+<!-------------------------------  -->
+<div slot="attachment-tab2" id="attachment-tab-panel" role="tabpanel" aria-labelledby="attachment-tab">
+  <div class="demo-tab-content">
+  <!-- <h6 style="font-size: larger; font-weight: bold;">Attachment Detail</h6> -->
+  <div id="sampleDemo" style="" class="demo-padding demo-container">
+    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <div id="mainContent">
+    <!-- <oj-button   chroming="solid">Create</oj-button> -->
+      <oj-button  chroming="half" on-oj-action="[[$listeners.buttonAction14]]" 
+      disabled="[[ $variables.validateFields ]]">
+        <img slot="startIcon" :src="[[ $application.path + 'resources/images/add.png' ]]">Add Attachment
+      </oj-button>
+    <!-- oj Table -->
+    <oj-table scroll-policy="loadMoreOnScroll" 
+          class="oj-sm-width-full oj-bg-body oj-search-table"
+          columns='[
+          {"headerText":"Document Name","field":"document_name"},
+          {"headerText":"Document Type","field":"document_type"},
+          {"headerText":"Downlaod","field":"","template":"download"},
+          {"headerText":"Created By","field":"created_by"},
+          {"headerText":"Delete","field":"","template":"downloadDelete"}
+          ]'
+          selection-mode.row="single" edit-mode="rowEdit" data="[[ $variables.attachmentVar ]]"
+          id="attachmentTable" display="grid">
+
+          <template slot="download">
+            <div>
+              <oj-bind-if test='true'>
+                <div class="oj-flex">
+                  <oj-label for="oj-input-text--706204795-1" class="oj-flex-item oj-sm-12 oj-md-2"></oj-label>
+                  <!-- <a target="_blank"><oj-bind-text value="[[ $current.data ]]"></oj-bind-text></a> -->
+                  <oj-button on-oj-action="[[$listeners.buttonAction19]]" chroming="borderless">
+                  <img slot="startIcon" :src="[[ $application.path + 'resources/images/downgreenplus_status.png' ]]">
+                  </oj-button>
+                </div>
+              </oj-bind-if>
+            </div>
+          </template>
+
+          <!--Delete  -->
+          <template slot="downloadDelete">
+            <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?false:true ]]">
+                <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction13]]">
+                  <img :src="[[ $application.path + 'resources/images/delete_ena.png' ]]" slot="startIcon">
+                </oj-button>
+            </oj-bind-if>
+
+            <oj-bind-if test="[[ (($variables.postTravelApplHdr.application_status==='Pending'||$variables.postTravelApplHdr.application_status==='Approved'))?true:false ]]">
+                <oj-button display="icons" chroming="borderless">
+                  <img :src="[[ $application.path + 'resources/images/delete_dis.png' ]]" slot="startIcon">
+                </oj-button>
+            </oj-bind-if>
+
+
+          </template>
+
+
+    </oj-table>
+          <oj-paging-control id="pageattach" class="oj-sm-width-full" data="[[ $variables.attachmentVar ]]" page-size="8">
+          </oj-paging-control>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<!--  -->
+<div slot="approval-tab3" id="approval-tab-panel" role="tabpanel" aria-labelledby="approval-tab">
+<div class="demo-tab-content">
+<!-- <h1 style="font-size: larger; font-weight: bold;">Approval Action History</h1> -->
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction20]]">Refresh<img slot="startIcon" 
+    :src="[[ $application.path + 'resources/images/refresh_ena.png' ]]">
+    </oj-button>
+    <div id="mainContent">
+      <!-- oj Table -->
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+        columns='[    {        "headerText": "Level",        "field": "action_level"    },    {        "headerText": "Category",        "field": "category"    },    {        "headerText": "Approval Group",        "field": "group_name"    },    {        "headerText": "Submission Date",        "field": "submission_date",        "template": "submissionDate"    },    {        "headerText": "Action",        "field": "action_code"    },    {        "headerText": "Action Date",        "field": "action_date",        "template": "actionDate"    },    {        "headerText": "Comments",        "field": "action_comments"    }]'
+        selection-mode.row="single" edit-mode="rowEdit" data="[[ $variables.approvalHistory]]" id="searchTable"
+        display="grid" horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+        <!--submissionDate  -->
+        <template slot="submissionDate">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"MM/dd/yyyy hh:mm:ss"}}'></oj-input-date>
+        </template>
+        <!--actionDate  -->
+        <template slot="actionDate">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"MM/dd/yyyy hh:mm:ss"}}'></oj-input-date>
+        </template> 
+      <oj-paging-control slot="bottom" id="paging" class="oj-sm-width-full" data="[[ $variables.approvalHistory ]]" page-size="17">
+      </oj-paging-control>
+      </oj-table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!--  -->
+</oj-switcher>
+</div>
+
+
+<oj-dialog dialog-title="Approve" id="approvePopUp">
+<div>
+  <oj-label for="app-1"></oj-label>
+  <oj-text-area id="app-1" label-hint="Comments" placeholder="Comments" value="{{ $variables.responseComment }}" ></oj-text-area>
+<oj-validation-group>
+<oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction23]]" >Submit</oj-button>
+<oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction24]]" >Cancel</oj-button>
+</oj-validation-group>
+</div>
+</oj-dialog>
+<oj-dialog dialog-title="Reject" id="rejectPopUp">
+<div>
+  <oj-label for="app-1"></oj-label>
+  <oj-text-area id="app-1" label-hint="Comments" placeholder="Comments" value="{{ $variables.responseComment }}"> </oj-text-area>
+<oj-validation-group>
+<oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction25]]" >Submit</oj-button>
+<oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction26]]"  >Cancel</oj-button>
+</oj-validation-group>
+</div>
+</oj-dialog>
+
+<oj-dialog dialog-title="In-Progress" id="loadingplzwait" style="width: 336px; height: 384px;">
+<div class="oj-flex">
+  <div class="oj-flex-item oj-sm-12 oj-md-12">
+    <img :src="[[ $application.path + 'resources/images/loading.gif' ]]" width="311px"
+      height="300px">
+  </div>
+</div>
+</oj-dialog>
+
+
+
+
+
+      <!---Reassign popup-->
+<oj-dialog dialog-title="Re-Assign" id="reassignpopup" style="width: 480px; height: 300px;">
+<div>
+  <oj-label for="oj-select-single-1262" >From Approver</oj-label>
+  <oj-select-single 
+  id="oj-select-single-1262"
+  data="[[$variables.getReAssignEmplistListSDP2]]" item-text="response_full_name"
+    label-hint="[[$application.translations.app.FromApprover]]"
+    value="{{ $variables.reassignObjApi.pfrom_response_user_id }}" required="true">
+  </oj-select-single>
+<!-- Employee  -->
+        <oj-label for="oj-select-single-28918854-1" >Employee Name</oj-label>
+        <oj-select-single id="oj-select-single-28918854-1" required="true" item-text="full_name"
+          label-hint="Employee List" value="{{ $variables.reassignobj.person_id }}"
+          data="[[$variables.getReassignListSDP]]"
+          on-value-item-changed="[[$listeners.ojSelectSingle289188541ValueItem]]">
+        <template slot="collectionTemplate" data-oj-as="collection">
+          <br>
+          <!-- <oj-input-text style="background-color: #740b40; color: white;"
+            id="oj-input-text-651077415-1" label-hint="Search" placeholder="Search"
+            value="{{ $variables.filter.employeeSearch }}"></oj-input-text> -->
+          <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                    class="oj-select-results" 
+                    columns='  [
+                            {"headerText":"Person Number","field":"person_number"},
+                            {"headerText":"Employee Name","field":"full_name"},
+                            {"headerText":"E-Mail","field":"email_address"}
+                          ]' 
+                    on-oj-row-action="[[collection.handleRowAction]]"
+                    data="[[collection.data]]" selected.row="[[collection.selected]]"
+                    current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+          <template slot="cellTemplate" data-oj-as="cell">
+            <oj-highlight-text text='[[String(cell.data)]]' >
+            </oj-highlight-text>
+          </template>
+          </oj-select-single>
+          <oj-label for="app-1"></oj-label>
+          <oj-text-area id="app-1" label-hint="Comments" placeholder="Comments" value="{{ $variables.reassignobj.comment }}"  ></oj-text-area>
+	  <oj-validation-group>
+<oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction32]]">Ok</oj-button>
+<oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction31]]">Cancel</oj-button>
+</oj-validation-group>
+</oj-dialog>
