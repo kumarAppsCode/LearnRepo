@@ -1,0 +1,194 @@
+<h1 id="h4" style="font-size: larger; font-weight: bold;color:#740b40">Delegation</h1>
+<!-- <div style="display:flex;justify-content:flex-end;">
+      <oj-form-layout columns="2" label-edge="start" direction="column" max-columns="2" label-width="100%">
+        <oj-button label="[[$application.translations.app.search]]" style="margin-left:0.5%;margin-right:0.5%"
+          chroming="outlined" class="oj-button-sm oj-button-full-width">
+        </oj-button>
+        <oj-button label="[[$application.translations.app.Reset]]" style="margin-left:0.5%;margin-right:0.5%"
+          chroming="outlined" class="oj-button-sm oj-button-full-width">
+        </oj-button>
+      </oj-form-layout>
+</div> -->
+<br>
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+<div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+<div id="mainContent">
+  <oj-button chroming="outlined" class="oj-button-sm" label="[[$application.translations.app.Create]]"
+    on-oj-action="[[$listeners.buttonAction]]">
+  </oj-button>
+  <oj-button chroming="outlined" class="oj-button-sm" label="[[$application.translations.app.save]]"
+    on-oj-action="[[$listeners.buttonAction2]]">
+  </oj-button>
+<oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+  data="[[ $variables.postDelegationADP ]]" horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+  selection-mode.row="single" selection-mode.column="none" class="oj-sm-width-full"
+  columns='[
+  {"headerText":"rownum","field":"rownum"},
+  {"headerText":"Level Id","field":"level_id","template":"level_id","sortable":"disabled"},
+  {"headerText":"Object Type","field":"object_type","template":"object_type","sortable":"disabled"},
+  {"headerText":"Approver","field":"approver","template":"approver","sortable":"disabled"},
+  {"headerText":"Approver Level","field":"approver_level","template":"approver_level","sortable":"disabled"},
+  {"headerText":"Start Date","field":"start_date","template":"start_date","sortable":"disabled"},
+  {"headerText":"End Date","field":"end_date","template":"end_date","sortable":"disabled"},
+  {"headerText":"Delegate Start Date","field":"delegate_start_date","template":"delegate_start_date","sortable":"disabled"},
+  {"headerText":"Delgate End Date","field":"delgate_end_date","template":"delgate_end_date","sortable":"disabled"},
+  {"headerText":"Delegate User Id","field":"delegate_user_id","template":"delegate_user_id","sortable":"delegate_user_id"}
+  ]'
+  edit-mode="rowEdit" on-oj-before-row-edit="[[$listeners.tableBeforeRowEdit]]"
+  on-oj-before-row-edit-end="[[$listeners.tableBeforeRowEditEnd]]">
+
+<template slot="level_id">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+          <oj-input-number 
+            value="{{ $current.row.level_id}}" 
+            readonly="true">
+          </oj-input-number>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+          <oj-input-number 
+            :id="[['level_id'+$current.index]]" 
+            value="{{ $variables.currentRow.level_id }}" required="true">
+          </oj-input-number>
+      </oj-bind-if>
+</template>
+
+<template slot="object_type">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+          <oj-input-text 
+            value="{{ $current.row.object_type}}" 
+            readonly="true">
+          </oj-input-text>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+          <oj-input-text 
+            :id="[['object_type'+$current.index]]" 
+            value="{{ $variables.currentRow.object_type}}" >
+          </oj-input-text>
+      </oj-bind-if>
+</template>
+
+<template slot="approver">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-text value="{{ $current.row.approver}}" readonly="true"></oj-input-text>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-text 
+          :id="[['approver'+$current.index]]" 
+          value="{{ $variables.currentRow.approver}}">
+        </oj-input-text>
+      </oj-bind-if>
+</template>
+
+<template slot="approver_level">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-number 
+          value="{{ $current.row.approver_level}}" readonly="true">
+        </oj-input-number>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-number 
+          :id="[['approver_level'+$current.index]]" 
+          value="{{ $variables.currentRow.approver_level}}">
+        </oj-input-number>
+      </oj-bind-if>
+</template>
+
+<template slot="start_date">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-date
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          readonly="true"
+          value="{{ $current.row.start_date}}">
+        </oj-input-date>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-date
+          :id="[['start_date'+$current.index]]"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.currentRow.start_date}}">
+        </oj-input-date>
+      </oj-bind-if>
+</template>
+
+<template slot="end_date">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-date
+          readonly="true"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $current.row.end_date}}">
+        </oj-input-date>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-date
+          :id="[['end_date'+$current.index]]"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.currentRow.end_date}}"
+          min="[[ $variables.currentRow.start_date ]]"
+          >
+        </oj-input-date>
+      </oj-bind-if>
+</template>
+
+<template slot="delegate_start_date">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-date
+          readonly="true"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $current.row.delegate_start_date}}">
+        </oj-input-date>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-date
+          :id="[['delegate_start_date'+$current.index]]"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.currentRow.delegate_start_date}}">
+        </oj-input-date>
+      </oj-bind-if>
+</template>
+
+<template slot="delgate_end_date">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-date
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $current.row.delgate_end_date}}" readonly="true">
+        </oj-input-date>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-date
+          :id="[['delgate_end_date'+$current.index]]"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.currentRow.delgate_end_date}}"
+          min="[[ $variables.currentRow.delegate_start_date ]]"
+          >
+        </oj-input-date>
+      </oj-bind-if>
+</template>
+
+<template slot="delegate_user_id">
+      <oj-bind-if test='[[ $current.mode=="navigation" ]]'>
+        <oj-input-text
+          value="{{ $current.row.delegate_user_id}}" readonly="true">
+        </oj-input-text>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $current.mode=="edit" ]]'>
+        <oj-input-text
+          :id="[['delegate_user_id'+$current.index]]"
+          value="{{ $variables.currentRow.delegate_user_id}}">
+        </oj-input-text>
+      </oj-bind-if>
+</template>
+
+</oj-table>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+<oj-dialog dialog-title="Please wait..." id="progressMsg" class="wd200">
+  <div slot="body">
+    <div class="oj-flex full_stretch lg_button_width">
+      <oj-progress-bar class="full_stretch oj-flex-item oj-sm-12 oj-md-12" value="-1"></oj-progress-bar>
+    </div>
+  </div>
+</oj-dialog>
