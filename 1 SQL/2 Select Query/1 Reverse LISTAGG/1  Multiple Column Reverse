@@ -1,0 +1,20 @@
+WITH approver_list AS (
+SELECT 
+APPROVER_USER_ID
+,APPROVER_EMAIL_ID
+,APPROVAL_PCS_INSTANCE_NUM
+FROM fs_****_action_t 
+where 
+APPROVAL_PCS_INSTANCE_NUM='8ae3fec7-********'
+)
+SELECT
+    regexp_substr(APPROVER_USER_ID, '[^,]+', 1, level) as APPROVER_USER_ID,
+    regexp_substr(APPROVER_EMAIL_ID, '[^,]+', 1, level) as APPROVER_EMAIL_ID,
+    APPROVAL_PCS_INSTANCE_NUM
+FROM
+    approver_list
+CONNECT BY
+    level <= length(regexp_replace(APPROVER_USER_ID, '[^,]+')) + 1
+    and level <= length(regexp_replace(APPROVER_EMAIL_ID, '[^,]+')) + 1
+
+    
