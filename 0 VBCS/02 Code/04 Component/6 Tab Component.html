@@ -1,0 +1,40 @@
+        <div class="demo-tabbar-container oj-panel">
+          <oj-tab-bar id="hnavlist" edge="top" selection="{{ $variables.selectedTab }}" >
+            <ul>
+              <li id="matchschedule">
+                <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="worldcupmatches" id="match-tab">Approval History</a>
+              </li>
+              <li id="playerstowatch">
+                <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="playerstowatch" id="players-tab">Require More Information</a>
+              </li>
+            </ul>
+          </oj-tab-bar>
+        </div>
+
+=======================================
+                <div class="demo-switcher-container oj-panel">
+          <oj-switcher value="[[ $variables.selectedTab ]]">
+            <!-- <tab-1> -->
+            <div slot="matchschedule" id="match_schedules" role="tabpanel1" aria-labelledby="matchschedule" style="height: 30rem;">
+              <div class="demo-content">
+                <div>
+                  <oj-button label="[[$application.translations.app.Refresh]]" chroming="borderless" style="height:2rem;">
+                    <img slot="startIcon" :src="[[ $flow.path + 'resources/images/1.png' ]]">
+                  </oj-button>
+                </div>
+                <!-- <Table 1> -->
+              </div>
+            </div>
+            <!-- <tab-2> -->
+            <div slot="playerstowatch" id="playertab" role="tabpanel1" aria-labelledby="playerstowatch" style="height: 30rem;">
+              <div class="demo-content">
+                <div>
+                  <oj-button label="[[$application.translations.app.Refresh]]" chroming="borderless" style="height:2rem;">
+                    <img slot="startIcon" :src="[[ $flow.path + 'resources/images/1.png' ]]">
+                  </oj-button>
+                </div>
+                <!-- <Table 2> -->
+              </div>
+            </div>
+          </oj-switcher>
+        </div>
