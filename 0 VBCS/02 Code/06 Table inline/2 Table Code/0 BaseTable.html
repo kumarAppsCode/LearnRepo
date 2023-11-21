@@ -1,0 +1,188 @@
+[
+    {
+        "headerText": "Sphere",
+        "field": "sphere",
+        "width": 200,
+        "sortable": "disabled"
+    },
+    {
+        "headerText": "Cylinder",
+        "field": "cylinder",
+        "width": 200,
+        "sortable": "disabled"
+    },
+    {
+        "headerText": "Sales Category",
+        "field": "sales_category",
+        "width": 200,
+        "sortable": "disabled"
+    },
+    {
+        "headerText": "Customer",
+        "field": "customer",
+        "width": 250,
+        "sortable": "disabled"
+    },
+    {
+        "headerText": "Price",
+        "field": "price",
+        "width": 300
+    }
+]
+
+
+
+
+<!-- Mobile only header and page title -->
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-md-hide">
+  <div role="image" class="vb-web-applayout-header-image-stripe"></div>
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button will render only if we have a drawer -->
+    <oj-bind-if test="[[ document.querySelector('oj-vb-fragment[name=\'shell-drawer\']') ]]">
+      <div class="oj-flex-bar">
+        <oj-button on-oj-action="[[$listeners.toggleDrawer]]" chroming="borderless"
+                   display="icons">
+          <span slot="startIcon" class="oj-ux-ico-menu"></span>
+          <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <!-- Page specific title and actions with overflow menu displayed -->
+    <div class="oj-sm-margin-2x-horizontal oj-sm-align-items-center oj-md-hide oj-sm-flex-1">
+      <div class="vb-content-header oj-flex oj-sm-flex-items-initial oj-sm-align-items-center">
+        <div class="oj-flex-item">
+          <div class="oj-typography-body-lg oj-typography-semi-bold">
+            <oj-bind-text value="sourcedata page"></oj-bind-text>
+          </div>
+          <!-- Add Page specific actions etc -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page specific title and actions for desktop formfactor -->
+<div class="oj-lg-down-web-padding-vertical">
+  <header style="background-color: white;" role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-sm-only-hide fixed-header">
+    <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+      <div class="oj-flex-bar-middle oj-sm-margin-4x-horizontal oj-sm-align-items-center">
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="">
+          <oj-bind-text value='[[ "Batch Number BAT" +" - " +$variables.pbatchid ]]'></oj-bind-text>
+        </h1>
+      </div>
+      <!-- tool bar start -->
+      <oj-toolbar>
+   
+    <!-- APPROVED -->
+    <!-- <oj-bind-if -->
+      <!-- test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approved"||$variables.postPkgTravelHeaderDetails.approval_status==="Pending")?true:false ]]'> -->
+      <!--approved  -->
+        <oj-bind-for-each data="[[ $variables.ToolApprovedADP ]]">
+          <template>
+              <oj-button style="margin-right:5px;" chroming="outlined" >
+                <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+              </oj-button>
+          </template>
+        </oj-bind-for-each>
+</oj-toolbar>
+      <!-- tool bar end -->
+      <!-- </div> -->
+    </div>
+  </header>
+</div>
+<br>
+<br>
+<br>
+<div class="oj-panel oj-panel-shadow-md oj-selected">
+<oj-form-layout label-edge="start" columns="2" direction="column" label-width="43%">
+      <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.BatchNumber]]"
+          value="{{ $variables.postBatchObj.batch_number }}" disabled="true">
+      </oj-input-text>
+      <oj-input-date label-hint="[[$application.translations.app.Date]]" style="width: 16rem;"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+        value="{{ $variables.postBatchObj.uploaded_date }}"
+          ></oj-input-date>
+    </oj-form-layout>
+    </div>
+    <br>
+<div class="oj-panel oj-panel-shadow-md oj-selected">
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <div id="mainContent">
+      <!-- :hidden='[[ ($application.variables.appType=="EMP")?false:true ]]' -->
+      <!-- Button Self -->
+     
+      <!-- table start -->
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+        selection-mode.row="single" edit-mode="rowEdit" display="grid" selection-mode.column="single"
+        data="[[ $variables.pagetabledata ]]" columns="{{ $variables.columnDetail }}" 
+        >
+        <template slot="TravelDate">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+            label-hint="[[$application.translations.app.BatchDate]]"></oj-input-date>
+        </template>
+        <!-- Date of approval -->
+         <template slot="ApproveDate">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+            label-hint="[[$application.translations.app.ApproveDate]]"></oj-input-date>
+        </template>
+        <template slot="Edit">
+          <a target="_blank" >
+            <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+          </a>
+        </template>
+        <template slot="delete">
+          <oj-bind-if
+              test="[[ $current.row.approval_status == 'Draft' ||$current.row.approval_status ==  'Rejected' ]]"  >
+          <oj-button label=""  class="oj-button-full-width" chroming="borderless">
+            <img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+          </oj-button>
+          </oj-bind-if>
+        </template>
+
+         <template slot="status">
+          <oj-bind-if test='[[ $current.data==="Approved" ]]'>
+          <oj-bind-text style="color: green;font-weight: bold;">Approved</oj-bind-text>
+          </oj-bind-if>
+         </template>
+          <!--  -->
+        
+        <oj-paging-control id="paging" class="oj-sm-width-full" page-size="10" slot="bottom"
+          data="[[ $variables.pagetabledata ]]"
+         ></oj-paging-control>
+      </oj-table>
+    </div>
+  </div>
+</div>
+</div>
+<oj-dialog dialog-title="About" id="about">
+   <oj-form-layout label-edge="start">
+        <br>
+      <oj-input-text style="width:18rem;" label-hint="[[$application.translations.app.CreatedBy]]" disabled="true"
+        value="{{ $variables.postBatchObj.created_by }}"
+          ></oj-input-text>
+      <br>
+      <oj-input-date style="width:18rem;" label-hint="[[$application.translations.app.CreatedDate]]" disabled="true"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+        value="{{ $variables.postBatchObj.creation_date }}"
+        
+       ></oj-input-date>
+      <br>
+      <oj-input-text style="width:18rem;" label-hint="[[$application.translations.app.UpdatedBy]]" disabled="true"
+        value="{{ $variables.postBatchObj.last_update_by }}"
+        ></oj-input-text>
+      <br>
+      <oj-input-date style="width:18rem;" label-hint="[[$application.translations.app.UpdatedDate]]" disabled="true"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy hh:mm a"}}'
+        value="{{ $variables.postBatchObj.last_update_date }}"
+        
+       ></oj-input-date>
+        <oj-validation-group style="display:flex; justify-content:flex-end;">
+       <oj-button label="[[$application.translations.app.Ok]]"></oj-button>
+        </oj-validation-group>
+      </oj-form-layout>
+</oj-dialog>
