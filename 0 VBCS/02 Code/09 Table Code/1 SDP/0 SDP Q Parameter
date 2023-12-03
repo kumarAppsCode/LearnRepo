@@ -1,0 +1,31 @@
+PageModule.prototype.buildWhereClause = function (brkName, brkNum, brkSite) {
+
+    let whereClause = '';
+    if (brkName !== '') {
+      whereClause = "brkName = '" + brkName + "'";
+    }
+    if (brkNum !== '') {
+      if (whereClause !== '') {
+        whereClause = whereClause + " and brkNumber ='" + brkNum + "'";
+      }
+      else {
+        whereClause = "brkNumber = '" + brkNum + "'";
+      }
+    }
+    if (brkSite !== '') {
+      if (whereClause !== '') {
+        whereClause = whereClause + " and brkNumber ='" + brkSite + "'";
+      }
+      else {
+        whereClause = "brkSiteCode = '" + brkSite + "'";
+      }
+    }
+
+    if (whereClause === '') {
+      whereClause = 'null';
+    }
+
+
+    return whereClause;
+
+  };
