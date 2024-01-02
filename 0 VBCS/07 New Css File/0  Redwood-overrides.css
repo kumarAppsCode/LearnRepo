@@ -1,0 +1,513 @@
+/**
+ * To theme your application, just override the variable values you want to change. To find which variables can be changed,
+ * see the JET documentation at https://www.oracle.com/webfolder/technetwork/jet/jsdocs/CssVariablesOverview.html
+ * In general, we recommend using the Stable theme, as it reduces the chances of being impacted by changes over time.
+ */
+ 
+ :root {
+    /* --oj-html-font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; */
+    /* --oj-html-font-size:   1em; */
+ /*Form Layout  */
+--oj-form-layout-margin-bottom: -0.5rem;
+--oj-form-layout-column-gutter: 0.5rem;
+--oj-label-required-char-font-size:  0.3rem; 
+--oj-form-layout-start-edge-label-to-value-padding: 0.5rem;
+--oj-form-layout-top-edge-label-to-value-padding: 0rem; 
+--oj-collection-grid-cell-padding: 0rem;
+
+/* Pagingcontrol menu */
+--oj-typography-body-md-font-size: 0.8rem;
+
+/* Table */
+--oj-collection-grid-row-height:1.8rem;
+--oj-collection-grid-header-height:2.25rem;
+
+/* Button */
+--oj-button-height:2rem;
+--oj-typography-body-sm-font-size:1.2rem
+
+--oj-typography-body-md-line-height:0
+ }
+
+.oj-collection-grid-header{
+  height: 0rem !important;
+}
+
+.oj-table-body-row {
+    height: auto !important;
+    min-height: 0rem !important;
+    font-size: 12px;
+    font-weight: medium;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   /* color:#5D5D5D ;  */
+}
+
+.oj-tabbar-horizontal:not(.oj-tabbar-icon-only) .oj-tabbar-item.oj-selected a.oj-tabbar-item-content .oj-tabbar-item-label {
+    /* color: white; */
+    color: #740b40;
+    font-weight: bold;
+}
+
+.oj-tabbar-horizontal.oj-tabbar-icon-only .oj-tabbar-item.oj-selected, .oj-tabbar-horizontal:not(.oj-tabbar-icon-only) .oj-tabbar-item.oj-selected {
+    border-color: #740b40;
+}
+
+.oj-tabbar-item {
+    /* border-color: transparent; */
+    display: flex;
+    align-items: stretch;
+}
+.searchBtn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: green;
+    color: white;
+}
+
+.resetBtn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.oj-tabbar-horizontal:not(.oj-tabbar-icon-only) .oj-tabbar-item.oj-selected a.oj-tabbar-item-content .oj-tabbar-item-label {
+    /* color: white; */
+    color: #013766;
+    font-weight: bold;
+}
+
+.oj-tabbar-horizontal.oj-tabbar-icon-only .oj-tabbar-item.oj-selected, .oj-tabbar-horizontal:not(.oj-tabbar-icon-only) .oj-tabbar-item.oj-selected {
+    border-color: #013766;
+}
+
+.oj-tabbar-item {
+    /* border-color: transparent; */
+    display: flex;
+    align-items: stretch;
+}
+
+.oj-button-button{
+    height: 2rem;
+    color: white;
+    /* border: none; */
+    cursor: pointer;
+}
+
+.approveBtn{
+background-color: lightgreen;
+
+}
+.redBtn{
+background-color:red;
+}
+.blueBtn{
+background-color:lightblue;
+}
+.pinkBtn{
+  background-color:lightpink;
+  color: transparent;
+}
+
+.oj-form-layout .oj-form.oj-enabled .oj-text-field.oj-read-only .oj-text-field-container {
+    border-width: var(--oj-text-field-border-width);
+    /* border-color: var(--oj-text-field-border-color-disabled); */
+    background-color: transparent;
+    height: var(--oj-text-field-height);
+}
+
+
+.oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item-label {
+    vertical-align: middle;
+    color: white;
+}
+
+/* ASIK */
+
+
+/* Input Test border */
+
+.oj-text-field.oj-disabled .oj-text-field-input {
+    /* color: var(--oj-text-field-text-color-disabled); */
+    /* color: red; */
+    color: black;
+    background-color: #dedcde;
+}
+
+.oj-text-field.oj-disabled .oj-text-field-container {
+    /* background-color: var(--oj-text-field-bg-color-disabled); */
+    border-color: var(--oj-text-field-border-color-disabled);
+    /* background-color: #e3e3e3; */
+    background-color: f6f6f6; 
+    border: solid 1px #171616;
+}
+
+ .oj-text-field .oj-text-field-container{
+    position: relative;
+    box-sizing: border-box;
+    border-style: solid;
+    transition: border-color .1s linear;
+    border-color: var(--oj-text-field-border-color);
+    border-width: var(--oj-text-field-border-width);
+    border-radius: var(--oj-text-field-border-radius);
+    background-color: var(--oj-text-field-bg-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    height: var(--oj-text-field-height);
+    border: solid 1px grey;
+     font-size: 12px; /* Adjust the font size as needed */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+} 
+
+.oj-required-inline-container {
+    text-align: inherit;
+}
+
+
+.oj-form-layout .oj-form.oj-enabled .oj-text-field.oj-combobox-multi.oj-has-no-value:not(.oj-text-field-label-inside) .oj-text-field-container, .oj-form-layout .oj-form.oj-enabled .oj-text-field.oj-select-multi.oj-has-no-value:not(.oj-text-field-label-inside) .oj-text-field-container, .oj-form-layout .oj-form.oj-enabled .oj-text-field.oj-textarea.oj-has-no-value:not(.oj-text-field-label-inside) .oj-text-field-container, .oj-form-layout .oj-form.oj-enabled .oj-textarea.oj-read-only:not(.oj-text-field-label-inside) .oj-text-field-container {
+
+    min-height: 5rem;
+
+}
+
+/* Date Big font reduce */
+.oj-form-control-inherit:not(.oj-form-control-default) .oj-text-field:not(.oj-invalid):not(.oj-warning) .oj-text-field-container, .oj-form-control-inherit:not(.oj-form-control-default) .oj-text-field:not(.oj-invalid):not(.oj-warning) .oj-text-field-input, .oj-form-control-inherit:not(.oj-form-control-default) .oj-text-field:not(.oj-invalid):not(.oj-warning) .oj-text-field-readonly-div {
+    border-width: 0;
+}
+ .oj-button-label, .oj-button-label oj-option {
+    cursor: inherit !important;  
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    /* background-color: #740b40 !important; */
+    /* color: black !important; */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     font-size: 12px;
+
+     /* color: #4F4F4F; */
+} 
+
+
+
+.oj-required-inline-container {
+    text-align: inherit;
+}
+/* Headers */
+   .h1 {
+    /* font-family: serif; Change the font family to "serif" */
+   /* font-size: 10px; */
+   /* text-align: left; */
+   /* font-family:Arial; */
+    position: relative;
+    padding: 0;
+    min-width: 50px;
+    /* display: block; */
+    /* font-weight: bolder; */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     font-size: 16px;
+  }
+ .oj-forme-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient, .oj-form.oj-enabled .oj-user-assistance-inline-container.oj-efficient {
+    min-height: 0.3rem;
+}
+
+/* .oj-forme-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-compact, .oj-form.oj-enabled .oj-user-assistance-inline-container.oj-compact {
+    min-height: 0.3rem;
+} */
+.input{
+  padding:8px 0px;
+  margin:-8px 0px;
+}
+
+.oj-table-grid-display .oj-table-header {
+    background-color: var(--oj-collection-header-bg-color);
+    border-bottom: 1px solid var(--oj-collection-border-color);
+    background-color: #02497c;
+    color:white;
+   font-size: 14px;
+   /* font-weight: bold; */
+ 
+}
+
+.oj-table-column-header {
+    font-size: initial;
+    position: relative;
+    float: none;
+    text-overflow: inherit;
+    overflow: inherit;
+    white-space: normal;
+    display: inline-flex;
+    align-items: center;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+ }
+ .h1
+ {
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-weight: semi bold;
+   font-size: 16px;
+ }
+
+ .oj-sp-template-wrapper
+ {
+     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-weight: semi bold;
+   font-size: 16px;
+   height: 10px;
+ }
+ .oj-label{
+
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 12px;
+    /* color: #4F4F4F; */
+    font-weight: bold;
+ }
+ /* .oj-dialog-title
+ {
+   color:white;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 16px;
+font-weight:bold;
+ } */
+ .oj-dialog-title {
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+ .oj-dialog .oj-fwk-icon:before{
+color: white;
+ }
+ .oj-dialog-header{
+   background-color: #013766;
+   height: 2px;
+ }
+
+  .oj-dialog-body{
+padding-top: 10px;
+ }
+ .oj.badge-text
+ {
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 12px;
+font-weight:semi bold;
+ } 
+.oj-dialog-header-close .oj-dialog-title {
+    padding-inline-end: 0.2rem;
+    margin-bottom: 18px;
+}
+
+   oj-sp-header-general-overview .oj-sp-header-general-overview-header-strip {
+    background-image: var(--oj-sp-theme-page-header-strip, url(''));
+    
+   }
+oj-sp-header-create-edit .oj-sp-header-create-edit-header-strip{
+    background-image: var(--oj-sp-theme-page-header-strip, url(''));
+     }
+/*      
+ .oj-forme-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient .oj-compact, .oj-form.oj-enabled .oj-user-assistance-inline-container.oj-efficient.oj-compact {
+    min-height: 0.3rem;
+    
+}  */
+oj-sp-header-general-overview .oj-sp-header-general-overview-page-title{
+ 
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    /* white-space: nowrap; */
+    color: white;
+    /* display: inline-block; */
+    font-size: 14px;
+}
+oj-sp-header-create-edit .oj-sp-header-create-edit-spacing-container .oj-sp-header-create-edit-container .oj-sp-header-create-edit-avatar-container .oj-sp-header-create-edit-title .oj-sp-header-create-edit-title-badge-container .oj-sp-header-create-edit-page-title{
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    white-space: nowrap;
+    color:white;
+    display: inline-block;
+    font-size: 16px;
+    
+} 
+.oj-ux-ico-reset { 
+    color:#ff3333; /* Icon color */
+    cursor: pointer; /* Change cursor on hover */
+}
+.oj-ux-ico-invoice-create {
+    /* Add your styles for the secondary action icons here */ 
+     /* Spacing between icons */ 
+    color:#006622; /* Icon color */
+    cursor: pointer; /* Change cursor on hover */
+}
+.oj-dialog-content
+{
+   color:#013766;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 13px;
+}
+.oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item-label  {
+    padding: 10px 15px; /* Adjust padding as needed */
+    margin: 5px 0; /* Adjust margin as needed */
+    background-color:1px solid #ccc; /* Background color */
+    cursor: pointer; /* Change cursor to pointer on hover */
+color: #4E4E4E;
+}
+.menuList{
+  background-color: black;
+  }
+  .icons{
+    color: white;
+  }
+oj-sp-header-general-overview .oj-sp-header-general-overview-padded-container{
+  background-color:#013766;
+    
+}
+oj-sp-advanced-create-edit .oj-sp-header-create-edit-spacing-container{
+  background-color:#013766;
+    
+}
+/* Button */
+oj-sp-advanced-create-edit .oj-sp-header-create-edit-spacing-container .oj-button-label, .oj-button-label oj-option  {
+    cursor: inherit !important;  
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #013766 !important;
+    color: white !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     font-size: 12px;
+     /* color: #4F4F4F; */
+} 
+oj-sp-advanced-create-edit .oj-sp-header-create-edit-spacing-container .oj-button-button{
+    
+    border: none;
+    cursor: pointer;
+     outline: none;
+     height: 2rem;
+}
+oj-sp-header-general-overview .oj-sp-header-general-overview-padded-container .oj-button-label, .oj-button-label oj-option {
+    cursor: inherit !important;  
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #013766 !important;
+    color: white !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     font-size: 12px;
+     /* color: #4F4F4F; */
+} 
+oj-sp-header-general-overview .oj-sp-header-general-overview-padded-container .oj-button-button{
+    
+    border: none;
+    cursor: pointer;
+     outline: none;
+     height: 2rem;
+}
+oj-sp-header-general-overview .oj-sp-header-general-overview-padded-container .oj-button:hover{
+border: 1px solid white;
+    height: 2rem;
+    cursor: pointer;
+}
+
+oj-sp-advanced-create-edit .oj-sp-header-create-edit-spacing-container .oj-button:hover:not(.oj-disabled){
+border: 1px solid white;
+    height: 2rem;
+    cursor: pointer;
+}
+
+.oj-ux-ico-content-item-search{
+  color: white;
+}
+
+/* Pagingcontrol menu*/
+.oj-pagingcontrol-nav-input-summary {
+   font-size: var(--oj-typography-body-md-font-size);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+oj-sp-header-general-overview .oj-sp-header-general-overview-avatar-title-buttons-container-side-by-side{
+  margin-top: -12px;
+}
+.oj-sp-public-primary-content-container{
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+}
+oj-sp-header-create-edit .oj-sp-header-create-edit-spacing-container .oj-sp-header-create-edit-container {
+margin-top: -12px;
+}
+
+/* pagination overall css */
+ .oj-sp-public-primary-content-container{
+     padding-left: 10px;
+     padding-right: 10px;
+ }
+
+
+ oj-sp-header-general-overview .oj-sp-header-general-overview-avatar-title-buttons-container-side-by-side{
+
+  margin-top: -12px;
+  margin-left: -15px;
+
+}
+oj-sp-advanced-create-edit .oj-sp-header-create-edit-spacing-container .oj-component-icon:before{
+  color: white;
+}
+.oj-ux-ico-warehouse{
+  color: white;
+}
+.popupheader{
+  background-color: #013766;
+  margin-top: 0px;
+}
+/* .checkbtn{
+  background-color: green;
+  text-decoration-color: white;
+} */
+.checkbtn{
+ background-color: green; /* Background color of the button */
+        color: white; /* Text color of the button */
+        border: 4px solid white;
+        border-radius: 9px; /* Optional: Border radius for rounded corners */
+        /* padding: 10px 20px; Optional: Padding inside the button */
+        text-align: center; /* Optional: Center text horizontally */
+        text-decoration: none; /* Optional: Remove underline for links */
+        display: inline-block;
+}
+.checkbtn .oj-button-label{
+  color: white;
+}
+.panels{
+  margin-top: -14px;
+}
+
+.dialog .oj-dialog-container
+{
+margin-top:-20px;
+}
+
+
+.oj-text-field-readonly-div{
+  margin-top: 5px;
+}
+.oj-textarea.oj-read-only .oj-textarea-input{
+  margin-top: 5px;
+}
+
+
+.oj-lg-padding-12x-horizontal {
+    padding-inline-start: var(--oj-core-spacing-12x)!important;
+    padding-inline-end: var(--oj-core-spacing-12x)!important;
+}
