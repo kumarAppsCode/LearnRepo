@@ -1,0 +1,30 @@
+<oj-select-single
+            class="oj-form-control-max-width-sm oj-form-control-width-sm oj-form-control-text-align-start __input_txt"
+            value="{{form.accountNumber}}" data="[[accountNumbers]]" label-hint="Account Number"
+            :id="[['selected-account-id'+$uniqueId]]" required placeholder="Select Account "
+            item-text="[[getItemText]]">
+            <template slot="collectionTemplate" data-oj-as="collection">
+              <oj-list-view aria-label="select" gridlines.item="visibleExceptLast" selection-mode="single"
+                class="oj-select-results custom-list-item" data="[[collection.data]]" selected="[[collection.selected]]"
+                current-item="{{collection.currentRow.rowKey}}" on-oj-item-action="[[collection.handleRowAction]]">
+                <template slot="itemTemplate" data-oj-as="item">
+                  <oj-list-item-layout class="oj-listitemlayout-padding-off">
+                    <span class="oj-typography-body-sm oj-text-color-primary">
+                      <oj-highlight-text text='[[item.data.AccountNumber ]]'
+                        match-text="[[collection.searchText]]"></oj-highlight-text>
+                    </span>
+                  </oj-list-item-layout>
+                </template>
+              </oj-list-view>
+            </template>
+          </oj-select-single>
+
+
+          .custom-list-item {
+  --oj-collection-list-row-height: 25px !important;
+  --oj-collection-list-cell-padding-vertical: 2px;
+  --oj-list-view-item-padding-horizontal: 2px;
+  --oj-core-bg-color-selected: #faa51973;
+  --oj-core-text-color-primary: #004e95;
+  text-transform: capitalize;
+}
