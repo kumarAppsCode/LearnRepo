@@ -1,0 +1,153 @@
+<oj-sp-canvas-page badge.status="info" primary-action.label="Save & Close" page-title="Lookup Type"
+  badge.text="[[ $variables.HeaderPost.lookup_type_name_disp ]]"
+  on-sp-cancel="[[$listeners.canvasPageTemplateSpCancel]]"
+  on-sp-primary-action="[[$listeners.canvasPageTemplateSpPrimaryAction]]"
+  on-sp-save="[[$listeners.canvasPageTemplateSpSave2]]" primary-action.disabled='[[ $variables.statusHidevar ==="N" ]]'
+  display-options.save="[[ $variables.savebtnHide ]]">
+ <oj-validation-group id="SearchForm">
+   <br>
+  <oj-form-layout label-edge="start" columns="3" id="oj-form-layout--1016815941-1" >
+    
+    <oj-input-text label-hint="Lookup Type Code" value="{{ $variables.HeaderPost.lookup_type_name }}" required="true"
+      disabled='[[ $variables.HdrCreateVar.p_method ==="Edit" ]]'
+      >
+      <!-- readonly="[[ $variables.HdrCodeDisable ==0]]" -->
+                <!-- <oj-button display="icons" chroming="borderless" label="Button" slot="end"
+                  on-oj-action="[[$listeners.buttonAction11]]" :hidden="[[ $variables.HdrCodeDisable==1 ]]">
+                  <span class="oj-ux-ico-edit-inline" id="span--674450213-1" slot="startIcon"></span>
+                </oj-button> -->
+    </oj-input-text>
+    <oj-input-text label-hint="Lookup Type Name" value="{{ $variables.HeaderPost.lookup_type_name_disp }}"
+      required="true"></oj-input-text>
+     <td align="right">
+                <oj-label style="margin-left:35px;margin-top:10px" for="oj-form-layout--1016815941-1">
+                  <oj-bind-text value="Active"></oj-bind-text>
+                </oj-label>
+              </td>
+              <td align="left">
+                <oj-switch style="margin-left:38px;margin-top:2px" on-value-changed="[[$listeners.switchValue]]"
+                  value="{{ $variables.HeaderPost.status =='Y'? true:false }}"></oj-switch>
+               </td>
+  </oj-form-layout>
+ </oj-validation-group>
+  <!-- <div class="oj-panel"> -->
+  <h1 style="color: #01474d; font-size: larger; font-weight: bold; display: flex; justify-content: space-between;" title="Template" class="h1">
+    <oj-bind-text value='[[ "Lookup Value "]]'></oj-bind-text>
+    <oj-button label="Add" class="oj-flex-bar-end oj-helper-justify-content-flex-end"
+      on-oj-action="[[$listeners.buttonAction]]" chroming="outlined" disabled='[[ $variables.statusHidevar ==="N" ]]'>
+    <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]">
+    </oj-button>
+</h1>
+
+
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <div id="mainContent">
+    
+<div class="oj-flex">
+  <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+    columns='[{"headerText":"Action","field":"","template":"Delete","resizable":"enabled","width":"92px"},{"headerText":"Lookup Value Code","field":"lookup_value_name","resizable":"enabled","template":"Lookup Value Code"},{"headerText":"Lookup Value Name","field":"lookup_value_name_disp","resizable":"enabled"},{"headerText":"Lookup Type Code","field":"lookup_type_name"},{"headerText":"Lookup Type Name","field":"lookup_type_name_disp"},{"headerText":"Active","field":"status","template":"status","resizable":"enabled","width":"92px"}]'
+    display="grid" selection-mode.row="single" selection-mode.column="single" data="[[ $variables.lookupValueTable ]]" 
+   >
+   <template slot="Delete">
+ 
+<oj-button chroming="half" on-oj-action="[[$listeners.buttonAction7]]" >
+<img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+</oj-button> 
+
+</template>
+ <template slot="status">
+   <oj-bind-if test="[[ $current.data == 'Y' ]]">  
+     <img :src="[[ $application.path + 'resources/images/activeBtn.png' ]]" style="margin-left:35%;">
+   </oj-bind-if>
+   <oj-bind-if test="[[ $current.data != 'Y' ]]">
+     <img :src="[[ $application.path + 'resources/images/inactive.png' ]]" style="margin-left:35%;">
+     
+   </oj-bind-if>
+   
+ </template>
+   <template slot="Lookup Value Code">
+    <a target="_blank" class="oj-link" on-click="[[$listeners.hyperlinkClick]]"  >
+      <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+    </a>
+  </template>
+      <oj-paging-control slot="bottom" style="margin-left:38%" class="oj-sm-width-full" 
+         page-size="15" data="[[ $variables.lookupValueTable ]]" >
+      </oj-paging-control>
+   
+   </oj-table>
+</div>
+  </div>
+</div>
+       </div>
+  <!-- </div> -->
+</oj-sp-canvas-page>
+<!-- child dialg -->
+<oj-dialog style="display:none;width: 470px; height: 362px;" dialog-title="Lookup Value" id="lookupValueCreatePopup"
+  cancel-behavior="icon" class="" on-oj-close="[[$listeners.lookupValueCreatePopupClose]]">
+    <!-- <h1 slot="header" style="font-size: 24px; font-weight:lighter ;color:#013766; font-family: 'Inter', sans-serif;">Lookup Value</h1> -->
+    <div slot="body">
+        <div class="oj-flex">
+            <oj-validation-group id="lookupValue">
+                <oj-form-layout label-edge='start' columns="1" class="oj-forme-control" direction="column"
+                  label-width="33%" id="oj-form-layout--1016815941-2">
+                    <oj-input-text label-hint="Code" value="{{ $variables.childPostVar.lookup_value_name }}"
+                      disabled='[[ $variables.ChildCreateVar.p_method==="Edit" ]]'
+                      >
+                      <!-- readonly="[[ $variables.LineCodeDisable==0 ]]" -->
+                <!-- <oj-button display="icons" chroming="borderless" label="Button" slot="end"
+                  :hidden="[[ $variables.LineCodeDisable==1 ]]" on-oj-action="[[$listeners.buttonAction12]]">
+                  <span class="oj-ux-ico-edit-inline" id="span--674450213-2" slot="startIcon"></span>
+                </oj-button> -->
+                    </oj-input-text>
+                    <oj-input-text label-hint="Name" required="true"
+                      value="{{ $variables.childPostVar.lookup_value_name_disp }}"></oj-input-text>
+                    <oj-input-text label-hint="Display Order" style="width:20rem;"
+                      value="{{ $variables.childPostVar.display_order }}" disabled="true"></oj-input-text>
+                <td align="right">
+                <oj-label style="margin-top:10px" for="oj-form-layout--1016815941-2" >
+                  <oj-bind-text value="Active"></oj-bind-text>
+                </oj-label>
+              </td>
+              <td align="left">
+                <oj-switch style="margin-left:8px;margin-top:2px" class="oj-switch"
+                  value='{{ $variables.childPostVar.status =="Y" ? true:false }}'
+                  on-value-changed="[[$listeners.switchValue2]]"></oj-switch>
+               </td>
+                </oj-form-layout>
+            </oj-validation-group>
+        </div>
+    </div>
+    <div slot="footer">
+          <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction4]]"
+            :hidden='[[ $variables.ChildCreateVar.p_method ==="Edit"]]'>Save &amp; Add</oj-button>
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction8]]"
+          :hidden='[[ $variables.childPostVar.status ==="N"]]' >Save & Close</oj-button>
+        <!-- <oj-button chroming="solid"
+          on-oj-action="[[$listeners.buttonAction2]]">Close</oj-button>  -->
+    </div>
+</oj-dialog>
+
+<!-- Delete -->
+ <oj-dialog style="display:none; width: 322px;" dialog-title="Warning" id="delete_dialog">
+      <div slot="body">
+        <div class="oj-flex">"Are you sure you want to inactive record?"</div>
+      </div>
+      <div slot="footer">
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction9]]"  >Yes</oj-button>
+        <oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction10]]">No</oj-button>
+      </div>
+  </oj-dialog>
+
+  <!-- Save -->
+  
+<oj-dialog style="display:none; width: 330px;" dialog-title="Warning" id="onlychildpopup">
+ <!-- <h1  slot="header" style="font-size: larger; font-weight: bold;color:#013766">Save</h1> -->
+      <div slot="body">
+        <div class="oj-flex">Do you want to save and continue ?</div>
+      </div>
+      <div slot="footer">
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction5]]"  >Ok</oj-button>
+        <oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction6]]" >Cancel</oj-button>
+      </div>
+    </oj-dialog>
