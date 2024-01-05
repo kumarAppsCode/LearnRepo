@@ -1,0 +1,87 @@
+<oj-sp-smart-search-page page-title="Lookup Type" primary-action.label="Reset"
+  secondary-actions='[{"id":"Search","label":"Search","display":"on","icon":"oj-ux-ico-content-item-search"}]'
+  primary-action.display="on" on-sp-secondary-action="[[$listeners.smartSearchPageTemplateSpSecondaryAction]]"
+  on-sp-primary-action="[[$listeners.smartSearchPageTemplateSpPrimaryAction]]">
+  <oj-drawer-popup edge="end" opened='{{ $variables.searchOpen=="Yes" }}' style="width:500px" auto-dismiss="none">
+ <div style="display: flex; align-items: center;">
+  <oj-button chroming="borderless" style="margin-right: 10px;margin-top:3px;"
+    on-oj-action="[[$listeners.buttonAction]]">
+    <img :src="[[ $flow.path + 'resources/images/right-arrow.png' ]]" width="15" height="15">
+  </oj-button>
+  <h1 style="color: #01474d; font-size: larger; font-weight: bold; margin: 0;" title="Template" class="h1">
+    <oj-bind-text value='[[ "Search"]]'></oj-bind-text>
+  </h1>
+</div>
+
+ <oj-form-layout label-edge="start" style="margin-top:30px;">
+    <oj-input-text label-hint="Lookup Type Code" style="width:20rem" value="{{ $variables.searchObj.p_lookupCode }}"></oj-input-text>
+    <oj-input-text label-hint="Lookup Type Name" style="width:20rem" value="{{ $variables.searchObj.p_lookupName }}"></oj-input-text>
+  </oj-form-layout>
+  <div class="oj-helper-text-align-end"style="margin-right:16px" >
+    <oj-button label="Search" style="height:2.3rem" on-oj-action="[[$listeners.buttonAction2]]"></oj-button>
+    <oj-button label="Reset" style="height:2.3rem" on-oj-action="[[$listeners.buttonAction3]]"></oj-button>
+  </div>
+  </oj-drawer-popup>
+ 
+  <div id="sampleDemo" style="" class="demo-padding demo-container">
+
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+
+    <div id="mainContent">
+      <div class="oj-flex-bar-end oj-helper-justify-content-flex-end">
+  
+<oj-button label="Add" style="margin-left:10px;height:2.3rem;" on-oj-action="[[$listeners.buttonAction4]]"
+  chroming="outlined" >
+  <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]" id="img-881905495-1">
+</oj-button>
+</div>
+<div class="oj-flex">
+  <oj-table scroll-policy="loadMoreOnScroll"  class="oj-sm-width-full oj-bg-body oj-search-table"
+    columns='[{"headerText":"Action","field":"","template":"Edit","resizable":"enabled","width":"92px"},{"headerText":"Lookup Type Code","field":"lookup_type_name","resizable":"enabled","template":"Lookup Type Code"},{"headerText":"Lookup Type Name","field":"lookup_type_name_disp","resizable":"enabled"},{"headerText":"Active","field":"status","template":"status","resizable":"enabled","width":"92px"}]'
+    display="grid" data="[[ $variables.lookupTypeTable ]]" selection-mode.row="single" selection-mode.column="single"
+   >
+   <template slot="Edit">
+  
+<oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction5]]" >
+<img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+</oj-button>       
+</template>
+ <template slot="status">
+   <oj-bind-if test="[[ $current.data == 'Y' ]]">  
+     <img style="margin-left:35%;" :src="[[ $application.path + 'resources/images/activeBtn.png' ]]">
+   </oj-bind-if>
+   <oj-bind-if test="[[ $current.data != 'Y' ]]">
+     <img 
+     style="margin-left:35%;" :src="[[ $application.path + 'resources/images/inactive.png' ]]">
+     
+   </oj-bind-if>
+   
+ </template>
+      <oj-paging-control slot="bottom" style="margin-left:38%;" page-size="15" data="[[ $variables.lookupTypeTable ]]">
+      </oj-paging-control>
+  
+  <template slot="Lookup Type Code">
+    <a target="_blank" class="oj-link" on-click="[[$listeners.hyperlinkClick]]" >
+      <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+    </a>
+  </template>
+   
+   </oj-table>
+</div>
+  </div>
+  </div>
+
+</div>
+</oj-sp-smart-search-page>
+ <oj-dialog style="display:none; width: 322px;" dialog-title="Warning" id="delete_dialog">
+      <div slot="body">
+        <div class="oj-flex">"Are you sure you want to inactive record?"</div>
+      </div>
+      <div slot="footer">
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction6]]"  >Yes</oj-button>
+        <oj-button  chroming="solid" on-oj-action="[[$listeners.buttonAction7]]">No</oj-button>
+      </div>
+  </oj-dialog>
+<!-- <oj-button chroming="outlined">
+      <span class="oj-ux-ico-content-item-search" slot="startIcon"></span>
+</oj-button> -->
