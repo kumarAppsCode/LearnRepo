@@ -1,0 +1,1779 @@
+<div>
+  <oj-sp-advanced-create-edit id="oj_ssce1" page-title="Work Order" avatar="{{$page.variables.avatar}}"
+    primary-action.disabled="[[ $variables.displayoptions.fileds ]]"
+    display-options.save="{{$page.variables.saveOption!=='off'?$page.variables.dirtyDataFlag?'on':'disabled':'off'}}"
+    display-options.go-to-parent="{{$page.variables.goToParentOption }}"
+    display-options.contextual-info-sticky="{{ $page.variables.contextualInfoSticky }}"
+    display-options.contextual-info-label="{{$page.variables.contextualInfoLabelVisible}}"
+    display-options.responsive-padding="on" display-options.bottom-actions="on"
+    display-mode="[[$page.variables.displayMode]]" primary-action.label="Save"
+    secondary-actions='[[ [{"id":"submit","label":"Submit For Approval","display":$variables.displayoptions.submit},{"id":"approve","label":"Approve","display":$variables.displayoptions.approve},{"id":"reject","label":"Reject","display":$variables.displayoptions.reject},{"label":"Attachment","id":"attachment"},{"label":"About","id":"about"}] ]]'
+    on-sp-cancel="[[$listeners.ojSsce1SpCancel2]]" badge.text="[[ $variables.postworkorder.work_order_request_number ]]"
+    badge.status="info" on-sp-primary-action="[[$listeners.ojSsce1SpPrimaryAction]]"
+    on-sp-secondary-action="[[$listeners.ojSsce1SpSecondaryAction]]">
+
+    <div slot="main">
+      <div class="oj-panel oj-panel-shadow-md oj-selected">
+        <oj-validation-group id="workorder">
+        <oj-form-layout columns="2" label-edge="start" direction="column" style="margin-top:23px;margin-left:-40px;"
+          class="oj-forme-control" user-assistance-density="compact">
+          <!-- <oj-select-single label-hint="Fleet Number" required="true"
+            value="{{ $variables.postworkorder.fleet_number }}"></oj-select-single> -->
+          <!-- <oj-bind-if test="[[ $variables.p_Work_request_key!== '0' ]]">
+                    
+          </oj-bind-if>
+          <oj-bind-if test="[[ $variables.p_Work_request_key=== '0' ]]">
+                    <oj-select-single label-hint="* Work Request" required="true" style="margin-bottom:6px"
+                      value="{{ $variables.postworkorder.work_request_id }}" item-text="work_request_number"
+                      data="[[$variables.getLovWorkrequestListSDP]]"
+                      on-value-item-changed="[[$listeners.selectValueItem2]]"></oj-select-single>
+          </oj-bind-if> -->
+            <!-- <oj-input-text label-hint="* Fleet Number" required="true" style="margin-bottom:6px"
+            value="{{ $variables.postworkorder.fleet_number }}" disabled="true"></oj-input-text> -->
+            <oj-input-text label-hint="Work Order" disabled="true" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.work_order_request_number }}"></oj-input-text>
+            <oj-select-single label-hint="* Fleet Number" required="true" style="margin-bottom:6px"
+              value="{{ $variables.postworkorder.fleet_number }}" data="[[$variables.getSearchAssetMasterListSDP]]"
+              item-text="fleet_number" on-value-item-changed="[[$listeners.selectValueItem10]]"
+              disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+          <oj-input-text label-hint="Asset" style="margin-bottom:6px"
+            value="{{ $variables.postworkorder.asset_number }}" disabled="true"></oj-input-text>
+          <oj-input-text label-hint="Status" style="margin-bottom:6px" disabled="true"
+            value="{{ $variables.postworkorder.work_order_status }}"></oj-input-text>
+
+          <oj-select-single label-hint="Asset Type" value="{{ $variables.postworkorder.asset_type }}"
+            style="margin-bottom:6px;" data="[[$variables.getLovLookupValuesListSDP]]"
+            item-text="lookup_value_name_disp" disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+          <oj-select-single label-hint="* Invoice Requirement" style="margin-bottom:6px"
+            value="{{ $variables.postworkorder.invoice_requirement }}" item-text="lookup_value_name_disp"
+            required="true" data="[[$variables.getLovLookupValuesListSDP8]]"
+            disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+         <oj-select-single label-hint="Unit Type" value="{{ $variables.postworkorder.unit_category }}"
+            data="[[$variables.getLovLookupValuesListSDP7]]" item-text="lookup_value_name_disp"
+            disabled="[[ $variables.displayoptions.fileds ]]">
+          </oj-select-single>
+          <!-- <oj-input-text label-hint="Unit Type" value="{{ $variables.postworkorder.unit_category }}" disabled="true"></oj-input-text> -->
+        </oj-form-layout>
+        </oj-validation-group>
+      </div>
+      <br>
+
+      <!-- Tab Start -->
+      <div id="sampleDemo" style="" class="demo-padding demo-container">
+        <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+          <div id="mainContent">
+            <div class="demo-tabbar-container oj-panel">
+              <oj-tab-bar id="hnavlist" edge="top" selection="{{ $variables.selectedTab }}"
+                on-selection-changed="[[$listeners.hnavlistSelection]]">
+                <ul>
+                  <li id="GeneralInformation-tab1">
+                    <a href="#" style="font-size: larger; font-weight: bold;"
+                      aria-controls="GeneralInformation-tab-panel" id="GeneralInformation-tab">General Information</a>
+                  </li>
+
+                  <li id="Operations-tab2">
+                    <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="Operations-tab-panel2"
+                      id="Operations-tab">Operations</a>
+                  </li>
+
+                  <li id="WorkEstimate-tab3">
+                    <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="advanceRecovery-tab-panel"
+                      id="WorkEstimate-tab">Work Estimate</a>
+                  </li>
+                  <li id="receivingandhandover-tab4">
+                    <a href="#" style="font-size: larger; font-weight: bold;"
+                      aria-controls="receivingandhandover-tab-panel" id="receivingandhandover-tab">Receiving and
+                      Handover</a>
+                  </li>
+                  <li id="history-tab5">
+                    <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="history-tab-panel"
+                      id="history-tab">History</a>
+                  </li>
+
+
+
+
+                </ul>
+              </oj-tab-bar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-switcher-container oj-panel oj-selected">
+        <oj-switcher value="[[ $variables.selectedTab ]]">
+
+          <!--TAB1  -->
+          <div slot="GeneralInformation-tab1" id="GeneralInformation-tab-panel1" role="tabpanel1"
+            aria-labelledby="GeneralInformation-tab1">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <!--ADD BUTTON  -->
+                <oj-validation-group id="generalinfo">
+                <oj-form-layout label-edge="start" columns="3" direction="column" label-width="48%"
+                  style="margin-top:20px;margin-left:-80px" class="oj-forme-control" user-assistance-density="compact">
+                    <oj-input-number label-hint="Work Request" disabled="true" style="margin-bottom:6px"
+                      value="{{ $variables.postworkorder.work_request_id }}"></oj-input-number>
+                  <oj-input-date label-hint="* Planned Start Date" style="margin-bottom:6px"
+                    converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                    value="{{ $variables.postworkorder.start_date }}"
+                    min="[[ $application.functions.getSysdateMinusOne() ]]" required="true"
+                    disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date>
+                  <oj-input-date label-hint="* Planned Completion Date" style="margin-bottom:6px"
+                    converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                    value="{{ $variables.postworkorder.completion_date }}"
+                    min="[[ $variables.postworkorder.start_date ]]" required="true"
+                    disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date>
+                  <oj-input-date label-hint="Actual Completion Date" style="margin-bottom:6px"
+                    converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                    value="{{ $variables.postworkorder.actual_completion_date }}" disabled="true"></oj-input-date>
+                  <oj-select-single label-hint="Action Taken" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.action_taken }}" data="[[$variables.getLovLookupValuesListSDP3]]"
+                    item-text="lookup_value_name_disp" disabled="true" required="true">
+                  </oj-select-single>
+                  <!-- <oj-select-single label-hint="* Customer Number" 
+                    item-text="customer_number" required="true"></oj-select-single> -->
+<oj-bind-if
+  test="[[ $variables.postworkorder.asset_type==='Customer' || $variables.postworkorder.asset_type==='Customer - Component' ]]">
+                    <oj-select-single label-hint="* Customer Number" style="margin-bottom:6px"
+                      value="{{ $variables.postworkorder.customer_number }}" data="[[$variables.getLovCustomerListSDP]]"
+                      item-text="customer_number" required="true"
+                      on-value-item-changed="[[$listeners.selectValueItem11]]"
+                      disabled="[[ $variables.displayoptions.fileds ]]"
+                    >
+                    <template slot="collectionTemplate" data-oj-as="collection"> 
+                    <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                          vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                          columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                          columns='[{"headerText":"Customer Number","field":"customer_number"},{"headerText":"Customer Name","field":"customer_name"}]'
+                          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}">
+                        </oj-table>
+                        </template> 
+                        </oj-select-single>
+                    <oj-input-text label-hint="* Customer" value="{{ $variables.postworkorder.customer }}"
+                      style="margin-bottom:6px;" disabled="true"></oj-input-text>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.postworkorder.asset_type==='Internal' || $variables.postworkorder.asset_type==='Internal - Component' ]]">
+              <!-- <oj-input-text label-hint="Item" style="margin-bottom:6px;"
+                value="{{ $variables.postworkorder.item_number }}" disabled="true"></oj-input-text> -->
+                <oj-select-single label-hint="* Item" style="margin-bottom:6px;"
+                  value="{{ $variables.postworkorder.item_number }}" data="[[$variables.getLovInventoryitemsListSDP7]]"
+                  item-text="item_number" required="true" on-value-item-changed="[[$listeners.selectValueItem12]]"
+                  disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+              <oj-text-area label-hint="Item Description" style="margin-bottom:6px;"
+                value="{{ $variables.postworkorder.item_description }}" disabled="true"></oj-text-area>
+            </oj-bind-if>
+                  <oj-select-single label-hint="* Severity" value="{{ $variables.postworkorder.priority }}"
+                    style="margin-bottom:6px" data="[[$variables.getLovLookupValuesListSDP4]]"
+                    item-text="lookup_value_name_disp" required="true"
+                    disabled="[[ $variables.displayoptions.fileds ]]">
+                  </oj-select-single>
+                  <oj-select-single label-hint="* Type" value="{{ $variables.postworkorder.type }}"
+                    style="margin-bottom:6px" data="[[$variables.getLovLookupValuesListSDP5]]"
+                    item-text="lookup_value_name_disp" required="true"
+                    disabled="[[ $variables.displayoptions.fileds ]]">
+                  </oj-select-single>
+                  <oj-combobox-one label-hint="Effect-Flight Delay" style="margin-bottom:6px" placeholder="Choose One"
+                    value="{{ $variables.postworkorder.flight_delay }}" on-value-changed="[[$listeners.comboValue]]"
+                    disabled="[[ $variables.displayoptions.fileds ]]">
+                    <oj-option value="Yes">Yes</oj-option>
+                    <oj-option value="No">No</oj-option>
+                  </oj-combobox-one>
+
+                  <!-- <oj-bind-if test='[[ $variables.postworkorder.flight_delay=="Yes" ]]'> -->
+                    <oj-input-text label-hint="* Delay Time" style="margin-bottom:6px"
+                      value="{{ $variables.postworkorder.delay_time }}"
+                      disabled="[[ ($variables.postworkorder.flight_delay==='No') || ($variables.displayoptions.fileds) ]]"
+                      required="true">
+                    <oj-label slot="end" class="oj-label-nowrap">Hrs</oj-label>
+                    </oj-input-text>
+                  <!-- </oj-bind-if> -->
+                  <oj-select-single label-hint="Work Location" value="{{ $variables.postworkorder.work_location }}"
+                    style="margin-bottom:6px" data="[[$variables.getSearchWorkLocationNameLOVListSDP]]"
+                    item-text="work_location_name" disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+                  <oj-select-single label-hint="* Sub Type" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.sub_type }}" data="[[$variables.getLovLookupValuesListSDP6]]"
+                    item-text="lookup_value_name_disp" required="true"
+                    disabled="[[ $variables.displayoptions.fileds ]]">
+                  </oj-select-single>
+                  <oj-select-single label-hint="Supply Inventory"
+                    value="{{ $variables.postworkorder.supply_inventory }}" style="margin-bottom:6px;"
+                    data="[[$variables.getLovLookupValuesListSDP9]]" item-text="lookup_value_name_disp"
+                    disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+                    <oj-select-single label-hint="* Work Shop" value="{{ $variables.postworkorder.work_shop }}"
+                      style="margin-bottom:6px;" item-text="lookup_value_name_disp"
+                      disabled="[[ $variables.displayoptions.fileds ]]"
+                      data="[[$variables.getLovLookupValuesListSDP13]]" required="true"></oj-select-single>
+                  <oj-input-date label-hint="Closed Date" style="margin-bottom:6px"
+                    converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                    value="{{ $variables.postworkorder.closed_date }}"
+                    min="[[ $variables.postOperation.actual_completion_date ]]" disabled="true"></oj-input-date>
+
+                  <oj-input-text label-hint="* Work Order Description" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.work_order_description }}"
+                    disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-text>
+                  <oj-input-text label-hint="Assigned By" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.assigned_by }}" disabled="true"></oj-input-text>
+                    <oj-select-single label-hint="Requester Number" style="margin-bottom:6px;"
+                      value="{{ $variables.postworkorder.person_number }}"
+                      data="[[$variables.getLovEmployeedetailsListSDP2]]" item-text="person_number"
+                      on-value-item-changed="[[$listeners.selectValueItem14]]"
+                      disabled="[[ $variables.displayoptions.fileds ]]">
+                        <template slot="collectionTemplate" data-oj-as="collection"> 
+                        <!-- <oj-label for="oj-input-text-651077415-3" style="font-weight: bold;">Search</oj-label>  -->
+                        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                          vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                          columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                          columns='[{"headerText":"Employee Number","field":"person_number"},{"headerText":"Employee Name","field":"display_name"},{"headerText":"Email Id","field":"email_address"}]'
+                          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}">
+                        </oj-table>
+                      </template>
+                      </oj-select-single>
+                  <oj-input-text label-hint="Requester" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.requester }}" disabled="true">
+                  </oj-input-text>
+                  <oj-text-area label-hint="Reported Defects" style="margin-bottom:6px" length.max="3000"
+                    resize-behavior="both" value="{{ $variables.postworkorder.reported_defects }}"
+                    disabled="[[ $variables.displayoptions.fileds ]]"></oj-text-area>
+                  <!-- <oj-input-number label-hint="* Staff No" style="margin-bottom:6px"
+                    converter='{"options":{"useGrouping":false},"type":"number"}'
+                    value="{{ $variables.postworkorder.supervisor_person_number }}" required="true"></oj-input-number> -->
+                    <oj-select-single label-hint="* Staff Number" style="margin-bottom:6px;"
+                      value="{{ $variables.postworkorder.supervisor_person_number }}"
+                      data="[[$variables.getLovResourceNameListSDP]]" item-text="person_number"
+                      on-value-item-changed="[[$listeners.selectValueItem15]]" required="true"
+                      disabled="[[ $variables.displayoptions.fileds ]]">
+                        <template slot="collectionTemplate" data-oj-as="collection"> 
+                        <!-- <oj-label for="oj-input-text-651077415-3" style="font-weight: bold;">Search</oj-label>  -->
+                        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                          vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                          columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                          columns='[{"headerText":"Employee Number","field":"person_number"},{"headerText":"Employee Name","field":"person_full_name"},{"headerText":"Resource Name","field":"resource_name"}]'
+                          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}">
+                        </oj-table>
+                      </template></oj-select-single>
+                  <oj-input-text label-hint="* Supervisor" style="margin-bottom:6px"
+                    value="{{ $variables.postworkorder.supervisor }}" required="true" disabled="true">
+                  </oj-input-text>
+                  <oj-text-area label-hint="Work Carried Remarks" length.max="3000" resize-behavior="both"
+                    value="{{ $variables.postworkorder.work_carried_remarks }}"
+                    disabled="[[ $variables.displayoptions.fileds ]]"></oj-text-area>
+                </oj-form-layout>
+                </oj-validation-group>
+              </div>
+            </div>
+          </div>
+          <!--TAB2  -->
+
+          <div slot="Operations-tab2" id="Operations-tab-panel2" role="tabpanel2" aria-labelledby="Operations-tab2">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <div class="oj-flex oj-helper-justify-content-right">
+                  <oj-button chroming="outlined" label="Add" on-oj-action="[[$listeners.buttonAction3]]" title="Add"
+                    :hidden="[[ $variables.displayoptions.fileds ]]">
+
+                    <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]" width="15"
+                      height="15">
+                  </oj-button>
+                </div>
+                <div id="sampleDemo" style="" class="demo-padding demo-container">
+                  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                    <div id="mainContent">
+                      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                        selection-mode.row="single" data="[[ $variables.operationTable ]]" id="searchSSTable"
+                        display="grid" selection-mode.column="single" columns='{{$variables.operationColumns}}'
+                        horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+                        on-first-selected-row-changed="[[$listeners.searchSSTableFirstSelectedRow]]">
+                        <!-- edit -->
+                        <!-- <template slot="checklist">
+                          
+                        </template> -->
+                        <template slot="Edit">
+
+                          <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction6]]" title="Edit">
+                            <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                          </oj-button>
+                          <oj-button chroming="borderless" title="Delete"
+                            disabled="[[ $variables.displayoptions.fileds ]]">
+                            <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                          </oj-button>
+                          <oj-button on-oj-action="[[$listeners.buttonAction45]]" class="" chroming="borderless"
+                            title="Check List">
+                            <img slot="startIcon" :src="[[ $application.path + 'resources/images/clipboard.png' ]]"
+                              width="15" height="15">
+                          </oj-button>
+                           <oj-button class="" chroming="borderless" title="Pick Material"
+                             on-oj-action="[[$listeners.buttonAction53]]"
+                             disabled="[[ (($current.row.oic_direc_pr_status==='S') || ($current.row.oic_moveorder_status==='S'))?true:false ]]">
+                            <img slot="startIcon" width="15" height="15"
+                              :src="[[ $application.path + 'resources/images/pick-list (1).png' ]]">
+                          </oj-button>
+                           <oj-button class="" chroming="borderless" title="Release Work Order"
+                             on-oj-action="[[$listeners.buttonAction52]]"
+                             disabled="[[ ($current.row.oic_sup_pr_status==='S')?true:false ]]">
+                            <img slot="startIcon"
+                              width="15" height="15" :src="[[ $application.path + 'resources/images/product.png' ]]">
+                          </oj-button>
+                        </template>
+                        <template slot="cfd_date">
+                          <oj-input-date-time value="[[$current.data]]" readonly="true"
+                            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy HH:mm"}}'>
+                          </oj-input-date-time>
+                        </template>
+                        <template slot="document">
+                          <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction46]]"><img :src="[[ $application.path + 'resources/images/doc.png' ]]" width="15"
+                                         height="15"></oj-button>
+                        </template>
+                        <oj-paging-control id="paging" style="margin-left:38%" class="oj-sm-width-full" page-size="25"
+                          slot="bottom" data="[[ $variables.operationTable ]]">
+                        </oj-paging-control>
+                      </oj-table>
+                      <!-- Spare Details -->
+                      <oj-bind-if
+                        test="[[ $variables.operationLinehide==='Y' && $variables.operationHideVar==='In-House' ]]">
+                        <!-- <div> -->
+                        <!-- <oj-button style="margin-left:95%">Add</oj-button> -->
+                        <!-- </div> -->
+                        <oj-collapsible expanded="true">
+                          <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Spare
+                            Parts</h1>
+                          <div class="oj-flex oj-helper-justify-content-right">
+                            <oj-button label="Add" on-oj-action="[[$listeners.buttonAction10]]">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"
+                                width="15" height="15">
+                            </oj-button>
+                          </div>
+                          <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                            selection-mode.row="single" data="[[ $variables.PopSpareTable ]]" id="searchSSTable"
+                            display="grid" selection-mode.column="single" columns='{{$variables.PopSpareColumn}}'
+                            horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                            <template slot="Edit">
+
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction14]]"
+                                title="Edit">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction23]]"
+                                title="Delete">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                            </template>
+                            <template slot="alternate">
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction7]]"
+                                title="Alternate Item">
+                                <img slot="startIcon" width="15" height="15" :src="[[ $application.path + 'resources/images/search.png' ]]">
+                              </oj-button>
+                            </template>
+                            <oj-paging-control id="paging" style="margin-left:38%" class="oj-sm-width-full"
+                              page-size="25" slot="bottom" data="[[ $variables.PopSpareTable ]]">
+                            </oj-paging-control>
+                          </oj-table>
+                          <div>
+                          </div>
+                        </oj-collapsible>
+                        <oj-collapsible expanded="true">
+                          <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">
+                            Consumables</h1>
+                          <div class="oj-flex oj-helper-justify-content-right">
+                            <oj-button label="Add" on-oj-action="[[$listeners.buttonAction11]]" title="Add">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"
+                                width="15" height="15">
+                            </oj-button>
+                          </div>
+                          <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                            selection-mode.row="single" data="[[ $variables.PopConsumablesTable ]]" id="searchSSTable"
+                            display="grid" selection-mode.column="single" columns='{{$variables.PopConsumablesColumn}}'
+                            horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                            <template slot="Edit">
+
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction15]]"
+                                title="Edit">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction26]]"
+                                title="Delete">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                            </template>
+                            <template slot="alternate">
+                              <oj-button chroming="borderless" title="Alternate Item"
+                                on-oj-action="[[$listeners.buttonAction8]]">
+                                <img slot="startIcon" width="15" height="15" :src="[[ $application.path + 'resources/images/search.png' ]]">
+                              </oj-button>
+                            </template>
+                            <oj-paging-control id="paging" style="margin-left:38%" class="oj-sm-width-full"
+                              page-size="25" slot="bottom" data="[[ $variables.PopConsumablesTable ]]">
+                            </oj-paging-control>
+
+                          </oj-table>
+                          <div>
+                          </div>
+                        </oj-collapsible>
+                        <oj-collapsible expanded="true">
+                          <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Direct
+                            Purchase</h1>
+                          <div class="oj-flex oj-helper-justify-content-right">
+                            <oj-button label="Sync" style="margin-right:6px;"
+                              on-oj-action="[[$listeners.buttonAction51]]">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/cloud.png' ]]"
+                                width="15">
+                            </oj-button>
+                            <oj-button label="Add" on-oj-action="[[$listeners.buttonAction12]]" title="Add">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]">
+                            </oj-button>
+                          </div>
+                          <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                            selection-mode.row="single" data="[[ $variables.PopupDirectTable ]]" id="searchSSTable"
+                            display="grid" selection-mode.column="single" columns='{{$variables.PopUpDirectColumn}}'
+                            horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                            <template slot="cfd_date">
+                              <oj-input-date value="[[$current.data]]" readonly="true"
+                                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+                            </template>
+
+
+                            <template slot="Edit">
+
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction40]]"
+                                title="Edit">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction42]]"
+                                title="Delete">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                            </template>
+                            <oj-paging-control id="paging" style="margin-left:38%" class="oj-sm-width-full"
+                              page-size="25" slot="bottom" data="[[ $variables.PopupDirectTable ]]">
+                            </oj-paging-control>
+                          </oj-table>
+                          <div>
+                          </div>
+                        </oj-collapsible>
+                        <oj-collapsible expanded="true">
+                          <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Labours
+                          </h1>
+                          <div class="oj-flex oj-helper-justify-content-right">
+                            <oj-button label="Add" on-oj-action="[[$listeners.buttonAction13]]" title="Add">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]">
+                            </oj-button>
+                          </div>
+                          <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                            selection-mode.row="single" data="[[ $variables.PopLabourTable ]]" id="searchSSTable"
+                            display="grid" selection-mode.column="single" columns='{{$variables.PopLabourColumn}}'
+                            horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                            <template slot="Edit">
+
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction16]]"
+                                title="Edit">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction27]]"
+                                title="Delete">
+                                <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                              </oj-button>
+                            </template>
+                            <template slot="alternate">
+                              <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction9]]">
+                                <img slot="startIcon" width="15" height="15" :src="[[ $application.path + 'resources/images/search.png' ]]">
+                              </oj-button>
+                            </template>
+                            <oj-paging-control id="paging" style="margin-left:38%" class="oj-sm-width-full"
+                              page-size="25" slot="bottom" data="[[ $variables.PopLabourTable ]]">
+                            </oj-paging-control>
+                          </oj-table>
+                    </div>
+                  </div>
+                  </oj-collapsible>
+                  </oj-bind-if>
+                  <!-- Supplier Type -->
+                  <oj-bind-if
+                    test='[[ $variables.operationLinehide==="Y" && $variables.operationHideVar==="Supplier" ]]'>
+                    <oj-collapsible expanded="true">
+                      <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Outside
+                        Processing Item</h1>
+                      <div class="oj-flex oj-helper-justify-content-right">
+                        <oj-button label="Add" on-oj-action="[[$listeners.buttonAction32]]" title="Add"
+                          :hidden="[[ $variables.displayoptions.fileds ]]">
+                          <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"
+                            width="15" height="15">
+                        </oj-button>
+                      </div>
+                      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                        selection-mode.row="single" data="[[ $variables.PopSupplierTable ]]" id="searchSSTable"
+                        display="grid" selection-mode.column="single" columns='{{$variables.PopsupplierColumn}}'
+                        horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                        <template slot="Edit">
+
+                          <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction35]]" title="Edit"
+                            disabled="[[ $variables.displayoptions.fileds ]]">
+                            <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                          </oj-button>
+                          <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction36]]" title="Delete"
+                            disabled="[[ $variables.displayoptions.fileds ]]">
+                            <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                          </oj-button>
+                        </template>
+                        <template slot="alternate">
+                          <oj-button chroming="borderless">
+                            <img slot="startIcon" width="15" height="15" :src="[[ $application.path + 'resources/images/search.png' ]]">
+                          </oj-button>
+                        </template>
+                         <template slot="cfd_date">
+                          <oj-input-date-time value="[[$current.data]]" readonly="true"
+                            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy HH:mm"}}'>
+                          </oj-input-date-time>
+                        </template>
+                        <oj-paging-control id="paging" style="margin-left:38%" class="oj-sm-width-full" page-size="25"
+                          slot="bottom" data="[[ $variables.PopSupplierTable ]]">
+                        </oj-paging-control>
+                      </oj-table>
+                    </oj-collapsible>
+                  </oj-bind-if>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+          <!-- </div> -->
+          <!--TAB3  -->
+          <div slot="WorkEstimate-tab3" id="WorkEstimate-tab-panel3" role="tabpanel3"
+            aria-labelledby="WorkEstimate-tab3">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <div style="display:flex; justify-content:flex-end;">
+                  <oj-button style="resetBtn margin-left:0.5%;margin-right:0.5%;" chroming="outlined" title="Print">
+                    <oj-bind-text value="Print"></oj-bind-text>
+                    <span class="oj-ux-ico-print" slot="startIcon"></span>
+                  </oj-button>
+                  <oj-button style="resetBtn margin-left:0.5%;margin-right:0.5%;" chroming="outlined" title="Costing"
+                    on-oj-action="[[$listeners.buttonAction54]]">
+                    <oj-bind-text value="Costing"></oj-bind-text>
+                  </oj-button>
+                </div>
+                <oj-collapsible expanded="true">
+                  <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Spare Parts</h1>
+                  <div id="sampleDemo" style="" class="demo-padding demo-container">
+                    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                      <div id="mainContent">
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                          selection-mode.row="single" data="[[ $variables.workestimateADP ]]" id="searchSSTable"
+                          display="grid" selection-mode.column="single" columns='{{$variables.SparePartsColumn}}'
+                          horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                          <!-- <oj-paging-control slot="bottom" data="[[ $variables.workestimateADP ]]" page-size="10"></oj-paging-control> -->
+                          <template slot="spareparts_supply">
+                            <oj-combobox-one value="{{ $current.row.spareparts_supply }}"
+                              :id="[['spareparts_supply_template'+$current.index]]" label-hint="" placeholder="Supply">
+                              <oj-option value="Instock">Instock</oj-option>
+                              <oj-option value="Newpurchase">New - Purchase</oj-option>
+                            </oj-combobox-one>
+                          </template>
+
+                          <!-- on-value-changed="[[$listeners.sparepartsSourcedTemplateValue]]" 
+             on-value-changed="[[$listeners.sparepartsSourcedTemplateValue2]]"  -->
+                          <template slot="spareparts_sourced">
+                            <oj-combobox-one label-hint="" placeholder="Sourced"
+                              value="{{ $current.row.spareparts_sourced }}"
+                              :id="[['spareparts_sourced_template'+$current.index]]"
+                              on-value-changed="[[$listeners.sparepartsSourcedTemplateValue3]]">
+                              <oj-option value="Local">Local</oj-option>
+                              <oj-option value="Overseas">Overseas</oj-option>
+                            </oj-combobox-one>
+                          </template>
+
+                          <template slot="unitcost">
+                            <oj-input-number value="[[$current.data]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalcost">
+                            <oj-input-number value="[[$current.data]]" :id="[['spareparts_total_cost'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargeamount">
+                            <oj-input-number value="{{ $current.row.spareparts_charge_amount }}"
+                              :id="[['spareparts_charge_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalamount">
+                            <oj-input-number value="[[$current.data]]"
+                              :id="[['spareparts_total_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargefee">
+                            <oj-input-number value="{{ $current.row.spareparts_charge_fees }}"
+                              :id="[['spareparts_charge_fees'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"standard"},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right"
+                              on-value-changed="[[$listeners.sparepartsChargeFeesValue]]">
+                            </oj-input-number>
+                          </template>
+                        </oj-table>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <br>
+                    <oj-label style="margin-left:68%; font-weight: bold;color:#013766" class="">
+                      <oj-bind-text value="[['Estimated Parts Sub Total  : ']]"></oj-bind-text>
+                      <!-- <oj-input-number label-hint=" "
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                        class="oj-form-control-text-align-right" readonly="true"
+                        value="{{ $variables.spareparts_sub_total_amt }}"></oj-input-number> -->
+                      <!-- <oj-sp-input-currency></oj-sp-input-currency> -->
+                      <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.spareparts_sub_total_amt }}"></oj-input-number>
+                        
+                    </oj-label>
+                    <oj-label style="margin-left:68%; font-weight: bold;color:#013766" class="">
+                      <oj-bind-text value="[['Actual Parts Sub Total  : ']]"></oj-bind-text>
+                    </oj-label>
+                    <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.act_sub_total_amt.spareparts_actual_total_amount }}"></oj-input-number>
+                  </div>
+                </oj-collapsible>
+                <oj-collapsible expanded="true">
+                  <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Consumables</h1>
+                  <div id="sampleDemo" style="" class="demo-padding demo-container">
+                    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                      <div id="mainContent">
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                          selection-mode.row="single" data="[[ $variables.consumablesTableADP ]]" id="searchSSTable"
+                          display="grid" selection-mode.column="single" columns='{{$variables.ConsumablesColumn}}'
+                          horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                          <!-- <oj-paging-control slot="bottom" data="[[ $variables.workestimateADP ]]"></oj-paging-control> -->
+                          <template slot="consumable_supply">
+                            <oj-combobox-one label-hint="" placeholder="Supply"
+                              value="{{ $current.row.consumable_supply}}"
+                              :id="[['consumable_supply_template'+$current.index]]">
+                              <oj-option value="Instock">Instock</oj-option>
+                              <oj-option value="Newpurchase">New - Purchase</oj-option>
+                            </oj-combobox-one>
+                          </template>
+                          <template slot="consumable_sourced">
+                            <oj-combobox-one label-hint="" placeholder="Sourced"
+                              value="{{ $current.row.consumable_sourced}}"
+                              :id="[['consumable_sourced_template'+$current.index]]"
+                              on-value-changed="[[$listeners.consumableSourcedTemplateValue]]">
+                              <oj-option value="Local">Local</oj-option>
+                              <oj-option value="Overseas">Overseas</oj-option>
+                            </oj-combobox-one>
+                          </template>
+                          <template slot="unitcost">
+                            <oj-input-number value="[[$current.data]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalcost">
+                            <oj-input-number value="[[$current.data]]" :id="[['consumables_total_cost'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargeamount">
+                            <oj-input-number value="[[$current.data]]"
+                              :id="[['consumable_charge_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalamount">
+                            <oj-input-number value="[[$current.data]]"
+                              :id="[['consumable_total_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargefee">
+                            <oj-input-number value="[[$current.data]]" :id="[['consumable_charge_fees'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"standard"},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right"
+                              on-value-changed="[[$listeners.consumableChargeFeesValue]]">
+                            </oj-input-number>
+                          </template>
+                        </oj-table>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <br>
+                    <oj-label style="margin-left:61%; font-weight: bold;color:#013766">Estimated Consumables Sub
+                      Total :
+                      <!-- <oj-input-number label-hint=" "
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        value="{{ $variables.consumable_total_amount }}"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                        class="oj-form-control-text-align-right" readonly="true"></oj-input-number> -->
+                        <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: medium; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.consumable_total_amount }}"></oj-input-number>
+                    </oj-label>
+                    <oj-label style="margin-left:61%; font-weight: bold;color:#013766">Actual Consumables Sub
+                      Total :
+                      <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: medium; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.act_sub_total_amt.consumable_actual_total_amount }}"></oj-input-number></oj-label>
+                  </div>
+                </oj-collapsible>
+                <oj-collapsible expanded="true">
+                  <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Direct Purchase
+                  </h1>
+                  <div id="sampleDemo" style="" class="demo-padding demo-container">
+                    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                      <div id="mainContent">
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                          selection-mode.row="single" data="[[ $variables.DirectPurchaseADP ]]" id="searchSSTable"
+                          display="grid" selection-mode.column="single" columns='{{$variables.DirectPurchaseColumn}}'
+                          horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                          <template slot="dp_supply">
+                            <oj-combobox-one label-hint="" placeholder="Supply" value="{{ $current.row.dp_supply}}"
+                              :id="[['dp_supply_template'+$current.index]]">
+                              <oj-option value="Instock">Instock</oj-option>
+                              <oj-option value="Newpurchase">New - Purchase</oj-option>
+                            </oj-combobox-one>
+                          </template>
+                          <template slot="dp_sourced">
+                            <oj-combobox-one label-hint="" placeholder="Sourced" value="{{ $current.row.dp_sourced}}"
+                              :id="[['dp_sourced_template'+$current.index]]"
+                              on-value-changed="[[$listeners.dpSourcedTemplateValue]]">
+                              <oj-option value="Local">Local</oj-option>
+                              <oj-option value="Overseas">Overseas</oj-option>
+                            </oj-combobox-one>
+                          </template>
+                          <template slot="unitcost">
+                            <oj-input-number value="[[$current.data]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalcost">
+                            <oj-input-number value="[[$current.data]]" :id="[['db_total_cost'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargeamount">
+                            <oj-input-number value="[[$current.data]]" :id="[['db_charge_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalamount">
+                            <oj-input-number value="[[$current.data]]" :id="[['db_total_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargefee">
+                            <oj-input-number value="[[$current.data]]" :id="[['db_charge_fees'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"standard"},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right"
+                              on-value-changed="[[$listeners.dbChargeFeesValue]]">
+                            </oj-input-number>
+                          </template>
+                        </oj-table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <br>
+                    <oj-label style="margin-left:59%; font-weight: bold;color:#013766">Estimated Direct Purchase
+                      Sub Total :
+                      <!-- <oj-input-number label-hint=" "
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        value="{{ $variables.db_total_amount }}"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                        class="oj-form-control-text-align-right" readonly="true"></oj-input-number> -->
+                        <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.db_total_amount }}"></oj-input-number>
+                    </oj-label>
+                    <oj-label style="margin-left:59%; font-weight: bold;color:#013766">Actual Direct Purchase
+                      Sub Total :
+                       <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.act_sub_total_amt.directpurchase_actual_total_amount }}"></oj-input-number>
+                    </oj-label>
+                  </div>
+                </oj-collapsible>
+                <oj-collapsible expanded="true">
+                  <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Resource</h1>
+                  <div id="sampleDemo" style="" class="demo-padding demo-container">
+                    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                      <div id="mainContent">
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                          selection-mode.row="single" data="[[ $variables.ResourceTableADP ]]" id="searchSSTable"
+                          display="grid" selection-mode.column="single" columns='{{$variables.ResourcesColumn}}'
+                          horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                          <template slot="unitcost">
+                            <oj-input-number value="[[$current.data]]"
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true"
+                              converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+                          </template>
+                          <template slot="totalcost">
+                            <oj-input-number value="[[$current.row.labour_amount]]" :id="[['labour_amount'+$current.index]]"
+                              class="oj-form-control-text-align-right oj-helper-text-align-right"
+                              on-value-changed="[[$listeners.inputNumberValue]]" readonly="true"
+                              converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+                          </template>
+                        </oj-table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <br>
+                    <oj-label style="margin-left:64%; font-weight: bold;color:#013766">Estimated Resource Sub
+                      Total :
+                   <!-- <oj-input-number label-hint=" "
+                        style="width:10.9rem;font-size: larger; font-weight: bold;"
+                        value="{{ $variables.subcost.resource_SubTotal }}"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                        class="oj-form-control-text-align-right" readonly="true"></oj-input-number> -->
+                        <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.subcost.resource_SubTotal }}"></oj-input-number>
+                    </oj-label>
+                    <oj-label style="margin-left:64%; font-weight: bold;color:#013766">Actual Resource Sub
+                      Total :
+                      <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.act_sub_total_amt.actual_labour_amount }}"></oj-input-number>
+                    </oj-label>
+                  </div>
+                </oj-collapsible>
+                <oj-collapsible expanded="true">
+                  <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Supplier</h1>
+                  <div id="sampleDemo" style="" class="demo-padding demo-container">
+                    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                      <div id="mainContent">
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                          selection-mode.row="single" data="[[ $variables.EstimateSupplierADP ]]" id="searchSSTable"
+                          display="grid" selection-mode.column="single" columns="{{$variables.EstimateSuppliercolumns}}"
+                          horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+                          <template slot="supplier_supply">
+                            <oj-combobox-one label-hint="" placeholder="Supply"
+                              value="{{ $current.row.supplier_supply}}"
+                              :id="[['supplier_supply_template'+$current.index]]"
+                              disabled="[[ $variables.displayoptions.fileds ]]">
+                              <oj-option value="Instock">Instock</oj-option>
+                              <oj-option value="Newpurchase">New - Purchase</oj-option>
+                            </oj-combobox-one>
+                          </template>
+                          <template slot="supplier_sourced">
+                            <oj-combobox-one label-hint="" placeholder="Sourced"
+                              value="{{ $current.row.supplier_sourced}}"
+                              :id="[['supplier_sourced_template'+$current.index]]"
+                              disabled="[[ $variables.displayoptions.fileds ]]">
+                              <oj-option value="Local">Local</oj-option>
+                              <oj-option value="Overseas">Overseas</oj-option>
+                            </oj-combobox-one>
+                          </template>
+                          <template slot="chargefee">
+                            <oj-input-number value="[[$current.row.supplier_charge_fees]]"
+                              :id="[['supplier_charge_fees'+$current.index]]" style="border:1px solid"
+                              class="oj-form-control-text-align-right oj-helper-text-align-right"
+                              on-value-changed="[[$listeners.supplierChargeFeesValue]]"
+                              disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-number>
+                          </template>
+                          <template slot="unitcost">
+                            <oj-input-number value="[[$current.data]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalcost">
+                            <oj-input-number value="[[$current.data]]" :id="[['supplier_total_cost'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="chargeamount">
+                            <oj-input-number value="[[$current.data]]" :id="[['supplier_charge_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <template slot="totalamount">
+                            <oj-input-number value="[[$current.data]]" :id="[['supplier_total_amount'+$current.index]]"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true">
+                            </oj-input-number>
+                          </template>
+                          <!-- <template slot="chargefee">
+           <oj-input-number value="[[$current.data]]" :id="[['supplier_charge_fees'+$current.index]]"
+        converter='{"options":{"decimalFormat":"standard"},"type":"number"}'
+        class="oj-form-control-text-align-right oj-helper-text-align-right" readonly="true"></oj-input-number>
+       </template> -->
+                        </oj-table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <br>
+                    <oj-label style="margin-left:59%; font-weight: bold;color:#013766"> Estimated Supplier Sub
+                      Total :
+                      <!-- <oj-input-number label-hint=" "
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        value="{{ $variables.supplier_total_amount }}"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                        class="oj-form-control-text-align-right" readonly="true"></oj-input-number> -->
+                        <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.supplier_total_amount }}"></oj-input-number>
+                    </oj-label>
+                    <oj-label style="margin-left:59%; font-weight: bold;color:#013766">Actual Supplier Sub
+                      Total :
+                       <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.act_sub_total_amt.supplier_actual_total_amount }}"></oj-input-number>
+                    </oj-label>
+                  </div>
+                </oj-collapsible>
+                <br>
+                <div id="sampleDemo" style="" class="demo-padding demo-container">
+                  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+                    <div id="mainContent">
+                      <!-- <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+         selection-mode.row="single" data="[[ $variables.GrandTotalTable ]]" id="searchSSTable" display="grid"
+          selection-mode.column="single" horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+          </oj-table> -->
+                      <!-- <oj-action-card style="margin-left:50%"> -->
+                     <div >
+
+                   <div style="width:50%; float:left">
+                <oj-form-layout label-edge="start" label-width="38%" class="oj-forme-control"
+                        user-assistance-density="compact">
+                        <oj-input-number label-hint="Spare Parts,Consumable,Direct Purchase Total "
+                          style="margin-bottom:6px" disabled="true" value="{{ $variables.parts_consumable_total }}"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"></oj-input-number>
+                        <oj-input-number label-hint="Outside Supplier Fee" disabled="true" style="margin-bottom:6px"
+                          value="{{ $variables.supplier_sub_total_cost }}"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"></oj-input-number>
+                        <oj-input-number label-hint="Labour Charge" disabled="true" style="margin-bottom:6px"
+                          value="{{ $variables.subcost.resource_SubTotal }}"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"></oj-input-number>
+                        <oj-input-number label-hint="Charge Fee" style="margin-bottom:6px" disabled="true"
+                          value="{{ $variables.sub_total_chrg_amt }}"
+                          on-value-changed="[[$listeners.inputNumberValue3]]"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"></oj-input-number>
+                        <oj-input-number label-hint="All Inclusive" style="margin-bottom:6px" disabled="true"
+                          value="{{ $variables.Allincusive }}"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"></oj-input-number>
+                        <oj-input-number label-hint="Administration Charges" style="margin-bottom:6px"
+                          on-value-changed="[[$listeners.inputNumberValue4]]"
+                          value="{{ $variables.administration_chrg }}"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end" disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-number>
+                        <oj-input-number style="margin-bottom:6px" label-hint="Technical Inspection charges"
+                          value="{{ $variables.technical_inspection_chrg }}"
+                          on-value-changed="[[$listeners.inputNumberValue2]]"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end" disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-number>
+                        <oj-input-number label-hint="Miscellaneous Charges"
+                          value="{{ $variables.miscellaneous_charges }}"
+                          on-value-changed="[[$listeners.inputNumberValue5]]"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end" disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-number>
+                      </oj-form-layout>
+</div >
+<div style="width:50%; float:left">
+                <oj-form-layout label-edge="start" label-width="38%" class="oj-forme-control"
+                        user-assistance-density="compact">
+                        <oj-input-number label-hint="Actual Spare Parts,Consumable,Direct Purchase Total "
+                          style="margin-bottom:6px" disabled="true"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"
+                          value="{{ $variables.Actual_parts_total.parts_consumable_total }}"></oj-input-number>
+                        <oj-input-number label-hint="Actual Outside Supplier Fee" disabled="true"
+                          style="margin-bottom:6px" converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"
+                          value="{{ $variables.Actual_parts_total.supplier_service_fees }}"></oj-input-number>
+                        <oj-input-number label-hint="Actual Labour Charge" disabled="true" style="margin-bottom:6px"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"
+                          value="{{ $variables.Actual_parts_total.labour_service }}"></oj-input-number>
+                        <oj-input-number label-hint="Actual Charge Fee" style="margin-bottom:6px" disabled="true"
+                          on-value-changed="[[$listeners.inputNumberValue3]]"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"
+                          value="{{ $variables.Actual_parts_total.actual_charge_fee }}"></oj-input-number>
+                        <oj-input-number label-hint="Actual All Inclusive" style="margin-bottom:6px" disabled="true"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end"
+                          value="{{ $variables.Actual_parts_total.actual_all_inclusive }}"></oj-input-number>
+                        <oj-input-number label-hint="Actual Administration Charges" style="margin-bottom:6px"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end" disabled="[[ $variables.displayoptions.fileds ]]"
+                          on-value-changed="[[$listeners.inputNumberValue6]]"
+                          value="{{ $variables.act_administration_charge }}"></oj-input-number>
+                        <oj-input-number style="margin-bottom:6px" label-hint="Actual Technical Inspection charges"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end" disabled="[[ $variables.displayoptions.fileds ]]"
+                          value="{{ $variables.act_tech_inspection_chrg }}"
+                          on-value-changed="[[$listeners.inputNumberValue7]]"></oj-input-number>
+                        <oj-input-number label-hint="Actual Miscellaneous Charges"
+                          converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                          class="oj-form-control-text-align-end" disabled="[[ $variables.displayoptions.fileds ]]"
+                          value="{{ $variables.act_miscellaneous_charges }}"
+                          on-value-changed="[[$listeners.inputNumberValue8]]"></oj-input-number>
+                      </oj-form-layout>
+</div >
+</div >  
+                     
+                     
+       
+                      <!-- </oj-action-card> -->
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <br>
+                  <oj-label style="margin-left:70%; font-weight: bold;color:#013766">Estimated Grand Total :
+                    <!-- <oj-input-number label-hint=" "
+                      style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                      value="{{ $variables.grand_total }}"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                      class="oj-form-control-text-align-right" readonly="true"></oj-input-number> -->
+                      <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.grand_total }}"></oj-input-number>
+                  </oj-label>
+                  <oj-label style="margin-left:70%; font-weight: bold;color:#013766">Actual Grand Total :
+                  <oj-input-number class="oj-form-control-text-align-right" readonly="true"
+                        style="width:10.9rem;font-size: larger; font-weight: bold;color:#013766;"
+                        converter='{"options":{"style":"currency","currency":"OMR","currencyDisplay":"code","currencyFormat":"standard"},"type":"number"}'
+                        label-hint=" " value="{{ $variables.actual_grant_total }}"></oj-input-number>
+                  </oj-label>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+          <!--TAB4  -->
+          <div slot="receivingandhandover-tab4" id="receivingandhandover-tab4" role="tabpanel4"
+            aria-labelledby="receivingandhandover-tab4">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <div class="oj-panel oj-selected">
+                  <oj-validation-group id="handover">
+                  <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">Equipment/Vechile/Asset
+                    Information</h1>
+                  <oj-form-layout label-edge="start" columns="3" class="oj-forme-control" direction="column"
+                    label-width="40%" user-assistance-density="compact" style="margin-left:-90px">
+                    <oj-input-text label-hint="Fleet" value="{{ $variables.postHandover.fleet }}"
+                      style="margin-bottom:6px" disabled="true"></oj-input-text>
+                    <oj-input-text label-hint="Equipment Vechile Type" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.vehicle_type }}" required="true"
+                      disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-text>
+                    <!-- <oj-input-text label-hint="Dept Section" value="{{ $variables.postHandover.dept_section }}"
+                      required="[[ $variables.postHandover.fleet!=='' ]]">
+                    </oj-input-text> -->
+                    <oj-select-single label-hint="* Dept Section" value="{{ $variables.postHandover.dept_section }}"
+                      required="[[ $variables.postHandover.fleet!=='' ]]"
+                      data="[[$variables.getLovLookupValuesListSDP10]]" item-text="lookup_value_name_disp"
+                      disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+                    <!--<oj-sample-checkbox-switch  label-hint="Routine" value="{{ $variables.postHandover.routine== 'Y'? true:false }}"
+           on-click="[[$listeners.booleanCheckboxComponentClick]]"></oj-sample-checkbox-switch>
+          <oj-sample-checkbox-switch label-hint="Non Routine" value="{{ $variables.postHandover.non_routine== 'Y'? true:false }}"></oj-sample-checkbox-switch> -->
+
+
+                  </oj-form-layout>
+                </div>
+                <br>
+                <div class="oj-panel oj-selected">
+                  <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">Handed Over To GSE W/Shop</h1>
+                  <oj-form-layout label-edge="start" columns="2" class="oj-forme-control" direction="column"
+                    label-width="37%" user-assistance-density="compact" style="margin-left:-40px">
+                    <oj-input-number label-hint="* Staff Number"
+                      value="{{ $variables.postHandover.handed_over_to_gse_person_number }}"
+                      required="[[ !($variables.postHandover.handed_over_to_gse_w_shop_name ==='') ]]"
+                      style="margin-bottom:6px" disabled="true"
+                      converter='{"options":{"useGrouping":false},"type":"number"}'
+                      class="oj-form-control-text-align-right"></oj-input-number>
+                    <oj-input-text label-hint="Name"
+                      value="{{ $variables.postHandover.handed_over_to_gse_w_shop_name }}" style="margin-bottom:6px"
+                      disabled="true"></oj-input-text>
+                    <!-- <oj-select-single label-hint="* Staff Number"
+                      value="{{ $variables.postHandover.handed_over_to_gse_person_number }}"
+                      required="[[ !($variables.postHandover.handed_over_to_gse_w_shop_name ==='') ]]"
+                      style="margin-bottom:6px" data="[[$variables.getLovEmployeedetailsListSDP]]"
+                      item-text="person_number" on-value-item-changed="[[$listeners.selectValueItem3]]"></oj-select-single> -->
+                    <oj-input-date label-hint="* Date" style="margin-bottom:6px"
+                      converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                      value="{{ $variables.postHandover.handed_over_to_gse_w_shop_date }}"
+                      required="[[ $variables.postHandover.handed_over_to_gse_person_number!==null ]]" disabled="true"></oj-input-date>
+                    <oj-input-time label-hint="* Time In"
+                      value="{{ $variables.postHandover.handed_over_to_gse_w_shop_time_in }}"
+                      required="[[ !($variables.postHandover.handed_over_to_gse_w_shop_name ==='') ]]" disabled="true"></oj-input-time>
+                  </oj-form-layout>
+                  <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">Received By GSE W/Shop</h1>
+
+                  <oj-form-layout label-edge="start" label-width="50%" user-assistance-density="compact" style="margin-left:-21px;">
+                    <oj-text-area label-hint="Equipment Vechile Visual Inspection" length.max="3000"
+                      resize-behavior="both" value="{{ $variables.postHandover.recived_by_gse_inspection }}"
+                      style="margin-bottom:6px;" disabled="[[ $variables.displayoptions.fileds ]]" ></oj-text-area>
+                  </oj-form-layout>
+                  <oj-form-layout label-edge="start" columns="2" class="oj-forme-control" direction="column"
+                    label-width="37%" user-assistance-density="compact" style="margin-left:-40px">
+                    <oj-input-number label-hint="* Staff Number" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.recived_by_gse_person_number }}"
+                      required="[[ !($variables.postHandover.recived_by_gse_name ==='') ]]" disabled="true"
+                      converter='{"options":{"useGrouping":false},"type":"number"}'
+                      class="oj-form-control-text-align-right"></oj-input-number>
+                    <oj-input-text label-hint="Name" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.recived_by_gse_name }}" disabled="true"></oj-input-text>
+                    <oj-input-date label-hint="* Date" style="margin-bottom:6px"
+                      converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                      value="{{ $variables.postHandover.recived_by_gse_date }}"
+                      required="[[ !($variables.postHandover.recived_by_gse_name==='') ]]" disabled="true"></oj-input-date>
+                    <oj-input-time label-hint="* Time In" value="{{ $variables.postHandover.recived_by_gse_time_in }}"
+                      required="[[ !($variables.postHandover.recived_by_gse_name ==='') ]]" disabled="true">
+                    </oj-input-time>
+                  </oj-form-layout>
+
+                </div>
+                <br>
+                <oj-bind-if test="[[ $variables.postworkorder.work_order_status==='Pending Approval' ]]">
+                <div class="oj-panel oj-selected">
+                  <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">Handed Over Unit Back TO User
+                    Department After Job Completion</h1>
+                  <oj-form-layout label-edge="start" columns="2" class="oj-forme-control" direction="column"
+                    label-width="37%" user-assistance-density="compact" style="margin-left:-40px" >
+                    <oj-input-number label-hint="* Staff Number" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.handed_over_by_gse_person_number }}"
+                      required="[[ !($variables.postHandover.handed_over_name ==='') ]]" disabled="true"
+                      converter='{"options":{"useGrouping":false},"type":"number"}'
+                      class="oj-form-control-text-align-right"></oj-input-number>
+                    <oj-input-text label-hint="Name" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.handed_over_name }}" disabled="true"></oj-input-text>
+                    <oj-input-date label-hint="* Date" style="margin-bottom:6px"
+                      converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                      value="{{ $variables.postHandover.handed_over_date }}"
+                      required="[[ !($variables.postHandover.handed_over_name ==='') ]]" disabled="true"></oj-input-date>
+                    <oj-input-time label-hint="* Time In" value="{{ $variables.postHandover.handed_over_time_in }}"
+                      required="[[ !($variables.postHandover.handed_over_name!=null) ]]" disabled="true">
+                    </oj-input-time>
+                  </oj-form-layout>
+                  <br>
+                  <oj-form-layout label-edge="start" label-width="50%" user-assistance-density="compact" style="margin-left:-21px;">
+                    <oj-text-area resize-behavior="both" length.max="3000"
+                      label-hint="Equipment Visual Inspection Remarks"
+                      value="{{ $variables.postHandover.recived_by_gse_inspection }}" style="margin-bottom:6px"
+                      disabled="[[ $variables.displayoptions.fileds ]]" ></oj-text-area>
+                  </oj-form-layout>
+                  <oj-form-layout label-edge="start" columns="2" direction="column" label-width="50%" style="margin-left:-40px"
+                    class="oj-forme-control" user-assistance-density="compact">
+                    <oj-input-text label-hint="Handed Over By GSE Staff Name" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.handed_over_by_gse_name }}" disabled="true"></oj-input-text>
+                    <oj-input-text label-hint="Received By User Dept Staff Name" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.received_by_dept_name }}" disabled="true"></oj-input-text>
+                    <oj-input-text label-hint="Received By Customer"
+                      value="{{ $variables.postHandover.received_by_customer }}" disabled="true"></oj-input-text>
+                    <oj-input-text label-hint="Staff Number" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.handed_over_by_gse_person_number }}" disabled="true"
+                      class="oj-form-control-text-align-right"></oj-input-text>
+                    <oj-input-text label-hint="Staff Number" style="margin-bottom:6px"
+                      value="{{ $variables.postHandover.received_by_dept_person_number }}" disabled="true"
+                      class="oj-form-control-text-align-right"></oj-input-text>
+                    <oj-input-text label-hint="Customer Contact Name"
+                      value="{{ $variables.postHandover.received_by_customer_contact_name }}" disabled="true"></oj-input-text>
+                  </oj-form-layout>
+                </div>
+                </oj-bind-if>
+               </oj-validation-group>              
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--TAB5  -->
+          <div slot="history-tab5" id="history-tab5" role="tabpanel4" aria-labelledby="history-tab5">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">Work Order Status History</h1>
+                <div class="oj-panel oj-selected">
+
+                  <div style="width:50%; float:left">
+                    <oj-form-layout label-edge="start" style="margin-top:20px;" class="oj-forme-control"
+                      user-assistance-density="compact">
+                      <oj-input-date label-hint="Released Date" style="margin-bottom:6px"
+                        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                        disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date>
+                      <oj-input-date label-hint="Completion Date" style="margin-bottom:6px"
+                        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                        disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date>
+                      <oj-input-date label-hint="Closed Date" style="margin-bottom:6px"
+                        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                        disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date>
+                      <oj-input-date label-hint="Canceled Date"
+                        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                        disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date>
+                    </oj-form-layout>
+                  </div>
+                  <div style="width:50%; float:left">
+                    <oj-form-layout label-edge="start" style="margin-top:20px;" class="oj-forme-control"
+                      user-assistance-density="compact">
+                      <oj-text-area length.max="3000" style="margin-bottom:6px" label-hint="Cancellation Reason"
+                        resize-behavior="both" disabled="[[ $variables.displayoptions.fileds ]]"></oj-text-area>
+                      <oj-text-area length.max="3000" label-hint="On-Hold Reason" resize-behavior="both"
+                        disabled="[[ $variables.displayoptions.fileds ]]"></oj-text-area>
+                    </oj-form-layout>
+                  </div>
+                </div>
+                <br>
+
+                <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+                  columns="[[$variables.OrderStatusColumns]]" data="[[ $variables.OrderStatusTale ]]" display="grid"
+                  selection-mode.row="single" selection-mode.column="single">
+                </oj-table>
+                <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">Work Order Operation Status
+                  History</h1>
+                <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+                  columns="[[$variables.HistoryColumn]]" data="[[ $variables.OperationHistoryTable ]]" display="grid"
+                  selection-mode.row="single" selection-mode.column="single">
+                </oj-table>
+
+
+              </div>
+            </div>
+          </div>
+        </oj-switcher>
+      </div>
+
+      <!-- Operation Popup -->
+      <oj-dialog style="display:none;width: 980px;" dialog-title="Task List" id="OperationList" cancel-behavior="icon"
+        on-oj-close="[[$listeners.operationListClose]]" class="dialog">
+          <div slot="body">
+          <div>
+            <oj-validation-group id="operation">
+            <oj-form-layout label-edge="start" style="margin-left:20%;margin-bottom:6px;" user-assistance-density="compact">
+              <oj-input-text label-hint="* Cost Centre" style="width:12rem;"
+                value="{{ $variables.postOperation.cost_centre }}" required="true"
+                disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-text>
+            </oj-form-layout>
+            </oj-validation-group>
+          </div>
+          <div class="oj-panel oj-selected">
+            <oj-validation-group id="operationnxt">
+            <oj-form-layout columns="2" label-edge="start" direction="column" label-width="45%"
+              style="margin-top:20px;margin-left:-50px;" class="oj-forme-control" user-assistance-density="compact">
+              <oj-select-single label-hint="* Operation Name" value="{{ $variables.postOperation.operation_name }}"
+                data="[[$variables.searchOperationmasterListSDP]]" style="margin-bottom:6px;" item-text="name"
+                on-value-item-changed="[[$listeners.selectValueItem]]" required="true"
+                disabled="[[ $variables.displayoptions.fileds ]]"></oj-select-single>
+              <oj-input-date-time label-hint="* Planned Start Date"
+                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy hh:mm"}}'
+                value="{{ $variables.postOperation.planned_start_date }}"style="margin-bottom:6px;"
+                on-value-changed="[[$listeners.inputDateTimeValue3]]" min="[[ $application.functions.getSysdate() ]]"
+                required="true" disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date-time>
+              <oj-input-date-time label-hint="* Planned Completion Date"
+                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy hh:mm"}}'
+                value="{{ $variables.postOperation.planned_competion_date }}" style="margin-bottom:6px;"
+                min="[[ $variables.postOperation.planned_start_date ]]"
+                on-value-changed="[[$listeners.inputDateTimeValue2]]" required="true"
+                disabled="[[ $variables.displayoptions.fileds ]]"></oj-input-date-time>
+              <oj-input-date-time label-hint="Actual Start Date"
+                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy hh:mm"}}'
+                value="{{ $variables.postOperation.actual_start_date }}"style="margin-bottom:6px;"
+                on-value-changed="[[$listeners.inputDateTimeValue4]]" disabled="true"></oj-input-date-time>
+              <oj-input-date-time label-hint="Actual Completion Date"
+                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy hh:mm"}}'
+                value="{{ $variables.postOperation.actual_completion_date }}"
+                min="[[ $variables.postOperation.actual_start_date ]]"style="margin-bottom:6px;"
+                on-value-changed="[[$listeners.inputDateTimeValue]]" disabled="true"></oj-input-date-time>
+              <oj-input-text label-hint="Planned Duration" value="{{ $variables.postOperation.planned_duration }}"
+                disabled="true" style="margin-bottom:6px;"></oj-input-text>
+              <oj-input-text label-hint="Actual Duration" value="{{ $variables.postOperation.actual_duration }}"
+                disabled="true"style="margin-bottom:6px;"></oj-input-text>
+              <oj-input-text label-hint="Status" disabled="true" style="margin-bottom:6px;" value="{{ $variables.postOperation.task_status }}">
+              </oj-input-text>
+              <oj-input-text label-hint="Operation Type" style="margin-bottom:6px;" value="{{ $variables.postOperation.operation_type }}"
+                disabled="true"></oj-input-text>
+              <!-- <oj-input-text label-hint="* Expense Account" value="{{ $variables.postOperation.expense_account }}"
+                required="true">
+              </oj-input-text> -->
+<oj-select-single label-hint="* Expense Account" style="margin-bottom:6px;"
+  value="{{ $variables.postOperation.expense_account }}" required="true"
+  data="[[$variables.getLovGlcodecombinationListSDP]]" item-text="segment_combination"
+  on-value-item-changed="[[$listeners.selectValueItem13]]" disabled="[[ $variables.displayoptions.fileds ]]">
+  <template slot="collectionTemplate" data-oj-as="collection"> 
+                        <!-- <oj-label for="oj-input-text-651077415-3" style="font-weight: bold;">Search</oj-label>  -->
+                        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                          vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                          columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                          columns='[{"headerText":"Segment Combination","field":"segment_combination"},{"headerText":"Segment Description","field":"segment_description"}]'
+                          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}">
+                        </oj-table>
+                      </template>
+  </oj-select-single>
+            </oj-form-layout>
+          </oj-validation-group>
+          </div>
+           
+        </div>
+
+        <div slot="footer">
+          <oj-button chroming="outlined" class="oj-button-sm" on-oj-action="[[$listeners.buttonAction4]]"
+            :hidden='[[ $variables.p_operation_method==="Edit" ]]'>Save &amp; Add</oj-button>
+          <oj-button chroming="outlined" class="oj-button-sm" on-oj-action="[[$listeners.buttonAction5]]"
+            :hidden="[[ $variables.displayoptions.fileds ]]">Save & Close
+          </oj-button>
+        </div>
+      </oj-dialog>
+      <oj-popup id="actionPop" style="height:100px;width:160px" modality="modal">
+        <oj-button chroming="borderless" class="oj-button-sm">Save</oj-button>
+        <oj-button chroming="borderless" class="oj-button-sm">Save And Close</oj-button>
+      </oj-popup>
+      <oj-dialog style="display:none" dialog-title="Save" id="save_dialog">
+        <div slot="body">
+          <div class="oj-flex">Are you sure want to Save and Continue?</div>
+        </div>
+        <div slot="footer">
+          <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction]]">Ok</oj-button>
+          <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction2]]">Cancel</oj-button>
+        </div>
+      </oj-dialog>
+
+      <oj-dialog style="display:none" dialog-title="Save" id="save_close">
+        <div slot="body">
+          <div class="oj-flex">Are you sure want to Save and Close?</div>
+        </div>
+        <div slot="footer">
+          <oj-button chroming="solid">Ok</oj-button>
+          <oj-button chroming="solid">Cancel</oj-button>
+        </div>
+      </oj-dialog>
+      <!-- End -->
+    </div>
+  </oj-sp-advanced-create-edit>
+  <!-- <oj-sp-message-unsaved-changes id="dirtyDataWarningDialog"
+    on-oj-sp-discard-changes="[[ $listeners.confirmYesOjAction ]]" on-oj-sp-cancel="[[ $listeners.confirmNoOjAction ]]"></oj-sp-message-unsaved-changes> -->
+</div>
+<!-- popup -->
+<oj-dialog dialog-title="Please wait..." id="progressMsg" class="wd200">
+  <div slot="body">
+    <div class="oj-flex full_stretch lg_button_width">
+      <oj-progress-bar class="full_stretch oj-flex-item oj-sm-12 oj-md-12" value="-1"></oj-progress-bar>
+    </div>
+  </div>
+</oj-dialog>
+
+<!-- Spare Parts Popup -->
+<oj-dialog dialog-title="Spare Parts" id="spareparts" cancel-behavior="icon"
+  on-oj-close="[[$listeners.sparepartsClose]]" style="width: 900px;">
+  <div slot="body">
+    <div class="oj-flex oj-panel oj-selected">
+      <oj-validation-group id="sparepartsln">
+      <oj-form-layout label-edge="start" class="oj-forme-control" columns="2" label-width="45%" style="margin-left:-25px;"
+        user-assistance-density="compact" direction="column">
+        <!-- <oj-input-text label-hint="Spare Parts" style="margin-bottom:6px;width:18rem;" value="{{ $variables.postItemspare.spartparts }}"></oj-input-text> -->
+        <oj-select-single label-hint="* Spare Parts" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemspare.spartparts }}" data="[[$variables.getLovInventoryitemsListSDP3]]"
+          item-text="item_number" on-value-item-changed="[[$listeners.selectValueItem6]]" required="true"></oj-select-single>
+          <oj-input-text label-hint="UOM" style="margin-bottom:6px;" value="{{ $variables.postItemspare.uom }}"
+            disabled="true"></oj-input-text>
+        <oj-input-text label-hint="On-Hand Quantity" style="margin-bottom:6px;width:18rem;" disabled="true"
+          value="{{ $variables.postItemspare.on_hand_quantity }}"></oj-input-text>
+        <!-- <oj-input-text label-hint="Unit Cost" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemspare.unit_cost }}" disabled="true"></oj-input-text> -->
+          <oj-input-number label-hint="Unit Cost" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemspare.unit_cost }}" disabled="true"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right">
+                            </oj-input-number>
+        <oj-input-text label-hint="* Planned Quantity" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemspare.spareparts_planned_quantity }}" required="true">
+        </oj-input-text>
+        <oj-input-text label-hint="Actual Quantity" style="width:18rem;"
+          value="{{ $variables.postItemspare.spareparts_utilized_quantity }}" disabled="true">
+        </oj-input-text>
+      </oj-form-layout>
+      </oj-validation-group>
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-button label="Save & Add" on-oj-action="[[$listeners.buttonAction17]]"></oj-button>
+    <oj-button label="Save & Close" on-oj-action="[[$listeners.buttonAction18]]"></oj-button>
+  </div>
+</oj-dialog>
+
+
+
+<!-- Consumable Popup -->
+<oj-dialog dialog-title="Consumable" id="consumable" cancel-behavior="icon"
+  on-oj-close="[[$listeners.consumableClose]]" style="width: 900px;">
+  <div slot="body">
+    <div class="oj-flex oj-panel oj-selected">
+      <oj-validation-group id="consumablesln">
+      <oj-form-layout label-edge="start" class="oj-forme-control" columns="2" label-width="45%" style="margin-left:-25px;"
+        user-assistance-density="compact" direction="column">
+        <!-- <oj-input-text label-hint="Consumable" style="margin-bottom:6px;width:18rem;" value="{{ $variables.postItemConsumable.consumable }}"></oj-input-text> -->
+<oj-select-single label-hint="* Consumable" style="margin-bottom:6px;width:18rem;"
+  value="{{ $variables.postItemConsumable.consumable }}" data="[[$variables.getLovInventoryitemsListSDP4]]"
+  item-text="item_number" on-value-item-changed="[[$listeners.selectValueItem7]]" required="true"></oj-select-single>
+  <oj-input-text label-hint="UOM" value="{{ $variables.postItemConsumable.uom }}" style="margin-bottom:6px;"
+    disabled="true"></oj-input-text>
+        <oj-input-text label-hint="On-Hand Quantity" style="margin-bottom:6px;width:18rem;" disabled="true"
+          value="{{ $variables.postItemConsumable.on_hand_quantity }}"></oj-input-text>
+        <!-- <oj-input-text label-hint="Unit Cost" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemConsumable.unit_cost }}" disabled="true"></oj-input-text> -->
+          <oj-input-number label-hint="Unit Cost" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemConsumable.unit_cost }}" disabled="true"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right">
+                            </oj-input-number>
+        <oj-input-text label-hint="* Planned Quantity" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemConsumable.consumable_planned_quantity }}" required="true"></oj-input-text>
+        <oj-input-text label-hint="Actual Quantity" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemConsumable.consumable_utilzed_quantity }}" disabled="true"></oj-input-text>
+      </oj-form-layout>
+      </oj-validation-group>
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-button label="Save & Add" on-oj-action="[[$listeners.buttonAction19]]"></oj-button>
+    <oj-button label="Save & Close" on-oj-action="[[$listeners.buttonAction20]]"></oj-button>
+  </div>
+</oj-dialog>
+
+<!-- Direct Purchase -->
+<oj-dialog dialog-title="Direct Purchase" id="directpurchase" cancel-behavior="icon"
+  on-oj-close="[[$listeners.directpurchaseClose]]" style="width: 800px;">
+  <div slot="body">
+    <div class="oj-flex oj-panel oj-selected">
+      <oj-validation-group id="directpurchaseln">
+      <oj-form-layout label-edge="start" class="oj-forme-control" columns="2" user-assistance-density="compact" style="margin-left:-25px;">
+        <!-- <oj-input-text label-hint="Item" style="margin-bottom:6px;width:18rem;" value="{{ $variables.postItemDirect.item_number }}"></oj-input-text> -->
+        <oj-select-single label-hint="* Item" style="margin-bottom:6px;"
+          value="{{ $variables.postItemDirect.item_number }}" data="[[$variables.getLovInventoryitemsListSDP5]]"
+          item-text="item_number" on-value-item-changed="[[$listeners.selectValueItem8]]" required="true"></oj-select-single>
+        <oj-input-text label-hint="* UOM" style="margin-bottom:6px;width:18rem;"
+          value="{{ $variables.postItemDirect.uom }}" disabled="true" required="true"></oj-input-text>
+        <oj-input-text label-hint="* Quantity" value="{{ $variables.postItemDirect.quantity }}"
+          style="margin-bottom:6px;width:18rem;" required="true"></oj-input-text>
+        <!-- <oj-input-text label-hint="* Location" value="{{ $variables.postItemDirect.location }}" style="width:18rem;"
+          required="true"></oj-input-text> -->
+          <oj-select-single label-hint="* Location" value="{{ $variables.postItemDirect.location }}"
+            style="width:18rem;" data="[[$variables.getLovLocationListSDP]]" item-text="location_name" required="true"></oj-select-single>
+        <!-- <oj-input-text label-hint="Unit Cost" value="{{ $variables.postItemDirect.unit_cost }}" style="width:18rem;"
+          disabled="true"></oj-input-text> -->
+          <oj-input-number label-hint="Unit Cost" value="{{ $variables.postItemDirect.unit_cost }}" style="width:18rem;"
+          disabled="true" converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right">
+                            </oj-input-number>
+        <oj-input-date label-hint="* Need Date" value="{{ $variables.postItemDirect.need_date }}" style="width:18rem;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' required="true"></oj-input-date>
+      </oj-form-layout>
+      </oj-validation-group>
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-button label="Save & Add" on-oj-action="[[$listeners.buttonAction39]]"></oj-button>
+    <oj-button label="Save & Close" on-oj-action="[[$listeners.buttonAction41]]"></oj-button>
+  </div>
+</oj-dialog>
+
+<!-- Resource Popup -->
+<oj-dialog dialog-title="Resource" id="resource" cancel-behavior="icon" on-oj-close="[[$listeners.resourceClose]]"
+  style="width: 820px;">
+  <div slot="body">
+    <div class="oj-flex oj-panel oj-selected">
+      <oj-form-layout label-edge="start" class="oj-forme-control" columns="2" user-assistance-density="compact" style="margin-left:-25px;"
+        direction="column">
+        <!-- <oj-input-text label-hint="Resource" style="margin-bottom:6px;width:18rem;" value="{{ $variables.postItemresource.resources }}"></oj-input-text> -->
+        <!-- <oj-input-text label-hint="In-Hand Quantity"></oj-input-text> -->
+        <oj-select-single label-hint="Resource Type" style="margin-bottom:6px;width:18rem;"
+          data="[[$variables.getLovLookupValuesListSDP11]]" item-text="lookup_value_name_disp"
+          on-value-item-changed="[[$listeners.selectValueItem17]]"
+          value="{{ $variables.postItemresource.resource_type }}"></oj-select-single>
+        <oj-select-single label-hint="Resource Group" data="[[$variables.getLovLookupValuesListSDP12]]"
+          style="margin-bottom:6px;width:18rem;" item-text="lookup_value_name_disp"
+          on-value-item-changed="[[$listeners.selectValueItem18]]"
+          value="{{ $variables.postItemresource.resource_group }}"
+          disabled="[[ $variables.postItemresource.resource_type==='Equipment' ]]"></oj-select-single>
+        <oj-select-single label-hint="Resource" style="margin-bottom:6px;width:18rem;"
+          on-value-item-changed="[[$listeners.selectValueItem19]]" data="[[$variables.getLovResourceNameListSDP2]]"
+          item-text="resource_name" value="{{ $variables.postItemresource.resources }}"></oj-select-single>
+        <oj-input-text label-hint="Unit Cost" value="{{ $variables.postItemresource.unit_cost }}"
+          style="margin-bottom:6px;width:18rem;" disabled="true"></oj-input-text>
+        <oj-input-text label-hint="Planned Hrs" style="margin-bottom:6px;width:18rem;" value="{{ $variables.postItemresource.resources_planned_quantity }}">
+        </oj-input-text>
+        <oj-input-text label-hint="Actual Hrs" style="margin-bottom:6px;width:18rem;" value="{{ $variables.postItemresource.resources_utilzed_quantity }}">
+        </oj-input-text>
+      </oj-form-layout>
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-button label="Save & Add" on-oj-action="[[$listeners.buttonAction21]]"></oj-button>
+    <oj-button label="Save & Close" on-oj-action="[[$listeners.buttonAction22]]"></oj-button>
+  </div>
+</oj-dialog>
+
+
+<!-- Delete Dialog -->
+<oj-dialog style="display:none" dialog-title="Delete" id="item_spare_delete">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction24]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction25]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- delete consumable -->
+<oj-dialog style="display:none" dialog-title="Delete" id="consumable_delete">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction28]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction29]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- delete Resource -->
+<oj-dialog style="display:none" dialog-title="Delete" id="resources_delete">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction30]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction31]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+<!-- delete direct Purchase -->
+<oj-dialog style="display:none" dialog-title="Delete" id="direct_purchase_delete">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction43]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction44]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog style="display:none" dialog-title="Delete" id="item_supplier_delete">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction37]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction38]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+<!-- Operation Type Supplier Popup -->
+<oj-dialog style="display:none; width: 900px;" dialog-title="Purchase Information" id="itemsupplier"
+  cancel-behavior="icon" on-oj-close="[[$listeners.itemsupplierClose]]">
+  <div slot="body">
+    <div class="oj-flex oj-panel oj-selected">
+    <oj-form-layout label-edge="start" class="oj-forme-control" columns="3" label-width="48%" direction="column">
+      <!-- <oj-input-text label-hint="* Item" value="{{ $variables.postItemSupplier.processing_item }}"></oj-input-text> -->
+      <oj-select-single label-hint="* Item" value="{{ $variables.postItemSupplier.processing_item }}"
+        data="[[$variables.getLovInventoryitemsListSDP6]]" item-text="item_number"
+        on-value-item-changed="[[$listeners.selectValueItem16]]"></oj-select-single>
+        <!-- <oj-select-single label-hint="Supplier Number" value="{{ $variables.postItemSupplier.supplier_number }}"
+          item-text="supplier_number" on-value-item-changed="[[$listeners.selectValueItem9]]"
+          data="[[$variables.getLovSupplierListSDP3]]"></oj-select-single> -->
+           <oj-select-single label-hint="Supplier Number" style="margin-bottom:6px;"
+             data="[[$variables.getLovSupplierListSDP4]]" item-text="supplier_number"
+             value="{{ $variables.postItemSupplier.supplier_number }}"
+             on-value-item-changed="[[$listeners.selectValueItem21]]">
+                        <template slot="collectionTemplate" data-oj-as="collection"> 
+                        <!-- <oj-label for="oj-input-text-651077415-3" style="font-weight: bold;">Search</oj-label>  -->
+                        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                          vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                          columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                          columns='[{"headerText":"Supplier Number","field":"supplier_number"},{"headerText":"Supplier Name","field":"vendor_name"}]'
+                          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}">
+                        </oj-table>
+                      </template>
+                      </oj-select-single>
+      <oj-input-text label-hint="Supplier" value="{{ $variables.postItemSupplier.supplier }}" disabled="true"></oj-input-text>
+      <!-- <oj-input-text label-hint="Supplier Site" value="{{ $variables.postItemSupplier.supplier_site }}"></oj-input-text> -->
+      <oj-select-single label-hint="Supplier Site" value="{{ $variables.postItemSupplier.supplier_site }}"
+        data="[[$variables.getLovSuppliercodeListSDP]]" item-text="vendor_site_code"></oj-select-single>
+      <!-- <oj-input-text label-hint="* Location" value="{{ $variables.postItemSupplier.location }}"></oj-input-text> -->
+      <oj-select-single label-hint="* Location" value="{{ $variables.postItemSupplier.location }}"
+        data="[[$variables.getLovLocationListSDP2]]" item-text="location_name"></oj-select-single>
+      <!-- <oj-input-text label-hint="* Unit Cost" value="{{ $variables.postItemSupplier.unit_cost }}" disabled="true"></oj-input-text> -->
+      <oj-input-number label-hint="* Unit Cost" value="{{ $variables.postItemSupplier.unit_cost }}" disabled="true"
+                              converter='{"options":{"decimalFormat":"long","minimumFractionDigits":2},"type":"number"}'
+                              class="oj-form-control-text-align-right oj-helper-text-align-right">
+                            </oj-input-number>
+      <oj-input-text label-hint="UOM" value="{{ $variables.postItemSupplier.uom }}" disabled="true"></oj-input-text>
+      <oj-select-single label-hint="* Requested Number" value="{{ $variables.postItemSupplier.requester_number }}"
+        data="[[$variables.getLovEmployeedetailsListSDP3]]" item-text="person_number"
+        on-value-item-changed="[[$listeners.selectValueItem20]]">
+          <template slot="collectionTemplate" data-oj-as="collection"> 
+                        <!-- <oj-label for="oj-input-text-651077415-3" style="font-weight: bold;">Search</oj-label>  -->
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+              vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+              columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+              columns='[{"headerText":"Employee Number","field":"person_number"},{"headerText":"Employee Name","field":"display_name"},{"headerText":"Email Id","field":"email_address"}]'
+              on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+              selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+      </oj-select-single>
+      <oj-input-text label-hint="Requester" disabled="true" value="{{ $variables.postItemSupplier.requested_by }}"></oj-input-text>
+      <oj-input-text label-hint="* Planned Quantity"
+        value="{{ $variables.postItemSupplier.supplier_planned_quantity }}">
+      </oj-input-text>
+      <oj-input-text label-hint="Actual Quantity" value="{{ $variables.postItemSupplier.supplier_utilized_quantity }}"
+        disabled="true">
+      </oj-input-text>
+      <!-- <oj-input-text label-hint="* Requested By" value="{{ $variables.postItemSupplier.requested_by }}"></oj-input-text> -->
+      <oj-input-date label-hint="* Need By Date" value="{{ $variables.postItemSupplier.need_by_date }}"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+      <oj-input-text label-hint="Supplier Warranty" value="{{ $variables.postItemSupplier.supplier_warranty }}">
+      </oj-input-text>
+    </oj-form-layout>
+  </div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction33]]"
+      :hidden="[[ $variables.p_item_supplier_method==='Edit' ]]">Save &amp; Add</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction34]]">Save & Close</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- About Information -->
+<oj-dialog dialog-title="About Information" id="about" style="width: 450px;" cancel-behavior="icon"
+  position.at.horizontal="right" position.at.vertical="top" position.my.horizontal="end">
+  <div slot="body">
+    <!-- <div class=" oj-panel oj-selected"> -->
+    <oj-vb-fragment bridge="[[vbBridge]]" name="aboutdetails">
+      <oj-vb-fragment-param name="p_hdr_key" value="{{ $variables.p_hdr_key }}"></oj-vb-fragment-param>
+      <oj-vb-fragment-param name="p_table_name" value="WORK_ORDER"></oj-vb-fragment-param>
+      <!-- <oj-vb-fragment-param name="aboutdetails" value="{{ $variables.aboutdetails }}" ></oj-vb-fragment-param> -->
+    </oj-vb-fragment>
+    <!-- </div> -->
+  </div>
+</oj-dialog>
+
+
+<!-- Approve & Reject Popup -->
+
+<oj-dialog dialog-title="Approve" id="approvePopUp">
+ <div slot="body">
+  <oj-validation-group id="approvedetail">
+  <oj-label for="app-1"></oj-label>
+  <oj-text-area id="app-1" placeholder="Comments" value="{{ $variables.responseComment }}" resize-behavior="both"
+    length.max="3000" required="true"  ></oj-text-area>
+  </oj-validation-group>
+ </div>
+
+<div slot="footer">
+<oj-validation-group>
+<oj-button on-oj-action="[[$listeners.buttonAction47]]" >Submit</oj-button>
+<oj-button on-oj-action="[[$listeners.buttonAction48]]" >Cancel</oj-button>
+</oj-validation-group>
+</div>
+</oj-dialog>
+<oj-dialog dialog-title="Reject" id="rejectPopUp">
+ 
+ <div slot="body">
+ <oj-validation-group id="rejectdetail">
+  <oj-label for="app-1"></oj-label>
+  <oj-text-area id="app-1" placeholder="Comments" value="{{ $variables.responseComment }}" resize-behavior="both"
+    length.max="3000" required="true" > </oj-text-area>
+ </oj-validation-group>
+ </div>
+
+<div slot="footer">
+<oj-validation-group>
+<oj-button on-oj-action="[[$listeners.buttonAction49]]" >Submit</oj-button>
+<oj-button on-oj-action="[[$listeners.buttonAction50]]" >Cancel</oj-button>
+</oj-validation-group>
+</div>
+</oj-dialog>
+
+<!-- Alternate Popups -->
+<oj-dialog style="display:none" dialog-title="Alternate Item" id="itemspare" cancel-behavior="icon">
+  <div slot="body">
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+      <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+        <div id="mainContent">
+          <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+            selection-mode.row="single" id="searchSSTable" display="grid" selection-mode.column="single"
+            columns='[{"headerText":"Action","template":"switchbox","resizable":"enabled","width":100},{"headerText":"Item","field":"item_number","resizable":"enabled","width":121},{"headerText":"UOM","field":"primary_uom_code","resizable":"enabled","width":151},{"headerText":"On-Hand Quantity","field":"on_hand_quantity","resizable":"enabled","width":171},{"headerText":"Unit Cost","field":"unit_cost","resizable":"enabled","width":151}]'
+            horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+            data="[[ $variables.sparepartsalternate ]]" edit-mode="rowEdit">
+            <!-- <oj-paging-control id="paging" style="margin-left:18%" class="oj-sm-width-full" page-size="25"
+              slot="bottom" data="[[ $variables.alternatespare ]]">
+            </oj-paging-control> -->
+            <template slot="switchbox">
+                          <oj-switch on-value-changed="[[$listeners.switchValue]]"  
+            ></oj-switch>
+                        </template>
+          </oj-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div slot="footer">
+<oj-button label="Replace" on-oj-action="[[$listeners.buttonAction55]]"></oj-button>
+  </div>
+</oj-dialog>
+<oj-dialog style="display:none" dialog-title="Alternate Item" id="itemconsumables" cancel-behavior="icon">
+  <div slot="body">
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+      <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+        <div id="mainContent">
+<oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+           selection-mode.row="single" id="searchSSTable" display="grid" selection-mode.column="single"
+            columns='[{"headerText":"Action","template":"switchbox","resizable":"enabled","width":100},{"headerText":"Item","field":"item_number","resizable":"enabled","width":121},{"headerText":"UOM","field":"primary_uom_code","resizable":"enabled","width":151},{"headerText":"On-Hand Quantity","field":"on_hand_quantity","resizable":"enabled","width":171},{"headerText":"Unit Cost","field":"unit_cost","resizable":"enabled","width":151}]'
+           horizontal-grid-visible="enabled" vertical-grid-visible="enabled" edit-mode="rowEdit"
+           data="[[ $variables.consumablesTableADP ]]">
+            <template slot="switchbox">
+                          <oj-switch   
+            ></oj-switch>
+                        </template>
+          </oj-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div slot="footer">
+<oj-button label="Replace"></oj-button>
+  </div>
+</oj-dialog>
