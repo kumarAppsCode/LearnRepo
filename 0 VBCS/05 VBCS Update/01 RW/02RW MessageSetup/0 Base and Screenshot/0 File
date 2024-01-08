@@ -1,0 +1,30 @@
+<oj-messages messages="[[ $variables.messageADP ]]" 
+  position.at.horizontal="center" 
+  position.at.vertical="top"
+  position.collision="flipfit" 
+  position.my.horizontal="center" 
+  position.my.vertical="top"
+  display-options.category="header"></oj-messages>
+  
+  
+Type:  
+  
+"displayMode": "string",
+"key": "string",
+"message": "string",
+"summary": "string",
+"target": "string",
+"type": "string"
+"autoTimeout": "number",  
+
+
+      $page.variables.messageADP.data.key = event.key;
+      $page.variables.messageADP.data.autoTimeout = event.displayMode === "transient"? 0 : 1;
+      $page.variables.messageADP.data.displayMode = event.displayMode;
+      $page.variables.messageADP.data.message = event.message;
+      $page.variables.messageADP.data.summary = event.summary;
+      $page.variables.messageADP.data.target = event.target;
+      $page.variables.messageADP.data.type = event.type;
+
+
+==="transient"?0:1
