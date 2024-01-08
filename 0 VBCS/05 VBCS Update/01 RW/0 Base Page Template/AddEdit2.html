@@ -1,0 +1,543 @@
+<div>
+  <oj-sp-advanced-create-edit id="oj_ssce1" page-title="Asset Master" avatar="{{$page.variables.avatar}}"
+    display-options.save="{{$page.variables.saveOption!=='off'?$page.variables.dirtyDataFlag?'on':'disabled':'off'}}"
+    display-options.go-to-parent="{{$page.variables.goToParentOption }}"
+    display-options.contextual-info-sticky="{{ $page.variables.contextualInfoSticky }}"
+    display-options.contextual-info-label="{{$page.variables.contextualInfoLabelVisible}}"
+    display-options.responsive-padding="on" display-options.bottom-actions="on"
+    display-mode="[[$page.variables.displayMode]]"
+    secondary-actions='[{"label":"Attachment","id":"attachment"},{"label":"About","id":"about"}]'
+    primary-action.label="Save" on-sp-secondary-action="[[$listeners.ojSsce1SpSecondaryAction]]"
+    on-sp-cancel="[[$listeners.ojSsce1SpCancel]]" badge.text="[[ $variables.postHdrVar.asset_request_number ]]"
+    badge.status="info" on-sp-primary-action="[[$listeners.ojSsce1SpPrimaryAction]]">
+    <div slot="main">
+
+      <div class="oj-panel oj-panel-shadow-md oj-selected" >
+
+        <div style="width:70%; float:left">
+          <oj-validation-group id="ResourceMaster">
+            <oj-form-layout label-edge='start'  style="margin-top:6px;margin-left:-55px" class="oj-forme-control" columns="2"
+              max-columns="2" user-assistance-density="compact" direction="column">
+              <oj-select-single label-hint="* Type" item-text="lookup_value_name_disp" required="true"
+                value="{{ $variables.postHdrVar.type }}" data="[[$variables.getLovLookupValuesListSDP]]"
+                style="margin-bottom:6px" on-value-item-changed="[[$listeners.selectValueItem]]"
+                user-assistance-density="compact" disabled="[[ $variables.p_hdr_method==='Edit' ]]"></oj-select-single>
+              <!-- <oj-bind-if test="[[ $variables.postHdrVar.type ==='Internal' ]]">
+                <oj-select-single label-hint="Fleet Number" value="{{ $variables.postHdrVar.fleet_number }}"
+                  item-text="fleet_number" on-value-item-changed="[[$listeners.selectValueItem2]]"
+                  user-assistance-density="efficient"></oj-select-single>
+              </oj-bind-if> -->
+              <!-- <oj-bind-if test="[[$variables.postHdrVar.type !=='Internal' ]]"> -->
+                <oj-input-text label-hint="* Fleet Number" value="{{ $variables.postHdrVar.fleet_number }}"
+                  style="margin-bottom:6px" required="true" disabled="[[ $variables.p_hdr_method==='Edit' ]]"></oj-input-text>
+              <!-- </oj-bind-if> -->
+              <oj-select-single label-hint="* Unit Type" required="true" style="margin-bottom:6px"
+                value="{{ $variables.postHdrVar.unit_category }}" data="[[$variables.getLovLookupValuesListSDP2]]"
+                item-text="lookup_value_name_disp" disabled="[[ $variables.p_hdr_method==='Edit' ]]"></oj-select-single>
+              <oj-input-text label-hint="Status" required="true" disabled="true" style="margin-bottom:6px"
+                value="{{ $variables.postHdrVar.status }}"></oj-input-text>
+              <oj-input-date label-hint="Inactive On" style="margin-bottom:6px"
+                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                value="{{ $variables.postHdrVar.inactive_date }}"
+                min="[[ $application.functions.getSysdateMinusOne() ]]"></oj-input-date>
+<oj-select-single label-hint="Unit SubType" value="{{ $variables.postHdrVar.unit_subtype }}"
+  data="[[$variables.getLovLookupValuesListSDP3]]" item-text="lookup_value_name_disp"></oj-select-single>
+            </oj-form-layout>
+          </oj-validation-group>
+        </div>
+
+        <div style="width:30%; float:left">
+          <oj-form-layout label-edge='start' style="margin-top:10px">
+            <!-- <div style="Margin-left:50%" > -->
+            <oj-bind-if test='[[ $variables.p_hdr_method ==="CREATE" ]]'>
+              <oj-file-picker style="margin-left: 30%;" selection-mode="single"
+                on-oj-select="[[$listeners.filePickerSelect]]">
+                <oj-avatar id="avatar" icon-class="oj-ux-ico-human-8" class="oj-flex-item oj-sm-flex-initial"
+                  slot="trigger" size="lg" title="Photo">
+                </oj-avatar>
+
+                <div slot="trigger">
+                  <br>
+                  <oj-label style="margin-left: 17%;">Upload Photo</oj-label>
+                </div>
+              </oj-file-picker>
+              <br>
+            </oj-bind-if>
+            <oj-bind-if test='[[ $variables.p_hdr_method ==="Edit" ]]'>
+              <oj-file-picker style="margin-left: 30%;" selection-mode="single"
+                on-oj-select="[[$listeners.filePickerSelect2]]">
+                <oj-avatar class="oj-flex-item oj-sm-flex-initial" slot="trigger" size="lg" background="gray"
+                  title="Photo" :id="[[ $variables.updateimgVar ]]" shape="circle">
+                </oj-avatar>
+                <div slot="trigger">
+                  <br>
+                  <oj-label style="margin-left: 33%;">Photo</oj-label>
+                </div>
+              </oj-file-picker>
+            </oj-bind-if>
+            <!-- </div> -->
+          </oj-form-layout>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="oj-flex-item oj-sm-12 oj-md-12 oj-lg-12 oj-xl-12 oj-panel oj-panel-shadow-md oj-selected panels"
+        style="width:300rem;">
+        <div class="oj-flex">
+          <div class="oj-flex-item oj-sm-12 oj-md-12">
+            <oj-validation-group id="Resource">
+              <oj-form-layout label-edge='start' columns="3" max-columns="4" direction="column"
+                style="margin-top:4px;margin-left:-47px;" class="oj-forme-control" user-assistance-density="compact"
+                label-width="38%">
+                <oj-input-text label-hint="* Asset" value="{{$variables.postHdrVar.asset_number}}"
+                  style="margin-bottom:6px;" required="true" disabled="[[ $variables.p_hdr_method==='Edit' ]]"></oj-input-text>
+                <oj-text-area label-hint="Address" value="{{ $variables.postHdrVar.address }}" style="margin-bottom:6px;"></oj-text-area>
+                  <!-- <oj-input-text label-hint="Customer" value="{{ $variables.postHdrVar.customer }}" style="margin-bottom:6px;" required="true"></oj-input-text> -->
+              <oj-bind-if
+                  test="[[ $variables.postHdrVar.type !=='Customer' && $variables.postHdrVar.type !=='Customer - Component' ]]">
+                <!-- <oj-input-text label-hint="Item" value="{{ $variables.postHdrVar.item_number }}" style="margin-bottom:6px;"></oj-input-text> -->
+                <oj-select-single label-hint="* Item" value="{{ $variables.postHdrVar.item_number }}"
+                  style="margin-bottom:6px;" data="[[$variables.getLovInventoryitemsListSDP]]" item-text="item_number"
+                  on-value-item-changed="[[$listeners.selectValueItem3]]" required="true"></oj-select-single>
+                                <oj-text-area label-hint="Item Description" style="margin-bottom:6px"
+                                  resize-behavior="both" length.max="3000"
+                                  value="{{ $variables.postHdrVar.item_description }}" disabled="true"></oj-text-area>
+                </oj-bind-if>
+               <oj-bind-if
+                 test="[[ $variables.postHdrVar.type ==='Customer' || $variables.postHdrVar.type ==='Customer - Component' ]]">
+                  <oj-select-single label-hint="* Customer Number" value="{{ $variables.postHdrVar.customer_number }}"
+                    style="margin-bottom:6px;" data="[[$variables.getLovCustomerListSDP]]" item-text="customer_number"
+                    on-value-item-changed="[[$listeners.selectValueItem4]]" required="true"
+                    disabled="[[ $variables.p_hdr_method==='Edit' ]]">
+                    <template slot="collectionTemplate" data-oj-as="collection"> 
+                    <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                          vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                          columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                          columns='[{"headerText":"Customer Number","field":"customer_number"},{"headerText":"Customer Name","field":"customer_name"}]'
+                          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}">
+                        </oj-table>
+                        </template> 
+                        </oj-select-single>
+                        <oj-input-text label-hint="* Customer Name" value="{{ $variables.postHdrVar.customer }}"style="margin-bottom:6px;"
+                          disabled="true" required="true"></oj-input-text>
+               </oj-bind-if>
+               <oj-input-text label-hint="UOM" value="{{ $variables.postHdrVar.uom }}" disabled="true"></oj-input-text>
+                <oj-select-single item-text="work_location_name" label-hint="Work Location"
+                  value="{{ $variables.postHdrVar.location }}" style="margin-bottom:6px;"
+                  data="[[$variables.getSearchWorkLocationNameLOVListSDP]]"></oj-select-single>
+                <oj-text-area label-hint="Description" value="{{ $variables.postHdrVar.description }}"
+                  style="margin-bottom:6px" resize-behavior="both" length.max="3000"></oj-text-area>
+              </oj-form-layout>
+            </oj-validation-group>
+          </div>
+        </div>
+      </div>
+
+<br>
+      <div class="demo-tabbar-container oj-panel">
+        <oj-tab-bar id="hnavlist" selection="{{ $variables.selectedTab }}" edge="top"
+          on-selection-changed="[[$listeners.hnavlistSelection]]">
+          <ul>
+            <li id="contactInfo-tab1">
+              <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="contactInfo-tab-panel"
+                id="contactInfo-tab">Contact Information</a>
+            </li>
+            <li id="GeneralInformation-tab2">
+              <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="GeneralInformation-tab-panel"
+                id="GeneralInformation-tab">Fleet Information</a>
+            </li>
+            <li id="Fleetinformation-tab3">
+
+              <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="fleet-tab-panel3"
+                id="fleet-tab3">Meter Reading</a>
+
+            </li>
+            <!-- <li id="Operations-tab4" >
+      
+      <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="Operations-tab-panel4"
+        id="Operations-tab">Attachment</a>
+    
+    </li> -->
+
+          </ul>
+        </oj-tab-bar>
+      </div>
+      <div class="demo-switcher-container">
+        <oj-switcher value="[[ $variables.selectedTab ]]">
+          <!-- TAB1 -->
+          <div slot="contactInfo-tab1" id="contactInfo-tab-panel2" role="tabpanel1" aria-labelledby="contactInfo-tab1">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <!-- <div class="oj-panel oj-selected"> -->
+                <!-- <div class="oj-flex"> -->
+                <div role="tabpanel2">
+                  <div class="demo-tab-content">
+                    <div id="mainContent">
+                      <div class="oj-panel oj-selected">
+                        <!-- <h1 style="font-size: larger; font-weight: bold;color:#013766">Contact Information</h1> -->
+                        <!-- </div> -->
+                        <div style="display: flex; justify-content: space-between; align-items: center;margin-bottom:6px">
+  <h1 style="font-size: larger; font-weight: bold; color: #013766; margin: 0;">Contact Information Details</h1>
+                      <oj-button chroming="outlined" label="[[$application.translations.appBundle.button_label]]"
+                            on-oj-action="[[$listeners.buttonAction3]]" class="oj-flex-item oj-sm-flex-initial">       
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"> 
+               </oj-button>
+</div>
+                        <!-- <div class="oj-helper-justify-content-flex-end oj-flex">
+                          <oj-button chroming="outlined" label="[[$application.translations.appBundle.button_label]]"
+                            on-oj-action="[[$listeners.buttonAction3]]" class="oj-flex-item oj-sm-flex-initial">       
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"> 
+               </oj-button>
+                        </div> -->
+                        <!-- </div> -->
+
+                        <!-- <div class="oj-flex"> -->
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+                          display="grid" selection-mode.row="single" selection-mode.column="single"
+                          data="[[ $variables.contactinfoTable ]]" columns="[[$variables.contactColumn]]">
+                          <template slot="Edit">
+                            <oj-button chroming="half" on-oj-action="[[$listeners.buttonAction12]]">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                            </oj-button>
+                            <oj-button chroming="half" on-oj-action="[[$listeners.buttonAction15]]">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                            </oj-button>
+                          </template>
+                          <template slot="cfd_date">
+                            <oj-input-date value="[[$current.data]]" readonly="true"
+                              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+                          </template>
+                          <oj-paging-control slot="bottom" style="margin-left:38%" class="oj-sm-width-full"
+                            page-size="15" data="[[ $variables.contactinfoTable ]]">
+                          </oj-paging-control>
+
+                        </oj-table>
+                      </div>
+                      <!-- </div> -->
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- TAB1 -->
+          <!-- TAB2 -->
+
+          <div slot="GeneralInformation-tab2" id="GeneralInformation-tab-panel2" role="tabpanel2"
+            aria-labelledby="GeneralInformation-tab2">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <!-- <div class="oj-panel oj-selected"> -->
+                <!-- <div class="oj-flex"> -->
+                <div role="tabpanel2">
+                  <div class="demo-tab-content">
+                    <div id="mainContent">
+                      <div class="oj-panel oj-selected">
+                        <!-- <h1 style="font-size: larger; font-weight: bold;color:#013766">Fleet Information</h1> -->
+                        <!-- </div> -->
+                        <!-- <div class="oj-flex oj-helper-justify-content-flex-end">
+                          <oj-button class="oj-flex-item oj-sm-flex-initial" chroming="outlined"
+                            label="[[$application.translations.appBundle.button_label_7c77]]"
+                            on-oj-action="[[$listeners.buttonAction4]]">       
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"> 
+               </oj-button>
+                        </div> -->
+                        <!-- </div> -->
+  <div style="display: flex; justify-content: space-between; align-items: center;margin-bottom:6px">
+  <h1 style="font-size: larger; font-weight: bold; color: #013766; margin: 0;">Fleet Information Details</h1>
+  <oj-button class="oj-flex-item oj-sm-flex-initial" chroming="outlined"
+                            label="[[$application.translations.appBundle.button_label_7c77]]"
+                            on-oj-action="[[$listeners.buttonAction4]]">       
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"> 
+               </oj-button>
+</div>
+                        <!-- <div class="oj-flex"> -->
+                        <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+                          display="grid" selection-mode.row="single" selection-mode.column="single"
+                          data="[[ $variables.fleetTable ]]" columns="[[$variables.fleetColumn]]">
+                          <template slot="Edit">
+                            <oj-button chroming="half" on-oj-action="[[$listeners.buttonAction13]]">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                            </oj-button>
+                            <oj-button chroming="half" on-oj-action="[[$listeners.buttonAction18]]">
+                              <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                            </oj-button>
+                          </template>
+                          <template slot="cfd_date">
+                            <oj-input-date value="[[$current.data]]" readonly="true"
+                              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+                          </template>
+                          <oj-paging-control slot="bottom" style="margin-left:38%" class="oj-sm-width-full"
+                            page-size="15" data="[[ $variables.fleetTable ]]">
+                          </oj-paging-control>
+
+                        </oj-table>
+                      </div>
+                      <!-- </div> -->
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB2 -->
+
+          <!-- TAB3 -->
+          <div slot="Fleetinformation-tab3" id="fleet-tab-panel3" role="tabpanel3" aria-labelledby="fleet-tab3">
+            <div class="demo-tab-content">
+              <div id="mainContent">
+                <div class="oj-panel oj-selected">
+                  <div role="tabpanel2">
+                    <!-- <div class="oj-panel oj-selected"> -->
+                    <!-- <h1 style="font-size: larger; font-weight: bold;color:#013766">Meter Readings</h1> -->
+                    <!-- </div> -->
+                    <!-- <div class="oj-flex oj-helper-justify-content-flex-end">
+                      <oj-button class="oj-flex-item oj-sm-flex-initial" chroming="outlined"
+                        label="[[$application.translations.appBundle.button_label_d33e]]"
+                        on-oj-action="[[$listeners.buttonAction5]]">       
+                          <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"> 
+               </oj-button>
+                    </div> -->
+                    <!-- </div> -->
+  <div style="display: flex; justify-content: space-between; align-items: center;margin-bottom:6px">
+  <h1 style="font-size: larger; font-weight: bold; color: #013766; margin: 0;">Meter Reading Details</h1>
+                  <oj-button class="oj-flex-item oj-sm-flex-initial" chroming="outlined"
+                        label="[[$application.translations.appBundle.button_label_d33e]]"
+                        on-oj-action="[[$listeners.buttonAction5]]">       
+                          <img slot="startIcon" :src="[[ $application.path + 'resources/images/createBtn.png' ]]"> 
+               </oj-button>
+</div>
+                    <!-- <div class="oj-flex"> -->
+                    <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+                      display="grid" selection-mode.row="single" selection-mode.column="single"
+                      data="[[ $variables.meterReadingTable ]]" columns="[[$variables.Metercolumn]]">
+                      <template slot="Edit">
+                        <oj-button chroming="half" on-oj-action="[[$listeners.buttonAction14]]">
+                          <img slot="startIcon" :src="[[ $application.path + 'resources/images/EditBtn.png' ]]" width="15" height="15">
+                        </oj-button>
+                        <oj-button chroming="half" on-oj-action="[[$listeners.buttonAction21]]">
+                          <img slot="startIcon" :src="[[ $application.path + 'resources/images/deleteBtn.png' ]]" width="15" height="15">
+                        </oj-button>
+                      </template>
+                      <template slot="cfd_date">
+                        <oj-input-date value="[[$current.data]]" readonly="true"
+                          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+                      </template>
+                      <oj-paging-control slot="bottom" style="margin-left:38%" class="oj-sm-width-full" page-size="15"
+                        data="[[ $variables.meterReadingTable ]]">
+                      </oj-paging-control>
+
+                    </oj-table>
+                  </div>
+                  <!-- </div> -->
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB3 -->
+
+          <!-- TAB4 -->
+
+          <!-- <div slot="Operations-tab4" id="Operations-tab-panel4" role="tabpanel4" aria-labelledby="Operations-tab4" >
+<div class="demo-tab-content">
+<div id="mainContent">
+<div class="oj-panel oj-selected">
+<div  role="tabpanel2" style="min-height: 28rem;">
+  
+<!-- <div class="oj-flex"> -->
+          <!-- <oj-vb-fragment bridge="[[vbBridge]]" name="attachment">
+        <oj-vb-fragment-param name="p_appl_code" value="Asset Master" ></oj-vb-fragment-param>
+        <oj-vb-fragment-param name="p_appl_ref_id" value="{{ $variables.p_hdr_key }}"  ></oj-vb-fragment-param>
+
+        <oj-vb-fragment-param name="p_appl_ref_num" value="{{ $variables.postHdrVar.asset_number }}" ></oj-vb-fragment-param>
+    </oj-vb-fragment> 
+</div>
+  </div>
+</div>
+</div>
+</div> -->
+          <!-- TAB4 -->
+
+
+        </oj-switcher>
+      </div>
+
+
+
+
+      <!-- END -->
+    </div>
+  </oj-sp-advanced-create-edit>
+  <!-- <oj-sp-message-unsaved-changes id="dirtyDataWarningDialog"
+    on-oj-sp-discard-changes="[[ $listeners.confirmYesOjAction ]]" on-oj-sp-cancel="[[ $listeners.confirmNoOjAction ]]"></oj-sp-message-unsaved-changes> -->
+</div>
+<!-- <oj-dialog style="display:none" dialog-title="Save" id="onlychildpopup">
+ <h1  slot="header" style="font-size: larger; font-weight: bold;color:#013766">Save</h1>
+      <div slot="body">
+        <div class="oj-flex">Do you want to save and continue ?</div>
+      </div>
+      <div slot="footer">
+        <oj-button  chroming="solid"  >Ok</oj-button>
+        <oj-button  chroming="solid"  >Cancel</oj-button>
+      </div>
+    </oj-dialog> -->
+<oj-dialog style="display:none" dialog-title="Delete" id="delete_dialog">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="solid">Yes</oj-button>
+    <oj-button chroming="solid">No</oj-button>
+  </div>
+</oj-dialog>
+<oj-dialog style="display:none" dialog-title="Save" id="save_dialog">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to Save and Continue?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction2]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- Contact Information -->
+<oj-dialog dialog-title="Contact Information" id="contact" style=" width: 900px;" cancel-behavior="icon"
+  on-oj-close="[[$listeners.contactClose]]">
+  <div slot="body">
+    <oj-validation-group id="contactinfo">
+    <div class=" oj-panel oj-selected">
+      <oj-form-layout columns="2" style="margin-top:7px;margin-left:-92px;" label-edge="start" label-width="43%"
+        class="oj-forme-control" user-assistance-density="compact">
+        <oj-input-text label-hint="* Contact" value="{{ $variables.postContact.contact_person_name }}"
+          style="margin-bottom:6px;" required="true"></oj-input-text>
+        <oj-input-text label-hint="Mobile Number" value="{{ $variables.postContact.mobile_number }}" style="margin-bottom:6px;"></oj-input-text>
+        <oj-input-text label-hint="Phone Number" value="{{ $variables.postContact.phone_number }}" style="margin-bottom:6px;"></oj-input-text>
+        <!-- <oj-input-text label-hint="Email" value="{{ $variables.postContact.email_address }}"></oj-input-text> -->
+        <!-- <oj-sp-input-email label-hint="* Email" value="{{ $variables.postContact.email_address }}"
+          style="margin-bottom:6px;" required="true"></oj-sp-input-email> -->
+        <oj-input-text virtual-keyboard="email"value="{{ $variables.postContact.email_address }}"
+          style="margin-bottom:6px;" required="true"
+          validators='[{"type":"regexp", "options":{"pattern":"([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})", "hint":"Enter an email address.", "messageDetail": "Value must be of the form xxx@xxx.xx"}}]'
+          label-hint="* Email"></oj-input-text>
+        
+        <oj-input-text label-hint="Fax" value="{{ $variables.postContact.fax }}" style="margin-bottom:6px;"></oj-input-text>
+
+      </oj-form-layout>
+      </div>
+      </oj-validation-group>
+    
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction6]]" :hidden='[[ $variables.P_contact_method==="Edit" ]]'>Save
+      &amp; Add</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction7]]">Save & Close</oj-button>
+  </div>
+</oj-dialog>
+<!-- Fleet Information -->
+<oj-dialog dialog-title="Fleet Information" id="fleet" style="width: 900px;" cancel-behavior="icon"
+  on-oj-close="[[$listeners.fleetClose]]">
+  <div slot="body">
+    <oj-validation-group id="fleetinfo">
+    <div class=" oj-panel oj-selected">
+      
+      <oj-form-layout columns="2" style="margin-top:6px;margin-left:-75px;" label-edge="start" label-width="43%"
+        class="oj-forme-control" user-assistance-density="compact">
+        <oj-input-text label-hint="Fleet Number" value="{{ $variables.PostFleetInformation.fleet_number }}"
+          style="margin-bottom:6px;" required="true" disabled="true"></oj-input-text>
+        <oj-input-text label-hint="* License Plate" value="{{ $variables.PostFleetInformation.license_plate }}"
+          required="true">
+        </oj-input-text>
+        <oj-input-text label-hint="Make" value="{{ $variables.PostFleetInformation.make }}" style="margin-bottom:6px"></oj-input-text>
+        <oj-input-text label-hint="Model" value="{{ $variables.PostFleetInformation.model }}"></oj-input-text>
+        <oj-input-text label-hint="Body Type" value="{{ $variables.PostFleetInformation.body_type }}" style="margin-bottom:6px;"></oj-input-text>
+        <oj-input-text label-hint="Colour" value="{{ $variables.PostFleetInformation.colour }}"></oj-input-text>
+        <oj-input-date label-hint="Production Date"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.PostFleetInformation.production_date }}"></oj-input-date>
+      </oj-form-layout>
+    </div>
+    </oj-validation-group>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction8]]" :hidden='[[ $variables.p_fleet_info_method==="Edit" ]]'>Save
+      &amp; Add</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction9]]">Save & Close</oj-button>
+  </div>
+</oj-dialog>
+<!-- Meter Reading -->
+<oj-dialog dialog-title="Meter Reading" id="reading" style="" cancel-behavior="icon"
+  on-oj-close="[[$listeners.readingClose]]">
+  <div slot="body">
+    <oj-validation-group id="readinginfo">
+    <div class=" oj-panel oj-selected">
+      <oj-form-layout columns="1" style="margin-top:6px;margin-left:-160px" label-edge="start" label-width="43%"
+        class="oj-forme-control" user-assistance-density="compact">
+        <oj-input-date label-hint="* Reading Date"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.postReading.reading_date }}" required="true" style="margin-bottom:6px;"
+          min="[[ $application.functions.getSysdateMinusOne() ]]" max="[[ $variables.postHdrVar.inactive_date ]]"></oj-input-date>
+        <oj-input-text label-hint="* Meter" value="{{ $variables.postReading.meter }}" style="margin-bottom:6px;" required="true"></oj-input-text>
+        <oj-input-text label-hint="Meter Reading" value="{{ $variables.postReading.meter_reading }}" style="margin-bottom:6px;"></oj-input-text>
+        <oj-select-single label-hint="* UOM" value="{{ $variables.postReading.uom }}"
+          data="[[$variables.getLovUomListSDP]]" item-text="unit_of_measure" required="true"></oj-select-single>
+      </oj-form-layout>
+    </div>
+         </oj-validation-group>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction10]]" :hidden='[[ $variables.P_meter_method==="Edit" ]]'>Save
+      &amp; Add</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction11]]">Save & Close</oj-button>
+
+  </div>
+</oj-dialog>
+<!-- About Information -->
+<oj-dialog dialog-title="About Information" id="about" style="width: 450px;" cancel-behavior="icon"
+  position.at.horizontal="right" position.at.vertical="top" position.my.horizontal="end">
+  <div slot="body">
+    <!-- <div class=" oj-panel oj-selected"> -->
+    <oj-vb-fragment bridge="[[vbBridge]]" name="aboutdetails">
+      <oj-vb-fragment-param name="p_hdr_key" value="{{ $variables.p_hdr_key }}"></oj-vb-fragment-param>
+      <oj-vb-fragment-param name="p_table_name" value="ASSET_MASTER"></oj-vb-fragment-param>
+      <!-- <oj-vb-fragment-param name="aboutdetails" value="{{ $variables.aboutdetails }}" ></oj-vb-fragment-param> -->
+    </oj-vb-fragment>
+    <!-- </div> -->
+  </div>
+</oj-dialog>
+<!-- Contact Delete -->
+<oj-dialog style="display:none" dialog-title="Delete" id="delete_contact">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction16]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction17]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+<!-- Fleet Delete -->
+<oj-dialog style="display:none" dialog-title="Delete" id="delete_fleet">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction19]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction20]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+<!-- Meter Delete -->
+<oj-dialog style="display:none" dialog-title="Delete" id="delete_meter">
+  <div slot="body">
+    <div class="oj-flex">Are you sure want to delete?</div>
+  </div>
+  <div slot="footer">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction22]]">Ok</oj-button>
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction23]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
