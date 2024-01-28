@@ -1,0 +1,150 @@
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <div id="mainContent">
+      <!-- :hidden='[[ ($application.variables.appType=="EMP")?false:true ]]' -->
+      <!-- Button Self -->
+      <!-- <oj-button >
+        <oj-bind-text ></oj-bind-text>
+      </oj-button> -->
+      <!-- Onbehalf button -->
+      <oj-bind-if test="[[ $application.variables.appType=='LM'|| $application.variables.appType=='ADMIN' ]]">
+         <oj-button >
+        <oj-bind-text ></oj-bind-text>
+      </oj-button>
+  
+    </oj-bind-if>
+     
+      <!-- table start -->
+  
+
+
+
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+        selection-mode.row="single" edit-mode="rowEdit" display="grid" selection-mode.column="single"
+        horizontal-grid-visible="enabled" vertical-grid-visible="enabled" data="[[ $variables.search_table ]]"
+        columns="{{ $variables.table_column }}" columns-default.header-class-name="my-custom-style">
+        <template slot="Date">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' class="oj-helper-text-align-center"></oj-input-date>
+        </template>
+        <!-- Date of approval -->
+         <template slot="ApproveDate">
+          <oj-input-date value="[[$current.data]]" readonly="true" converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' ></oj-input-date>
+        </template>
+        <template slot="Edit">
+          <a target="_blank">
+            <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+          </a>
+        </template>
+        <template slot="button">
+          
+          <oj-button label=""  class="oj-button-full-width" chroming="borderless">
+            <img slot="startIcon" :src="[[ $flow.path + 'resources/images/icons8-timesheet-64.png' ]]" width="20"
+              height="20">
+          </oj-button>
+       
+        </template>
+          
+           <template slot="centre">
+          <oj-input-text value="[[$current.data]]" readonly="true" class="oj-helper-text-align-center"></oj-input-text>
+</template>
+
+
+        <template slot="tooltip">
+  <oj-button chroming="borderless" class="oj-button-full-width" on-oj-action="[[$listeners.buttonAction7]]">
+    <img :src="[[ $flow.path + 'resources/images/script.png' ]]" width="15" height="15">
+  </oj-button>
+          
+          
+          
+       
+        </template>
+        <template slot="exception">
+           <oj-bind-if test='[[ ($current.row.status=="Weekend"||$current.row.status=="Absent")?false:true  ]]'>  
+          <oj-button label="[[$application.translations.app.latelogin]]" class="oj-button-full-width"
+            chroming="borderless" on-oj-action="[[$listeners.buttonAction5]]">
+  <img slot="startIcon" :src="[[ $flow.path + 'resources/images/icons8-comments-100.png' ]]" width="20" height="20">
+           
+          </oj-button>
+       
+        </template>
+        <!-- <template slot="header">
+          <oj-input-text value="[[$current.data]]" readonly="true" style="width:18rem;" 
+></oj-input-text> -->
+
+        
+
+         <template slot="status">
+          <oj-bind-if test='[[ $current.data==="Approved" ]]'>
+          <oj-bind-text style="color: green;font-weight: bold;">Approved<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Pending" ]]'>
+            <oj-bind-text style="color: blue;font-weight: bold;">Pending<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Draft" ]]'>
+            <oj-bind-text style="color: black;font-weight: bold;">Draft<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Rejected" ]]'>
+            <oj-bind-text style="color: red;font-weight: bold;">Rejected<oj-bind-text>
+          </oj-bind-if>
+        </template>
+        <oj-paging-control id="paging" class="oj-sm-width-full" page-size="31" slot="bottom"
+        data="[[ $variables.search_table ]]">
+        
+        <!-- style="margin-left:10px;height:2.3rem;" -->
+        <oj-button label="First Page" style="margin-left: 6px;height: 1.8em;"
+        chroming="outlined" on-oj-action="[[$listeners.buttonAction14]]"  >
+        <oj-bind-text value="[[ $variables.offsetobj.firstoff ]]"></oj-bind-text>
+        </oj-button>
+        <!--  -->
+        <oj-button label="Previous Page" style="margin-left: 6px;height: 1.8em;" chroming="outlined"
+            on-oj-action="[[$listeners.buttonAction13]]" disabled="[[ $variables.disablepreoff ]]">
+          <oj-bind-text value="[[ $variables.offsetobj.prevoff ]]"></oj-bind-text>
+          <span slot="startIcon" class="oj-ux-ico-rewind"></span>
+        </oj-button>
+        <!--  -->
+        <oj-button label="Current Page" style="margin-left: 6px;height: 1.8em;"
+          chroming="outlined" on-oj-action="[[$listeners.buttonAction16]]">
+          <oj-bind-text ></oj-bind-text>
+          <span slot="startIcon" class="oj-ux-ico-back-parent"></span>
+        </oj-button>
+        <!--  -->
+        <oj-button label="Next Page" style="margin-left: 6px;height: 1.8em;" chroming="outlined"
+        disabled="[[ $variables.disablenextoff ]]" on-oj-action="[[$listeners.buttonAction15]]">
+        <oj-bind-text value="[[ $variables.offsetobj.nextoff ]]"></oj-bind-text>
+        <span class="oj-ux-ico-fast-forward" slot="endIcon"></span>
+        </oj-button>
+
+        </oj-paging-control>
+        <!-- <oj-paging-control id="paging" class="oj-sm-width-full" page-size="31" slot="bottom"
+          data="[[ $variables.search_table ]]"></oj-paging-control> -->
+      </oj-table>
+    </div>
+  </div>
+</div>
+<!-- table end -->
+<!--  -->
+<!-- <div style="display:flex; margin-left:27%;"> 
+<oj-button label="First Page" style="margin-left:10px;height:2.3rem;"
+  chroming="outlined" on-oj-action="[[$listeners.buttonAction14]]"  >
+  <oj-bind-text value="[[ $variables.offsetobj.firstoff ]]"></oj-bind-text>
+</oj-button>
+<oj-button label="Previous Page" style="margin-left:10px;height:2.3rem;" chroming="outlined"
+     on-oj-action="[[$listeners.buttonAction13]]" disabled="[[ $variables.disablepreoff ]]">
+  <oj-bind-text value="[[ $variables.offsetobj.prevoff ]]"></oj-bind-text>
+  <span slot="startIcon" class="oj-ux-ico-rewind"></span>
+</oj-button>
+<oj-button label="Current Page" style="margin-left:10px;height:2.3rem;"
+  chroming="outlined" on-oj-action="[[$listeners.buttonAction16]]">
+  <oj-bind-text ></oj-bind-text>
+  <span slot="startIcon" class="oj-ux-ico-back-parent"></span>
+</oj-button>
+<oj-button label="Next Page" style="margin-left:10px;height:2.3rem;" chroming="outlined"
+   disabled="[[ $variables.disablenextoff ]]" on-oj-action="[[$listeners.buttonAction15]]">
+   <oj-bind-text value="[[ $variables.offsetobj.nextoff ]]"></oj-bind-text>
+  <span class="oj-ux-ico-fast-forward" slot="endIcon"></span>
+</oj-button>
+</div>  -->
