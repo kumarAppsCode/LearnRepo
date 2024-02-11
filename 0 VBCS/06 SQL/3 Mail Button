@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<p>
+<a 
+target="_blank"
+href='https://www.google.com/'style="padding:5px 7px;background: #308f04;color: #ffffff;text-decoration: none;">Generate Report</a>
+</p>
+
+</body>
+</html>
