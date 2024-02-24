@@ -1,0 +1,41 @@
+<div class="oj-lg-down-web-padding-vertical">
+  <header style="background-color: white;" role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-sm-only-hide fixed-header">
+    <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+      <div class="oj-flex-bar-middle oj-sm-margin-4x-horizontal oj-sm-align-items-center">
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="Period Close ">
+          <oj-bind-text value="[[ $variables.p_bu_name ]]"></oj-bind-text>
+        </h1>
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="Period Close2 ">
+          <oj-bind-text value=" ["></oj-bind-text>
+        </h1>
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="Period Close3 ">
+          <oj-bind-text value="[[ $variables.p_month_year ]]"></oj-bind-text>
+        </h1>
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="Period Close4 ">
+          <oj-bind-text value="]"></oj-bind-text>
+        </h1>
+      </div>
+      <!-- tool bar start -->
+      <oj-toolbar>
+        <oj-bind-if test="true">
+          <oj-button label="[[$application.translations.app.close]]" chroming="outlined"
+            on-oj-action="[[$listeners.buttonAction]]"></oj-button>
+        <!-- <div style="display:flex; justify-content:flex-end;">
+          <oj-button style="margin-left:0.5%;margin-right:0.5%;" label="[[$application.translations.app.Close]]"
+            chroming="danger" on-oj-action="[[$listeners.buttonAction7]]"></oj-button>
+        </div> -->
+        </oj-bind-if>
+      </oj-toolbar>
+      <!-- tool bar end -->
+    </div>
+  </header>
+</div>
+
+
+    <div style="display:flex; justify-content:flex-end;">
+      <oj-button style="margin-left:0.5%;margin-right:0.5%;" label="[[$application.translations.app.ToDashboard]]"
+        on-oj-action="[[$listeners.buttonAction8]]" chroming="borderless">
+        <span class="oj-ux-ico-home" slot="startIcon"></span>
+      </oj-button>
+    </div>   
+	
