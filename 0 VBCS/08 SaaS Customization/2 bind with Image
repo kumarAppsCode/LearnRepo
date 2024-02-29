@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.button {
+   background-color: #7d0041;
+   border: none;
+  color:white;
+  padding: 6px 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;	
+  margin: 0x 0px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+ 
+<button class="button"  onClick="MyWindow=window.open('https://design.******','MyWindow','width=1000,height=1000'); return false;" >Custom Approval Flow</button>
+</body>
+</html>
+
+
+
+/images/applcore/uishell/globalRegion/navi_bell24.svg
+
+svg-glob
