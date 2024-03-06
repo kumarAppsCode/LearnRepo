@@ -1,0 +1,30 @@
+    <oj-form-layout label-edge="start" columns="2" style="margin-top:-211px; margin-left: 669px;" max-columns="2">
+      <oj-chart type="bar" class="oj-sm-flex-initial" style="width: 671px;height: 320px; padding-left: 10px;"
+        data="[[$variables.getGetcountListSDP11]]" y-axis.title="Count" x-axis.title="Status"
+        animation-on-data-change="slideToLeft" animation-on-display="alphaFade" y-axis.major-tick.line-style="dotted" y-axis.minor-tick.line-color="#000000"
+          zoom-and-scroll="live" legend.title="Status" stack="on">
+        <template slot="itemTemplate">
+          <oj-chart-item value="[[ $current.data.count ]]" group-id="[[[ $current.data.status ]]]"
+            series-id="[[ $current.data.status ]]"></oj-chart-item>
+        </template>
+      </oj-chart>
+  <!-- <oj-chart type="bar" class="oj-sm-flex-initial" data="[[$variables.getGetcountListSDP12]]" y-axis.title="count"
+    x-axis.title="status" legend.title="status" animation-on-data-change="slideToLeft" >
+    <template slot="itemTemplate">
+      <oj-chart-item value="[[ $current.data.count ]]" group-id="[[[ $current.data.status ]]]"
+        series-id="[[ $current.data.status ]]"></oj-chart-item>
+    </template>
+  </oj-chart> -->
+      
+     
+    </oj-form-layout>
+
+
+      <oj-dialog dialog-title="Please wait..." id="progressMsg" class="wd200">
+  <div slot="body">
+    <div class="oj-flex full_stretch lg_button_width">
+      <oj-progress-bar class="full_stretch oj-flex-item oj-sm-12 oj-md-12" value="-1"></oj-progress-bar>
+    </div>
+  </div>
+</oj-dialog>
+
