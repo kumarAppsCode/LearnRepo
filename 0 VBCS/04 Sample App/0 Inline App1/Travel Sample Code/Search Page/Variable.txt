@@ -1,0 +1,21 @@
+"offsetobj": {
+      "type": {
+        "curroff": "number",
+        "firstoff": "number",
+        "nextoff": "number",
+        "prevoff": "number"
+      }
+    },
+
+========
+checkLinks : Param: $chain.results.callRestGetTravelSearchTravelrequestdtlNew.body.links
+
+disableextoff: $chain.results.callFunctionCheckLinks.hasNext
+disableextoff:: $chain.results.callFunctionCheckLinks.hasPrev
+
+{
+ "firstoff": "{{ $chain.results.callFunctionCheckLinks.lfirstoffset }}",
+ "nextoff": "{{ $chain.results.callFunctionCheckLinks.lnextoffset }}",
+ "prevoff": "{{ $chain.results.callFunctionCheckLinks.lprevoffset }}",
+ "curroff": "{{ 0 }}"
+}
