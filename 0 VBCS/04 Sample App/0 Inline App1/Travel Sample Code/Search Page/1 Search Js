@@ -1,0 +1,85 @@
+define(['ojs/ojpagingdataproviderview','ojs/ojarraydataprovider'], 
+function(PagingDataProviderView,ArrayDataProvider) {
+  'use strict';
+
+  class PageModule {
+
+    /**
+     *
+     * @param {String} arg1
+     * @return {String}
+     */
+    pagingSearch(array) {
+      let data = new PagingDataProviderView(new ArrayDataProvider(
+      array, {
+        idAttribute: 'travel_header_id'
+        }));
+      return data;
+    };
+
+checkLinks(links) {
+  let hasFirst = true;
+  let hasPrev = true;
+  let hasNext = true;
+  let lfirstoffset = 0;
+  let lprevoffset = 0;
+  let lnextoffset = 0;
+  let lcurroffset = 0;
+
+  links.forEach(link => {
+    if (link.rel === "first") {
+      const offsetMatch = link.href.match(/offset=(\d+)/);
+      if (offsetMatch && offsetMatch[1] !== undefined) {
+        hasFirst = false;
+        lfirstoffset = parseInt(offsetMatch[1], 10); // offset - 0
+        lcurroffset= 0;
+      }
+    } else if (link.rel === "prev") {
+      const offsetMatch = link.href.match(/offset=(\d+)/);
+      if (offsetMatch && offsetMatch[1] !== undefined) {
+        hasPrev = false;
+        lprevoffset = parseInt(offsetMatch[1], 10); // prev - first
+      lcurroffset = parseInt(offsetMatch[1], 10) - lfirstoffset;
+       //  lcurroffset = lprevoffset+5;
+      }
+    } else if (link.rel === "next") {
+      const offsetMatch = link.href.match(/offset=(\d+)/);
+      if (offsetMatch && offsetMatch[1] !== undefined) {
+        hasNext = false;
+        lnextoffset = parseInt(offsetMatch[1], 10); // next - first
+        lcurroffset = lprevoffset-lnextoffset;
+      }
+    }
+  });
+
+  if (!hasFirst) {
+    console.log("First link is missing or disabled.");
+  }
+
+  if (!hasPrev) {
+    console.log("Prev link is missing or disabled.");
+  }
+
+  if (!hasNext) {
+    console.log("Next link is missing or disabled.");
+  }
+
+  console.log("lfirstoffset:", lfirstoffset);
+  console.log("lprevoffset:", lprevoffset);
+  console.log("lnextoffset:", lnextoffset);
+console.log("lcurroffset:", lcurroffset);
+  return {
+    lfirstoffset: lfirstoffset,
+    lprevoffset: lprevoffset,
+    lnextoffset: lnextoffset,
+    lcurroffset:lcurroffset,
+    hasPrev: hasPrev,
+    hasNext: hasNext
+  };
+}
+
+
+  }
+  
+  return PageModule;
+});
