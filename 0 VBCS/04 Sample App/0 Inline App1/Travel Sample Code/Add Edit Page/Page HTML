@@ -1,0 +1,3300 @@
+<div class="oj-lg-down-web-padding-vertical">
+  <header style="background-color: white;" role="banner"
+    class="oj-sm-flex-initial vb-web-applayout-header oj-sm-only-hide fixed-header">
+    <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+      <div class="oj-flex-bar-middle oj-sm-margin-4x-horizontal oj-sm-align-items-center">
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="Travel Application ">
+          <oj-bind-text value='[[ "Travel Application" +" - " +$variables.ptravelheaderid ]]'></oj-bind-text>
+        </h1>
+      </div>
+      <!-- tool bar start -->
+      <!-- ||$variables.postPkgTravelHeaderDetails.approval_status=="Rejected" -->
+      <oj-toolbar>
+         <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Draft"||$variables.postPkgTravelHeaderDetails.approval_status==="Return for Correction"||$variables.ptravelmethod=="CREATE")?true:false ]]'>
+          <!-- <oj-bind-if test="  ">  condition-->
+          <oj-bind-if test="true">
+            <oj-bind-for-each data="[[ $variables.ToolDraftADP ]]">
+              <template>
+                <div>
+                  <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction]]">
+                    <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  </oj-button>
+                </div>
+              </template>
+            </oj-bind-for-each>
+          </oj-bind-if>
+        </oj-bind-if>
+         </oj-bind-if>
+        <!-- PENDING -->
+        <!-- <oj-bind-if test="true"> -->
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info")?false:true ]]'>
+          <oj-bind-for-each data="[[ $variables.ToolPendingADP]]">
+            <template>
+              <div :hidden="[[ ($variables.taskId!=null)?false:true ]]">
+                <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction37]]">
+                  <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+        <!-- ----------------------------SUBMIT BUTTON--------------------- -->
+        <!-- <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status=="Draft"||$variables.postPkgTravelHeaderDetails.approval_status=="Rejected"||$variables.ptravelheaderid!=0)?true:false ]]'><oj-button label="[[$application.translations.app.Submit]]" chroming="outlined"
+            :hidden='[[ $variables.postPkgTravelHeaderDetails.approval_status=="Approved" || $variables.postPkgTravelHeaderDetails.approval_status == "Pending" ]]'
+            on-oj-action="[[$listeners.buttonAction43]]"></oj-button></oj-bind-if> -->
+        <!-- ---------------------SUBMIT BUTTON END------------------------ -->
+        <!-- APPROVED -->
+        <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'> 
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approved"||$variables.postPkgTravelHeaderDetails.approval_status==="Rejected"||$variables.postPkgTravelHeaderDetails.approval_status==="Pending"||$variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info"||$variables.postPkgTravelHeaderDetails.approval_status==="Employee More Info")?true:false ]]'>
+          <!--approved  -->
+          <oj-bind-for-each data="[[ $variables.ToolApprovedADP ]]">
+            <template>
+              <div :hidden="[[ ($variables.taskId!=null)?true:false ]]">
+                <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction36]]">
+                  <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+        </oj-bind-if>
+        <oj-bind-if test='[[ $application.variables.userAccess==="VIEW" ]]'>
+      <oj-button style="margin-right:5px;" chroming="outlined" label="Close"
+        on-oj-action="[[$listeners.buttonAction85]]"
+        ></oj-button>
+</oj-bind-if>
+      </oj-toolbar>
+      <!-- tool bar end -->
+      <!-- </div> -->
+       <oj-bind-if
+        test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info" && $variables.taskId!=null)?true:false ]]'>
+      <oj-button style="margin-right:5px;" chroming="outlined" label="Approver More Info"
+        on-oj-action="[[$listeners.buttonAction82]]"
+        
+       >
+                 
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+      </oj-bind-if>
+    </div>
+  </header>
+</div>
+<!-- </div> -->
+<br>
+<!-- Employee Fragment -->
+<oj-vb-fragment bridge="[[vbBridge]]" name="employeedetail">
+  <oj-vb-fragment-param name="personid" value="{{ $variables.pemployee_id }}"></oj-vb-fragment-param>
+  <oj-vb-fragment-param name="employeeNumber" value="{{ $variables.pemployee_number }}"></oj-vb-fragment-param>
+</oj-vb-fragment>
+<br>
+<!-- Panel For Travel & Event -->
+<div class="oj-panel oj-panel-shadow-md oj-selected">
+  <h1 style="color: #013766; font-size: larger; font-weight: bold;">Travel and Event Details</h1>
+  <oj-validation-group id="requestdetail">
+    <oj-form-layout columns="3" label-edge="start" label-width="50%" direction="column" max-columns="3">
+      <!-- <oj-form-layout columns="1" label-edge="start" label-width="39%" direction="column"> -->
+      <!-- travel purpose -->
+      <oj-select-single label-hint="[[$application.translations.app.TravelPurpose]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose }}" item-text="lookup_value_name_disp"
+        data="[[$variables.findbyLookuptypecodeListSDP6]]" required="true"
+        disabled="[[ $variables.validateFields || $variables.validate_fin_bind ]]"
+        on-value-item-changed="[[$listeners.selectValueItem4]]"></oj-select-single>
+      <!-- travel category -->
+      <!-- <oj-select-single label-hint="[[$application.translations.app.TravelCategory]]" style="width: 16rem;"
+      value="{{ $variables.postPkgTravelHeaderDetails.ldata.travel_category }}" item-text="lookup_value_name_disp"
+      required="true" disabled="[[ $variables.validateFields ]]" data="[[$variables.findbyLookuptypecodeListSDP14]]"></oj-select-single> -->
+      <!-- ------------------------------------ -->
+      <oj-bind-if
+        test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose === "BUSINESS"|| $variables.postPkgTravelHeaderDetails.ldata.travel_purpose === "HOME_PASSAGE"||$variables.ptravelmethod === "CREATE" ]]'>
+        <oj-select-single label-hint="[[$application.translations.app.TravelCategory]]" style="width: 16rem;"
+          value="{{ $variables.postPkgTravelHeaderDetails.ldata.travel_category }}" item-text="lookup_value_name_disp"
+          required="true" disabled="[[ $variables.validateFields || $variables.validate_fin_bind  ]]"
+          data="[[$variables.findbyLookuptypecodeListSDP14]]"></oj-select-single>
+      </oj-bind-if>
+      <oj-select-single label-hint="[[$application.translations.app.TravelType]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.ldata.travel_type }}" item-text="lookup_value_name_disp"
+        data="[[$variables.findbyLookuptypecodeListSDP3]]" required="true"
+        disabled="[[ $variables.validateFields || $variables.validate_fin_bind  ]]"></oj-select-single>
+      <!-- travel type -->
+      <oj-select-single label-hint="[[$application.translations.app.HotelBookingBy]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.ldata.hotel_book_by }}"
+        data="[[$variables.findbyLookuptypecodeListSDP4]]" item-text="lookup_value_name_disp" required="true"
+        disabled="[[ $variables.validateFields || $variables.validate_fin_bind  ]]"></oj-select-single>
+      <!-- Hotel Booking -->
+      <!-- Transportation -->
+      <oj-bind-if test='[[ ($variables.postPkgTravelHeaderDetails.ldata.travel_type === "OMAN")?true:false]]'>
+        <oj-select-single label-hint="[[$application.translations.app.Transportation]]" style="width: 16rem;"
+          value="{{ $variables.postPkgTravelHeaderDetails.ldata.transportation }}"
+          data="[[$variables.findbyLookuptypecodeListSDP7]]" item-text="lookup_value_name_disp" required="true"
+          disabled="[[ $variables.validateFields || $variables.validate_fin_bind  ]]"></oj-select-single>
+      </oj-bind-if>
+      <!-- Flight Ticket Booking -->
+      <oj-bind-if test='[[ ($variables.postPkgTravelHeaderDetails.ldata.travel_type === "OVERSEAS")?true:false ]]'>
+        <oj-select-single style="width: 16rem;" label-hint="[[$application.translations.app.FlightTicketBooking]]"
+          data="[[$variables.findbyLookuptypecodeListSDP8]]" item-text="lookup_value_name_disp" required="true"
+          value="{{ $variables.postPkgTravelHeaderDetails.ldata.flight_ticket_booking }}"
+          disabled="[[ $variables.validateFields || $variables.validate_fin_bind ]]"></oj-select-single>
+      </oj-bind-if>
+      <oj-input-text label-hint="[[$application.translations.app.Status]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.approval_status }}" disabled="true"></oj-input-text>
+      <!-- Event Name -->
+      <oj-bind-if
+        test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_category === "JOINING_TRAVEL" || $variables.postPkgTravelHeaderDetails.ldata.travel_category === "RECRUITMENT_TRAVEL" ]]'>
+        <oj-input-text label-hint="[[$application.translations.app.EventName]]" style="width: 16rem;"
+          value="{{ $variables.postPkgTravelHeaderDetails.ldata.event_name }}" required="true"
+          disabled='[[ $variables.validateFields ||$variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" || $variables.validate_fin_bind  ]]'>
+        </oj-input-text>
+      </oj-bind-if>
+      <!-- Event name lov for travel category official mission and training -->
+      <oj-bind-if
+        test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_category ==="OFFICIAL_MISSION" || $variables.postPkgTravelHeaderDetails.ldata.travel_category ==="TRAINING" ]]'>
+        <oj-select-single style="width: 16rem;" label-hint="Event Name*"
+          data="[[$variables.findbyLookuptypecodeListSDP17]]" item-text="lookup_value_name_disp"
+          value="{{ $variables.postPkgTravelHeaderDetails.ldata.event_name }}"
+          disabled='[[ $variables.validateFields ||  $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" || $variables.validate_fin_bind ]]'
+          required="true"></oj-select-single>
+      </oj-bind-if>
+      <!-- Event Details -->
+      <oj-input-text label-hint="[[$application.translations.app.EventDetails]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.ldata.event_detail }}" required="true"
+        disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" || $variables.validate_fin_bind  ]]'>
+      </oj-input-text>
+      <!-- Event start Date -->
+      <!-- first code -->
+      <oj-bind-if
+        test="[[ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose !== 'HOME_PASSAGE' || $variables.ptravelmethod !== 'CREATE' ]]">
+        <oj-input-date label-hint="[[$application.translations.app.EventStartDate]]" style="width: 16rem;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.postPkgTravelHeaderDetails.ldata.event_start_date }}"
+          disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" || $variables.validate_fin_bind  ]]'>
+        </oj-input-date>
+      </oj-bind-if>
+      <oj-bind-if
+        test="[[ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose === 'HOME_PASSAGE' && $variables.ptravelmethod ==='CREATE' ]]">
+        <oj-input-date label-hint="[[$application.translations.app.EventStartDate]]" style="width: 16rem;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $application.functions.getSysdate() }}" disabled="true"></oj-input-date>
+      </oj-bind-if>
+      <!-- Event end date -->
+      <oj-input-date label-hint="[[$application.translations.app.EventEndDate]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.ldata.event_end_date }}"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' required="true"
+        min="[[ $variables.postPkgTravelHeaderDetails.ldata.event_start_date ]]"
+        disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" || $variables.validate_fin_bind  ]]'>
+      </oj-input-date>
+      <!-- Event Special Reqirement -->
+      <oj-text-area label-hint="[[$application.translations.app.EventSpecialRequirement]]" style="width: 16rem;"
+        value="{{ $variables.postPkgTravelHeaderDetails.ldata.event_special_requirement }}" rows="2"
+        resize-behavior="both"
+        disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" || $variables.validate_fin_bind  ]]'>
+      </oj-text-area>
+      <!-- REQUEST DATE -->
+      <oj-input-date label-hint="[[$application.translations.app.Request_Date]]"
+        value="{{ $variables.postPkgTravelHeaderDetails.travel_request_date }}" style="width: 16rem;"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' disabled="true"></oj-input-date>
+      <!-- <oj-input-text label-hint="emp_disable_access" value="{{ $application.variables.saasGetLogin.email_address }}"
+        disabled="true"></oj-input-text> -->
+      <!-- <oj-input-text label-hint="emp_disable_access" value="{{ $variables.validateFields }}" disabled="true"></oj-input-text><oj-input-text label-hint="Fin Bind Access" value="{{ $page.variables.validate_fin_bind }}" disabled="true"></oj-input-text><oj-input-text label-hint="Fin Actual Access" value="{{ $variables.validate_fin_actual_bind }}" disabled="true"></oj-input-text><oj-input-text label-hint="Payment Count" value="{{ $variables.lcount_payment }}" disabled="true"></oj-input-text><oj-input-text label-hint="Expenditure Count" value="{{ $variables.lcount_expenditure }}" disabled="true"></oj-input-text><oj-input-text value='{{ ($variables.validate_fin_actual_bind===false && $variables.lcount_payment===0) }}'
+        label-hint="[[$application.translations.app.input_text_label_hint_06bf]]"></oj-input-text> -->
+    </oj-form-layout>
+    <!-- </oj-form-layout> -->
+  </oj-validation-group>
+</div>
+<br>
+<!-- tabpanel -->
+<div class="oj-panel oj-panel-shadow-md oj-selected" style="height: 21rem;">
+  <div id="sampleDemo" style="" class="demo-padding demo-container">
+    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+      <div id="mainContent">
+        <!-- <div class="demo-switcher-container oj-panel"> -->
+        <!-- <oj-switcher value="[[ $variables.selectedTab ]]"> -->
+        <!--TAB1 Booking Detail  -->
+        <!-- <div slot="travelline-tab1" id="travelline-tab-panel1" role="tabpanel1" aria-labelledby="travelline-tab1" -->
+        <!-- style="height: 22rem;"> -->
+        <div class="demo-content">
+          <h1 style="color: #013766; font-size: larger; font-weight: bold;">Booking Detail</h1>
+          <div>
+            <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+            <oj-button label="[[$application.translations.app.booking_add]]" on-oj-action="[[$listeners.buttonAction3]]"
+              disabled='[[ ($variables.postPkgTravelHeaderDetails.approval_status === "Draft"||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction")?false:true ]]'
+              chroming="borderless">
+              <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ena.png' ]]" width="14" height="14">
+            </oj-button>
+            </oj-bind-if>
+          </div>
+          <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+            selection-mode.row="single" horizontal-grid-visible="enabled" vertical-grid-visible="enabled" display="grid"
+            columns='{{ ($application.variables.appType==="EMP")?$variables.column:($application.variables.appType==="IT")?$variables.column_book_admin:($application.variables.appType==="ABC")?$variables.columndummy:$variables.column }}'
+            data="[[ $variables.travelBookingTable ]]">
+            <template slot="BudgetAmt">
+              <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="257"></oj-input-number>
+            </template>
+            <template slot="EstCost">
+              <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="261"></oj-input-number>
+            </template>
+            <template slot="ActualCost">
+              <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="265"></oj-input-number>
+            </template>
+            <template slot="edit">
+              <!--Draft  -->
+               <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+              <oj-bind-if
+                test='[[ (($variables.postPkgTravelHeaderDetails.approval_status==="Draft" || $variables.postPkgTravelHeaderDetails.approval_status==="Return for Correction")&& $variables.validate_fin_bind===false)?true:false ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                  on-oj-action="[[$listeners.buttonAction6]]">
+                  <img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]">
+                </oj-button>
+              </oj-bind-if>
+               </oj-bind-if>
+              <!--Pending for finance ---------------------------------------------------- -->
+              <oj-bind-if
+                test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Pending" && $variables.validate_fin_bind===true)?true:false ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                  on-oj-action="[[$listeners.buttonAction6]]"
+                  disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'>
+                  <img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]">
+                </oj-button>
+              </oj-bind-if>
+              <!--Pending for Employee ---------------------------------------------------- -->
+              <oj-bind-if
+                test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Pending" && $variables.validate_fin_bind===false)?true:false ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless">
+                  <img :src="[[ $flow.path + 'resources/images/edit_dis.png' ]]">
+                </oj-button>
+              </oj-bind-if>
+              <!--Pending for Employee ---------------------------------------------------- -->
+              <oj-bind-if
+                test='[[ ($variables.postPkgTravelHeaderDetails.approval_status!=="Pending" || $variables.postPkgTravelHeaderDetails.approval_status!=="Draft")?true:false ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless">
+                  <img :src="[[ $flow.path + 'resources/images/edit_dis.png' ]]">
+                </oj-button>
+              </oj-bind-if>
+              <!-- ---------------------------------------------------- -->
+              <!-- <oj-bind-if test="[[ ($variables.taskId!=null && $variables.validate_fin_bind==='true') ?false:true ]]"><oj-bind-if test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Draft'))?true:false ]]"><oj-button label="" class="oj-button-full-width" chroming="borderless"
+                              on-oj-action="[[$listeners.buttonAction6]]"
+                              disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'><img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]"></oj-button></oj-bind-if><oj-bind-if test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Draft'))?false:true ]]"><oj-button label="" class="oj-button-full-width" chroming="borderless"><img :src="[[ $flow.path + 'resources/images/edit_dis.png' ]]"></oj-button></oj-bind-if></oj-bind-if>  -->
+            </template>
+            <template slot="TravelDate">
+              <oj-input-date value="[[$current.data]]" readonly="true"
+                converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                label-hint="[[$application.translations.app.input_date_label_hint]]"></oj-input-date>
+            </template>
+            <template slot="delete">
+              <oj-bind-if test="[[ ($variables.validate_fin_bind)?true:false ]]">
+                <oj-button label="" class="oj-button-full-width" chroming="borderless">
+                  <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+                </oj-button>
+              </oj-bind-if>
+              <!-- ---------------------------------------- -->
+              <oj-bind-if test='[[$variables.postPkgTravelHeaderDetails.approval_status === "Pending"  ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless">
+                  <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+                </oj-button>
+              </oj-bind-if>
+              <!-- ---------------------------------------------------- -->
+              <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+              <oj-bind-if
+                test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Draft" ||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction" ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                  on-oj-action="[[$listeners.buttonAction8]]"
+                  disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'>
+                  <img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+                </oj-button>
+              </oj-bind-if>
+              </oj-bind-if>
+              <!-- <oj-bind-if test="[[ ($variables.taskId!=null && $variables.validate_fin_bind==='true') ?true:false ]]"><oj-button label="" class="oj-button-full-width" chroming="borderless"
+                        on-oj-action="[[$listeners.buttonAction8]]"
+                        disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'><img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]"></oj-button></oj-bind-if> -->
+              <!-- <oj-bind-if test="[[ ($variables.taskId!=null && $variables.validate_fin_bind==='true') ?false:true ]]"><oj-bind-if test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Draft'))?true:false ]]"><oj-button label="" class="oj-button-full-width" chroming="borderless"
+                              on-oj-action="[[$listeners.buttonAction8]]"
+                              disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'><img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]"></oj-button></oj-bind-if>  -->
+              <!-- <oj-bind-if test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Draft'))?false:true ]]"><oj-button label="" class="oj-button-full-width" chroming="borderless"><img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]"></oj-button></oj-bind-if></oj-bind-if> -->
+            </template>
+             <template slot="more">
+                <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                  on-oj-action="[[$listeners.buttonAction76]]"
+                  >
+                  <img :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">
+                </oj-button>
+             </template>
+
+            <oj-paging-control id="paging" class="oj-sm-width-full" page-size="4" slot="bottom"
+              data="[[ $variables.travelBookingTable ]]"></oj-paging-control>
+          </oj-table>
+          <!-- FOR SHOWING BOOKING TOTAL CALCULATION -->
+          <!-- <oj-label style="margin-left:70%;font-weight: bold;color:#013766">Estimate Cost :
+                  <oj-input-number label-hint=" "
+                    style="width:7.9rem; font-weight: bold;color:#013766;"
+                    converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                    class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.bookingestcost }}"></oj-input-number></oj-label>
+																<!-- ------------------------------------------------------------------------------------------------------------- -->
+          <!-- <oj-label style="margin-left:70%;font-weight: bold;color:#013766">Actual Cost :
+                  <oj-input-number label-hint=" "
+                    style="width:9.1rem;font-weight: bold;color:#013766;"
+                    converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                     class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.bookingActCost }}"></oj-input-number></oj-label> -->
+          <!-- ----------------------------------------------------------------------------------------------------- -->
+          <!-- <oj-label style="margin-left:70%; font-weight: bold;color:#013766">Variance Cost :
+                  <oj-input-number label-hint=" "
+                    style="width:7.9rem;font-weight: bold;color:#013766;"
+                    converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                    class="oj-form-control-text-align-right" readonly="true"
+                    value="{{ $variables.varianceCostBooking }}"></oj-input-number></oj-label> -->
+        </div>
+        <br>
+        <!-- FOR SHOWING BOOKING TOTAL CALCULATION -->
+
+        <oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" ]]'>
+          <oj-form-layout style="margin-left:30%;" label-edge='start' max-columns="3" label-width="40%">
+
+            <oj-input-number style="margin-right:0.5%" label-hint="[[$application.translations.app.Estcostbk]]"
+              converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+              class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.bookingestcost }}" id="382"
+              disabled="true">
+            </oj-input-number>
+
+            <oj-input-number style="margin-right:0.5%" label-hint="[[$application.translations.app.Actcostbk]]"
+              converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+              class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.bookingActCost }}" id="388"
+              disabled="true">
+            </oj-input-number>
+
+            <oj-input-number style="margin-right:0.5%" label-hint="[[$application.translations.app.Varcostbk]]"
+              converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+              class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.varianceCostBooking }}"
+              id="394" disabled="true"></oj-input-number>
+
+          </oj-form-layout>
+        </oj-bind-if>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<!-- </div> -->
+<!-- Dependent -->
+  <oj-bind-if test="[[ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose==='HOME_PASSAGE' ]]">
+
+    <div class="oj-panel oj-panel-shadow-md oj-selected">
+  
+<h4 style="color: #01474d; font-size: larger; font-weight: bold;">Dependents Details</h4>
+ <oj-button label="[[$application.translations.app.dependent_add]]" 
+           disabled='[[ ($variables.postPkgTravelHeaderDetails.approval_status === "Draft"||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction")?false:true ]]'   
+              chroming="borderless" on-oj-action="[[$listeners.buttonAction70]]">
+              <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ena.png' ]]" width="14" height="14">
+            </oj-button>
+ 
+  <div id="sampleDemo" style="" class="demo-padding demo-container">
+<div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+<div id="mainContent">
+ <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata" selection-mode.row="single"
+   edit-mode="rowEdit" id="searchSSTable1" display="grid" selection-mode.column="single"
+   columns='[{"headerText":"Name","resizable":"enabled","field":"child_full_name"},{"headerText":"Contact Type","resizable":"enabled","field":"contact_type"},{"headerText":"Delete","resizable":"enabled","template":"delete","field":""}]'
+   data="[[ $variables.traveldependentTable ]]"
+   >
+  
+  <!--edit-->
+          
+ <!--edit-->
+ 
+   <template slot="delete">
+
+       <oj-bind-if
+                test='[[ ($variables.postPkgTravelHeaderDetails.approval_status === "Draft" ||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction")?true:false ]]'>
+          <oj-button display="icons" chroming="borderless" class="oj-button-full-width"
+            on-oj-action="[[$listeners.buttonAction73]]"
+           >
+            <img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+            <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+          </oj-button>
+       </oj-bind-if>
+                    <!--Delete Disable -->
+          <!-- <oj-bind-if
+            test="[[ $variables.Createheader.request_status==='Pending' && $variables.taskId!=undefined?true:false ]]" > -->
+             <oj-bind-if
+                test='[[ ($variables.postPkgTravelHeaderDetails.approval_status === "Draft" ||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction")?false:true ]]'>
+             <oj-button display="icons" chroming="borderless" class="oj-button-full-width">
+             <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+             </oj-button>
+          </oj-bind-if>
+   </template>
+
+ 
+<oj-paging-control page-size="10" slot="bottom" data="[[ $variables.traveldependentTable ]]"  ></oj-paging-control>
+ </oj-table>
+</div>
+</div>
+  </div>
+</div>
+
+
+  </oj-bind-if>
+<!-- <br> -->
+<br>
+<!--TAB2  -->
+<oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.ldata.hotel_book_by !== "SELF" ]]'>
+  <div class="oj-panel oj-panel-shadow-md oj-selected" style="height: 21rem;">
+
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+
+      <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+
+        <div id="mainContent">
+          <!-- <div slot="approval-tab2" id="approval-tab-panel2" role="tabpanel2" aria-labelledby="approval-tab2" -->
+          <!-- style="height: 28rem;"> -->
+
+          <div class="demo-tab-content">
+
+            <h1 style="color: #013766; font-size: larger; font-weight: bold;">Hotel Booking</h1>
+
+            <div>
+<oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+              <oj-button label="[[$application.translations.app.hotel_add]]"
+                on-oj-action="[[$listeners.buttonAction14]]"
+                :hidden='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE"||$variables.postPkgTravelHeaderDetails.ldata.hotel_book_by==="NOT_REQUIRED"||$variables.postPkgTravelHeaderDetails.ldata.hotel_book_by==="SELF" ]]'
+                disabled='[[ ($variables.postPkgTravelHeaderDetails.approval_status === "Draft"||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction")?false:true ]]'
+                chroming="borderless">
+
+                <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ena_1.png' ]]" width="14"
+                  height="14">
+
+              </oj-button>
+</oj-bind-if>
+            </div>
+
+            <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+              selection-mode.row="single" horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+              display="grid"
+              columns='{{ ($application.variables.appType==="EMP")?$variables.hotelBookingcolumn :($application.variables.appType==="IT")?$variables.hotelBookingcolumn_admin:($application.variables.appType==="ABC")?$variables.columndummy:$variables.hotelBookingcolumn  }}'
+              data="[[ $variables.hotelBookingTable ]]">
+
+              <template slot="BudgetAmt">
+
+                <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                  converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="424"></oj-input-number>
+
+              </template>
+
+              <template slot="EstCost">
+
+                <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                  converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="428"></oj-input-number>
+
+              </template>
+
+              <template slot="actCost">
+
+                <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                  converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="433"></oj-input-number>
+
+              </template>
+
+              <template slot="edit">
+
+                <oj-bind-if test="[[ ($variables.validate_fin_bind)?true:false ]]">
+
+                  <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                    on-oj-action="[[$listeners.buttonAction11]]"
+                    disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" ]]'>
+
+                    <img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]">
+
+                  </oj-button>
+
+                </oj-bind-if>
+                <!-- ---------------------------------------- -->
+
+                <oj-bind-if test='[[$variables.postPkgTravelHeaderDetails.approval_status === "Pending"  ]]'>
+
+                  <oj-button label="" class="oj-button-full-width" chroming="borderless">
+
+                    <img :src="[[ $flow.path + 'resources/images/edit_dis.png' ]]">
+
+                  </oj-button>
+
+                </oj-bind-if>
+                <!-- ---------------------------------------------------- -->
+<oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+                <oj-bind-if
+                  test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Draft"||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction"]]'>
+
+                  <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                    on-oj-action="[[$listeners.buttonAction11]]"
+                    disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" ]]'>
+
+                    <img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]">
+
+                  </oj-button>
+
+                </oj-bind-if>
+</oj-bind-if>
+              </template>
+
+              <template slot="TravelDate">
+
+                <oj-input-date value="[[$current.data]]" readonly="true"
+                  converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                  label-hint="[[$application.translations.app.input_date_label_hint]]"></oj-input-date>
+
+              </template>
+
+              <template slot="delete">
+<oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+                <oj-bind-if
+                  test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Draft'||$variables.postPkgTravelHeaderDetails.approval_status === 'Return for Correction')) ]]">
+
+                  <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                    on-oj-action="[[$listeners.buttonAction20]]"
+                    disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" || $variables.postPkgTravelHeaderDetails.approval_status === "Pending" ]]'>
+
+                    <img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+
+                  </oj-button>
+
+                </oj-bind-if>
+</oj-bind-if>
+                <!-- -------------------------------------------- -->
+
+                <oj-bind-if
+                  test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Pending' || $variables.postPkgTravelHeaderDetails.approval_status==='Approved' ))?true:false ]]">
+
+                  <oj-button label="" class="oj-button-full-width" chroming="borderless">
+
+                    <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+
+                  </oj-button>
+
+                </oj-bind-if>
+
+              </template>
+
+              <template slot="to_date">
+
+                <oj-input-date value="[[$current.data]]" readonly="true"
+                  converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+
+              </template>
+
+              <template slot="cfd_date">
+
+                <oj-input-date value="[[$current.data]]" readonly="true"
+                  converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+
+              </template>
+                 <template slot="more">
+                <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                  on-oj-action="[[$listeners.buttonAction78]]">
+                  <img :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">
+                </oj-button>
+             </template>
+
+              <oj-paging-control id="paging" class="oj-sm-width-full" page-size="4" slot="bottom"
+                data="[[ $variables.hotelBookingTable ]]"></oj-paging-control>
+
+            </oj-table><br>
+            <!-- FOR HOTEL SHOWING TOTAL CALCULATION -->
+            <!-- <oj-label style="margin-left:70%; font-weight: bold;color:#013766">Estimate Cost :
+                  <oj-input-number label-hint=" "
+                    style="width:7.9rem; font-weight: bold;color:#013766;"
+                    converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                    class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.htlEstCost }}"></oj-input-number></oj-label> -->
+            <!-- ------------------------------------------------------------------------------------------------------------- -->
+            <!-- <oj-label style="margin-left:70%; font-weight: bold;color:#013766">Actual Cost :
+                  <oj-input-number label-hint=" "
+                    style="width:9.1rem;font-weight: bold;color:#013766;"
+                    converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                     class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.htlActCost }}"></oj-input-number></oj-label> -->
+            <!-- ----------------------------------------------------------------------------------------------------- -->
+            <!-- <oj-label style="margin-left:70%;font-weight: bold;color:#013766">Variance Cost :
+                  <oj-input-number label-hint=" "
+                    style="width:7.9rem;font-weight: bold;color:#013766;"
+                    converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                    class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.VarianceCostHotel }}"></oj-input-number></oj-label> -->
+
+          </div>
+
+
+          <oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" ]]'>
+            <oj-form-layout style="margin-left:30%;" label-edge='start' max-columns="3" label-width="40%">
+
+
+              <oj-input-number style="margin-right:0.5%" label-hint="[[$application.translations.app.Estcosthbk]]"
+                converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.htlEstCost }}" id="532"
+                disabled="true">
+              </oj-input-number>
+
+
+              <oj-input-number style="margin-right:0.5%" label-hint="[[$application.translations.app.Actcosthbk]]"
+                converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.htlActCost }}" id="537"
+                disabled="true">
+              </oj-input-number>
+
+
+              <oj-input-number style="margin-right:0.5%" label-hint="[[$application.translations.app.Varcosthbk]]"
+                converter='{"options":{"minimumFractionDigits":2},"type":"number"}'
+                class="oj-form-control-text-align-right" readonly="true" value="{{ $variables.VarianceCostHotel }}"
+                id="542" disabled="true"></oj-input-number>
+
+
+            </oj-form-layout>
+          </oj-bind-if>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</oj-bind-if>
+<br>
+
+
+<!-- </div> -->
+
+<!--TAB3  -->
+
+
+<oj-bind-if test='[[ ($variables.validate_fin_bind===false && $variables.lcount_payment===0)?false:true ]]'>
+  <div class="oj-panel oj-panel-shadow-md oj-selected" style="height: 23rem;">
+
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+
+      <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+
+        <div id="mainContent">
+          <!-- <div slot="demo-content"> -->
+
+          <h1 style="color: #013766; font-size: larger; font-weight: bold;">Payment Details</h1>
+          <!--           
+          <oj-bind-if test='[[ ($variables.validate_fin_bind===false && $variables.lcount_payment===0)?true:false ]]'><h6>You are not authorized to see secure details</h6></oj-bind-if> -->
+
+          <!-- <oj-bind-if test='[[ ($variables.validate_fin_bind===false && $variables.lcount_payment===0)?false:true ]]'> -->
+
+            <div id="detail-tab-panel3" role="tabpanel3" style="height: 28rem;">
+
+              <div class="demo-tab-content">
+
+                <div>
+
+                  <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+
+                    <oj-button label="[[$application.translations.app.button_labeladd]]"
+                      on-oj-action="[[$listeners.buttonAction17]]"
+                      :hidden='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_purpose ==="HOME_PASSAGE" ]]'
+                      chroming="borderless">
+
+                      <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ena.png' ]]" width="14"
+                        height="14">
+
+                    </oj-button>
+
+                  </oj-bind-if>
+
+                </div>
+
+                <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                  selection-mode.row="single" horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+                  display="grid"
+                  columns='{{ ($application.variables.appType==="EMP")?$variables.paymentDetailColumn :($application.variables.appType==="IT")?$variables.paymentDetailColumn_admin:($application.variables.appType==="ABC")?$variables.columndummy:$variables.paymentDetailColumn  }}'
+                  data="[[ $variables.paymentDetailTable ]]">
+
+                  <template slot="edit">
+
+                    <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                        on-oj-action="[[$listeners.buttonAction15]]">
+
+                        <img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+                    <!-- --------------------------------------------------------------------------- -->
+
+                    <oj-bind-if test="[[ ($variables.validate_fin_bind)?false: true ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless">
+
+                        <img :src="[[ $flow.path + 'resources/images/edit_dis.png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+
+                  </template>
+
+                  <template slot="EligiblePerDiem">
+
+                    <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="589"></oj-input-number>
+
+                  </template>
+
+                  <template slot="TicketEncashAmount">
+
+                    <oj-input-number style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}' id="596"></oj-input-number>
+
+                  </template>
+
+                  <template slot="HotelCharges">
+
+                    <oj-input-number id="603" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+
+                  <template slot="BudgetAmount">
+
+                    <oj-input-number id="610" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+
+                  <template slot="TotalAmount">
+
+                    <oj-input-number id="617" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+
+                  <template slot="TravelDate">
+
+                    <oj-input-date value="[[$current.data]]" readonly="true"
+                      converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                      label-hint="[[$application.translations.app.input_date_label_hint]]"></oj-input-date>
+
+                  </template>
+
+                  <template slot="delete">
+
+                    <!-- <oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Draft" ]]'> -->
+                      <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                        on-oj-action="[[$listeners.buttonAction18]]"
+                        >
+
+                        <img slot="startIcon"
+                          :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+
+                    <oj-bind-if
+                      test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Pending' || $variables.postPkgTravelHeaderDetails.approval_status==='Approved' ))?true:false ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless">
+
+                        <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+
+                  </template>
+                  <template slot="more">
+                
+  <oj-bind-if
+    test='[[ ($application.variables.appType==="IT" && $variables.postPkgTravelHeaderDetails.approval_status==="Approved" && $current.row.total_amount!=null)?true:false ]]'>
+    <oj-button label="" class="oj-button-full-width" chroming="borderless" on-oj-action="[[$listeners.buttonAction80]]"
+                 
+                  >
+                  
+      <img :src="[[ $flow.path + 'resources/images/submitrequest_ena.png' ]]">
+                
+    </oj-button>
+  </oj-bind-if>
+  <oj-bind-if
+    test='[[ ($application.variables.appType==="IT" && $variables.postPkgTravelHeaderDetails.approval_status==="Approved" && $current.row.total_amount!=null)?false:true ]]'>
+                <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                  on-oj-action="[[$listeners.buttonAction86]]"
+                 
+                 
+                  >
+                  <img :src="[[ $flow.path + 'resources/images/EditPen_Icon.png' ]]">
+                </oj-button>
+                </oj-bind-if>
+             </template>
+
+                  <oj-paging-control id="paging" class="oj-sm-width-full" page-size="4" slot="bottom"
+                    data="[[ $variables.paymentDetailTable ]]"></oj-paging-control>
+
+                </oj-table>
+
+              </div>
+
+            </div>
+            <!-- </oj-bind-if> -->
+            <!-- </div> -->
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</oj-bind-if>
+
+<br>
+<!--TAB4 -->
+
+<oj-bind-if test='[[ ($variables.validate_fin_actual_bind===false && $variables.lcount_expenditure===0)?false:true ]]'>
+  <div class="oj-panel oj-panel-shadow-md oj-selected" style="height: 33rem;">
+
+    <div id="sampleDemo" style="" class="demo-padding demo-container">
+
+      <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+
+        <div id="mainContent">
+          <!-- <div slot="demo-content"> -->
+
+          <h1 style="color: #013766; font-size: larger; font-weight: bold;">Expenditure Details</h1>
+
+
+          <!-- <oj-bind-if
+            test='[[ ($variables.validate_fin_actual_bind===false && $variables.lcount_expenditure===0)?true:false ]]'>
+
+            <h6>You are not authorized to see secure details</h6>
+
+          </oj-bind-if> -->
+
+
+          <!-- <oj-bind-if
+            test='[[ ($variables.validate_fin_actual_bind===false && $variables.lcount_expenditure===0)?false:true ]]'> -->
+
+            <div id="detail-tab-panel3" role="tabpanel3" style="height: 28rem;">
+
+              <div class="demo-tab-content">
+
+                <div>
+
+                  <oj-button label="[[$application.translations.app.expenditure_add]]"
+                    on-oj-action="[[$listeners.buttonAction27]]">
+
+                    <img slot="startIcon" :src="[[ $flow.path + 'resources/images/1_(1).png' ]]" >
+
+                  </oj-button>
+
+                </div>
+
+                <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata"
+                  selection-mode.row="single" horizontal-grid-visible="enabled" vertical-grid-visible="enabled"
+                  display="grid" columns="{{ $variables.expenditurecolumn }}" data="[[ $variables.expenditureTable ]]">
+
+                  <template slot="edit">
+
+                    <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                        on-oj-action="[[$listeners.buttonAction29]]">
+                        <!-- disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'> -->
+
+                        <img :src="[[ $flow.path + 'resources/images/qual_pencil_16.png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+                    <!-- ----------------------------------------------------------------------------------- -->
+
+                    <oj-bind-if test="[[ ($variables.validate_fin_bind)?false: true ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless">
+
+                        <img :src="[[ $flow.path + 'resources/images/edit_dis.png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+
+                  </template>
+                  <!-- description template -->
+
+                  <template slot="codeDescription">
+
+                    <oj-text-area value="[[ $current.data ]]"></oj-text-area>
+
+                  </template>
+
+                  <template slot="BudgetAmount">
+
+                    <oj-input-number id="693" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+
+                  <template slot="Estimatedcost">
+
+                    <oj-input-number id="697" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+
+                  <template slot="Actualcost">
+
+                    <oj-input-number id="701" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+
+                  <template slot="Variance">
+
+                    <oj-input-number id="705" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                      converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+
+                  </template>
+                  <!-- <template slot="jvestimated">
+                      <oj-input-number id="709" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+                    </template> -->
+                  <!-- <template slot="jvvariance">
+                      <oj-input-number id="713" style="text-align: right;" value="[[$current.data]]" readonly="true"
+                        converter='{"options":{"minimumFractionDigits":2},"type":"number"}'></oj-input-number>
+                    </template> -->
+
+                  <template slot="TravelDate">
+
+                    <oj-input-date value="[[$current.data]]" readonly="true"
+                      converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+                      label-hint="[[$application.translations.app.input_date_label_hint]]"></oj-input-date>
+
+                  </template>
+
+                  <template slot="delete">
+
+                    <oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Draft" ]]'>
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless"
+                        on-oj-action="[[$listeners.buttonAction33]]"
+                        disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" || $variables.postPkgTravelHeaderDetails.approval_status === "Pending" ]]'>
+
+                        <img slot="startIcon"
+                          :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+
+
+                    <oj-bind-if
+                      test="[[ (($variables.postPkgTravelHeaderDetails.approval_status==='Pending' || $variables.postPkgTravelHeaderDetails.approval_status==='Approved' ))?true:false ]]">
+
+                      <oj-button label="" class="oj-button-full-width" chroming="borderless">
+
+                        <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+
+                      </oj-button>
+
+                    </oj-bind-if>
+
+                  </template>
+
+                  <oj-paging-control id="paging" class="oj-sm-width-full" page-size="4" slot="bottom"
+                    data="[[ $variables.expenditureTable ]]"></oj-paging-control>
+
+                </oj-table>
+
+
+              </div>
+
+            </div>
+
+          <!-- </oj-bind-if> -->
+          <!-- </div> -->
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</oj-bind-if>
+<!-- </oj-switcher> -->
+<!-- </div> -->
+
+
+
+
+
+
+<br>
+<!-- <oj-bind-if test="[[ $variables.ptravelheaderid != 0 ]]"> -->
+
+<!-- <div class="oj-panel oj-panel-shadow-md oj-selected" >
+  <div class="oj-flex" > -->
+<!-- <oj-vb-fragment bridge="[[vbBridge]]" id="attachementFragment" class="oj-flex-item oj-sm-12 oj-md-4" name="attachment">
+ <oj-vb-fragment-param name="p_appl_code" value="{{ $variables.postPkgTravelHeaderDetails.approval_department }}"> </oj-vb-fragment-param>
+ <oj-vb-fragment-param name="p_appl_ref_id" value="{{ $variables.ptravelheaderid }}"></oj-vb-fragment-param>
+<oj-vb-fragment-param name="p_appl_ref_num" value='{{ "TR-"+$variables.ptravelheaderid }}'></oj-vb-fragment-param>
+
+</oj-vb-fragment> -->
+<!-- <oj-vb-fragment-param name="p_disable" value="{{ $variables.ptravelheaderid }}"></oj-vb-fragment-param> -->
+<!-- </div>
+  </div> -->
+<div class="oj-panel oj-selected">
+  <h1 id="h4" style="font-size: larger; font-weight: bold;color:#013766">
+    <oj-bind-text value="[[$application.translations.app.attachment]]"></oj-bind-text>
+  </h1>
+  <br>
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <div id="mainContent">
+      <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+    <oj-button
+    label="[[$application.translations.app.Add]]"
+      disabled='[[ ($variables.postPkgTravelHeaderDetails.approval_status === "Approver More Info"|| $variables.postPkgTravelHeaderDetails.approval_status === "Employee More Info"||$variables.postPkgTravelHeaderDetails.approval_status === "Draft"||$variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction")?false:true ]]'
+      class="oj-button-sm"
+      chroming="borderless" on-oj-action="[[$listeners.buttonAction44]]">
+      <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ena.png' ]]" width="14" height="14">
+    </oj-button>
+      </oj-bind-if>
+      <!-- ENABLE ADD ATTACH -->
+  <!-- <oj-bind-if
+    test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approver More Info" || $variables.postPkgTravelHeaderDetails.approval_status === "Employee More Info" ]]'>
+    <oj-button
+      class="oj-button-sm" label="[[$application.translations.app.Add]]" chroming="borderless"
+      on-oj-action="[[$listeners.buttonAction44]]">
+      <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ena.png' ]]" width="14" height="14">
+    </oj-button>
+  </oj-bind-if> -->
+      <!--  -->
+      <oj-button label="[[$application.translations.app.Refresh]]" chroming="borderless" style="height:2rem;"
+        on-oj-action="[[$listeners.buttonAction48]]">
+                         <img slot="startIcon" :src="[[ $application.path + 'resources/images/1 (1).png' ]]" >              
+      </oj-button>
+    </div>
+    <div style="font-size: 17px; color: red; font-weight: bold;">
+
+      <oj-bind-if test="[[ $variables.disable_var === 'S' ]]">
+
+        <span  style="font-size: 17px; color: red; font-weight: bold;"> Please Save the Header Record.</span>
+
+      </oj-bind-if>
+
+
+    </div>
+    <div class="oj-flex">
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body oj-search-table"
+        columns='[[$application.variables.columns]]' display="grid" data="[[ $variables.attachmentTable ]]"
+        first-selected-row="{{ $application.variables.FileTable }}" selection-mode.row="single">
+        <template slot="download">
+          <oj-button chroming="borderless" on-oj-action="[[$listeners.buttonAction49]]">
+            <img slot="startIcon" :src="[[ $application.path + 'resources/images/MicrosoftTeams-image (17).png' ]]">
+          </oj-button>
+        </template>
+        <template slot="downloadDelete">
+          <!-- <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction50]]"
+            disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Pending" || $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'>
+            <img :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]" slot="startIcon">
+          </oj-button> -->
+          <oj-bind-if test="[[ ($variables.validate_fin_bind)?true:false ]]">
+            <oj-button label="" class="oj-button-full-width" chroming="borderless">
+              <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+            </oj-button>
+          </oj-bind-if>
+          <!-- ---------------------------------------- -->
+          <oj-bind-if test='[[$variables.postPkgTravelHeaderDetails.approval_status === "Pending"  ]]'>
+            <oj-button label="" class="oj-button-full-width" chroming="borderless">
+              <img :src="[[ $flow.path + 'resources/images/delete_sm_dis.png' ]]">
+            </oj-button>
+          </oj-bind-if>
+          <!-- ---------------------------------------------------- -->
+          <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+          <oj-bind-if
+            test='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Draft" || $variables.postPkgTravelHeaderDetails.approval_status === "Return for Correction" ]]'>
+            <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction50]]"
+              disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Approved" ]]'>
+              <img :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]" slot="startIcon">
+            </oj-button>
+          </oj-bind-if>
+          </oj-bind-if>
+        </template>
+        <template slot="cfd_date">
+          <oj-input-date value="[[$current.data]]" readonly="true"
+            converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+        </template>
+        <oj-paging-control slot="bottom" class="oj-sm-width-full" data="[[ $variables.attachmentTable ]]">
+        </oj-paging-control>
+      </oj-table>
+    </div>
+  </div>
+
+
+
+
+  <!--******************************************************************************************************  -->
+  <!-- style="display:none;color:#013766; width: 850px; height: 1000px;" -->
+  <oj-dialog dialog-title="Attachment" id="attachmentPopUp" drag-affordance="none">
+    <div>
+      <!-- <h1 id="h4"  style="font-size: larger; font-weight: bold;color:#013766">Attachment</h1> -->
+      <oj-validation-group id="SearchForm">
+        <oj-form-layout label-edge="start" columns="1">
+          <oj-label for="oj-file-picker–0001" style="font-weight: bold;" show-required="true">Upload</oj-label>
+          <oj-file-picker id="oj-file-picker–0001" selection-mode="single" style="width: 20rem;height:6rem;"
+            on-oj-select="[[$listeners.ojFilePicker0001Select]]"></oj-file-picker>
+        </oj-form-layout>
+        <br>
+        <oj-form-layout label-edge="start" direction="row" columns="1">
+          <!-- <oj-label for="oj-input-text-651077415-1" style="font-weight: bold;" show-required="true">File Name</oj-label>  -->
+          <oj-select-single style="width: 18rem;" item-text="lookup_value_name" label-hint="Category*" required="true"
+            data="[[$variables.getAttachmentFindbyLookupListSDP]]"
+            value="{{ $variables.attachmentObj.DOCUMENT_CATEGORY }}"></oj-select-single>
+          <oj-input-text disabled="true" style="width: 18rem;" required="true" label-hint="File Name*"
+            value="{{ $variables.attachmentObj.document_name }}"></oj-input-text>
+          <oj-input-text style="width: 18rem;" label-hint="Description"
+            value="{{ $variables.attachmentObj.DESCRIPTION }}"></oj-input-text>
+          <!-- <oj-bind-if test="true">
+          <oj-input-text disabled="true" style="width: 18rem;" required="true" label-hint="File Content" value="{{ $variables.attachmentobj.DOCUMENT_TYPE }}"></oj-input-text>
+        </oj-bind-if> -->
+        </oj-form-layout>
+        <div style="display:flex; justify-content:flex-end;">
+          <oj-button style="searchBtn margin-left:0.5%;margin-right:0.5%;" chroming="solid"
+            on-oj-action="[[$listeners.buttonAction45]]">
+            <oj-bind-text value="[[$application.translations.app.save_add_another]]"></oj-bind-text>
+          </oj-button>
+          <oj-button style="searchBtn margin-left:0.5%;margin-right:0.5%;" chroming="solid"
+            on-oj-action="[[$listeners.buttonAction46]]">
+            <oj-bind-text value="[[$application.translations.app.Save_and_Close]]"></oj-bind-text>
+          </oj-button>
+          <oj-button style="searchBtn margin-left:0.5%;margin-right:0.5%;" chroming="solid"
+            on-oj-action="[[$listeners.buttonAction47]]">
+            <oj-bind-text value="[[$application.translations.app.Cancel]]"></oj-bind-text>
+          </oj-button>
+        </div>
+      </oj-validation-group>
+    </div>
+  </oj-dialog>
+  <!-- <oj-dialog style="display:none; width: 400px;height: 200px;" id="warning">
+    <h1 id="h4" slot="header" style="font-size: larger; font-weight: bold;color:#013766">Warning</h1>
+    
+      <oj-button label="Do you want to Delete the Document?" chroming="borderless" disabled="true"></oj-button> Are You Sure want to Delete the Document?
+   
+     <div slot="footer">
+      <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction7]]">Yes</oj-button>
+      <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction8]]">No</oj-button>
+    </div>
+  </oj-dialog> -->
+
+  <!--******************************************************************************************************  -->
+
+  <oj-dialog dialog-title="Warning" style="display:none" id="warning">
+    <!-- <oj-dialog dialog-title="Dialog" id="delete_dialog" style="display:none">  -->
+    <br>
+    <div slot="body">
+      <!-- <br> -->
+      <oj-form-layout label-edge='start'>
+        <!-- <h3>Warning</h3> -->
+        <div class="oj-flex">Are you sure want to delete?</div>
+      </oj-form-layout>
+    </div>
+    <div slot="footer">
+      <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction51]]">Ok</oj-button>
+      <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction52]]">Cancel</oj-button>
+    </div>
+  </oj-dialog>
+
+  <!--******************************************************************************************************  -->
+  <oj-dialog style="display:none; width: 260px; height: 300px;" dialog-title="Please Wait..." id="InProgressPopup"
+    drag-affordance="title-bar">   
+    <img style="object-fit: fill;" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(18).png' ]]" width="250"
+   height="200">   
+  </oj-dialog>
+
+
+
+
+  <!--******************************************************************************************************  -->
+
+  <!-- <oj-dialog style="display:none" dialog-title="Save" id="delete_dialog">
+      <div slot="body">
+        <div class="oj-flex">Are you sure want to Save and Continue?</div>
+      </div>
+      <div slot="footer">
+        <oj-button chroming="solid" on-oj-action="[[$listeners.buttonAction7]]">Ok</oj-button>
+        <oj-button  chroming="solid"on-oj-action="[[$listeners.buttonAction8]]">Cancel</oj-button>
+      </div>
+  </oj-dialog> -->
+</div>
+<br>
+<!-- ---------------------Approval History Table Start------------------------------ -->
+
+<!-- <div class="oj-panel oj-panel-shadow-md oj-selected oj-flex-item oj-sm-12 oj-md-12"> -->
+
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+
+    <div id="mainContent">
+
+      <div class="demo-tabbar-container oj-panel">
+
+        <oj-tab-bar id="hnavlist" edge="top" selection="{{ $variables.selectedTabar }}">
+
+          <ul>
+            <li id="matchschedule">
+              <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="worldcupmatches"
+                id="match-tab">Approval History</a>
+            </li>
+
+            <li id="playerstowatch">
+              <a href="#" style="font-size: larger; font-weight: bold;" aria-controls="playerstowatch"
+                id="players-tab">Require More Information</a>
+            </li>
+
+          </ul>
+
+        </oj-tab-bar>
+      </div>
+      <div class="demo-switcher-container oj-panel">
+        <oj-switcher value="[[ $variables.selectedTabar ]]">
+          <div slot="matchschedule" id="match_schedules" role="tabpanel1" aria-labelledby="matchschedule"
+            style="height: 30rem;">
+            <div class="demo-content">
+              <div>
+                <oj-button label="[[$application.translations.app.Refresh]]" chroming="borderless" style="height:2rem;"
+                  on-oj-action="[[$listeners.buttonAction53]]">
+                  <img slot="startIcon" :src="[[ $flow.path + 'resources/images/1_(1).png' ]]" >
+                </oj-button>
+              </div>
+              <oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12"
+                columns="[[$variables.approvalColumn]]" selection-mode.row="single" selection-mode.column="single"
+                display="grid" data="[[ $variables.apprHistoryTable ]]">
+                <template slot="actiondate">
+                  <oj-input-date value="[[$current.data]]" readonly="true"
+                    converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+                </template>
+                <oj-paging-control slot="bottom" id="paging" class="oj-sm-width-full" page-size="30"
+                  data="[[ $variables.apprHistoryTable ]]">
+                </oj-paging-control>
+
+              </oj-table>
+            </div>
+          </div>
+          <!-- <tab-2> -->
+          <div slot="playerstowatch" id="playertab" role="tabpanel1" aria-labelledby="playerstowatch"
+            style="height: 30rem;">
+            <div class="demo-content">
+              <div>
+                <oj-button label="[[$application.translations.app.Refresh]]" chroming="borderless" style="height:2rem;"
+                  on-oj-action="[[$listeners.buttonAction67]]">
+                  <img slot="startIcon" :src="[[ $flow.path + 'resources/images/1_(1).png' ]]" >
+                </oj-button>
+              </div>
+            </div>
+            <oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12"
+              selection-mode.row="single" selection-mode.column="single" display="grid"
+              data="[[ $variables.requiretable ]]" columns="{{ $variables.Requiremoreclumn }}">
+              <template slot="actiondate">
+                <oj-input-date value="[[$current.data]]" readonly="true"
+                  converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+              </template>
+              <template slot="edit">
+                <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+                <oj-bind-if
+                  test='[[ $current.row.more_info_type==="EMP_MORE_INFO" && $variables.taskId==null && $current.row.status==="D" ]]'>
+                  <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction57]]">
+
+                    <img slot="startIcon" :src="[[ $flow.path + 'resources/images/EditPen_Icon.png' ]]">Button
+                  </oj-button>
+                </oj-bind-if>
+                <oj-bind-if
+                  test='[[ $current.row.more_info_type==="APPROVER_MORE_INFO" && $variables.taskId!=null && $current.row.status==="D" ]]'>
+                  <oj-button display="icons" chroming="borderless" on-oj-action="[[$listeners.buttonAction57]]">
+
+                    <img slot="startIcon" :src="[[ $flow.path + 'resources/images/EditPen_Icon.png' ]]">Button
+                  </oj-button>
+                </oj-bind-if>
+                </oj-bind-if>
+              </template>
+
+              <!-- TEXT AREA -->
+              <template slot="textarea">
+                <oj-text-area value="[[ $current.data ]]"></oj-text-area>
+              </template>
+
+              <template slot="textarea1">
+                <oj-text-area value="[[ $current.data ]]"></oj-text-area>
+              </template>
+              <!-- ------------------------------------------------------ -->
+
+              <oj-paging-control slot="bottom" id="paging" class="oj-sm-width-full" page-size="10"
+                data="[[ $variables.requiretable ]]">
+              </oj-paging-control>
+
+            </oj-table>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- </div> -->
+<!-- </div> -->
+
+
+<oj-dialog dialog-title="Save Header" id="SaveHeader">
+  <div slot="body">
+    <div class="oj-flex">Are you sure you want to save and continue?</div>
+  </div>
+  <div slot="footer">
+    <oj-button id="onClickOk" on-oj-action="[[$listeners.onClickOkAction]]">Ok</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction2]]">Cancel</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- Booking Detail Dialog -->
+<oj-dialog dialog-title="Booking Detail" id="BookingDetail" style="width: 1400px; height: 700px;">
+  <div slot="body">
+    <div class="oj-panel oj-flex-item oj-sm-flex-initial">
+      <div class="oj-flex">
+        <oj-validation-group id="bookingdetail">
+          <oj-form-layout columns="2" label-edge="start" direction="column" max-columns="3" class="" label-width="50%">
+            <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelType]]"
+              data="[[$variables.findbyLookuptypecodeListSDP11]]" item-text="lookup_value_name_disp" required="true"
+              value="{{ $variables.postPkgBookingDetails.travel_type }}" disabled="[[ $variables.validateFields]]">
+            </oj-select-single>
+            <!--  -->
+            <oj-input-date style="width: 32rem;" label-hint="[[$application.translations.app.TravelStartDate]]"
+              disabled="[[ $variables.validateFields ]]"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+              value="{{ $variables.postPkgBookingDetails.travel_start_date }}" required="true"></oj-input-date>
+            <!--  -->
+            <oj-input-date style="width:  32rem;" label-hint="[[$application.translations.app.TravelEndDate]]"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+              value="{{ $variables.postPkgBookingDetails.travel_end_date }}" required="true"
+              disabled="[[ $variables.validateFields ]]" min="[[ $variables.postPkgBookingDetails.travel_start_date ]]">
+            </oj-input-date>
+            <!--  -->
+            <!-- <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.Departingcountry]]"
+              required="true" disabled="[[ $variables.validateFields ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_country }}"></oj-input-text> -->
+
+            <!-- Country LOV -->
+            <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_country }}" required="true"
+              disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_type === "OMAN" ]]'
+              data="[[$variables.getTravelGetCountryHotelListSDP]]" item-text="country_name"
+              on-value-item-changed="[[$listeners.selectValueItem5]]"></oj-select-single>
+
+            <!--  -->
+    <oj-select-single label-hint="[[$application.translations.app.DepartingRegion]]" item-text="region_name"
+              disabled="[[ $variables.validateFields ]]" data="[[ $variables.departingRegLOV ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_region_id }}"
+              on-value-item-changed="[[$listeners.selectValueItem6]]" required="true"
+                ></oj-select-single>
+<oj-select-single label-hint="[[$application.translations.app.DepartingWilayat]]" item-text="wilayat_name"
+  disabled="[[ $variables.validateFields ]]" data="[[ $variables.departingWilayatLOV ]]" required="true"
+  value="{{ $variables.postPkgBookingDetails.ldata.departing_wilayat_id }}"
+  on-value-item-changed="[[$listeners.selectValueItem7]]"
+                ></oj-select-single>
+            <!-- TRAVEL TYPE != OMAN THEN IT SHOWS    -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type != "OMAN" || $variables.postPkgBookingDetails.ldata.departing_country !="Oman" ]]'> -->
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.DepartingCity]]"
+                required="true" disabled="[[ $variables.validateFields ]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.departing_city }}"></oj-input-text>
+            <!-- </oj-bind-if> -->
+
+            <!-- TRAVEL TYPE = OMAN THEN IT SHOWS    -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN" && $variables.postPkgBookingDetails.ldata.departing_country == "Oman" ]]'>
+              <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_63b2]]"
+                item-text="lookup_value_name_disp" value="{{ $variables.postPkgBookingDetails.ldata.departing_city }}"
+                required="true" disabled="[[ $variables.validateFields ]]"
+                data="[[$variables.findbyLookuptypecodeListSDP21]]"></oj-select-single>
+            </oj-bind-if> -->
+
+            <!--  -->
+
+            <!-- Arriving Contry -->
+            <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_17f5]]"
+              required="true"
+              disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_type ==="OMAN" ]]'
+              value="{{ $variables.postPkgBookingDetails.ldata.arriving_country }}"
+              data="[[$variables.getTravelGetCountryHotelListSDP2]]" item-text="country_name"></oj-select-single>
+
+               <oj-select-single label-hint="[[$application.translations.app.ArrivingRegion]]" item-text="region_name"
+                 disabled="[[ $variables.validateFields ]]" data="[[ $variables.arrivingReqLOV ]]"
+                 value="{{ $variables.postPkgBookingDetails.ldata.arriving_region_id }}"
+                 on-value-item-changed="[[$listeners.selectValueItem8]]"
+                ></oj-select-single>
+                <oj-select-single label-hint="[[$application.translations.app.ArrivingWilayat]]"
+                  item-text="wilayat_name" disabled="[[ $variables.validateFields ]]"
+                  data="[[ $variables.arrivingWilayatLOV ]]"
+                  value="{{ $variables.postPkgBookingDetails.ldata.arriving_wilayat_id }}"
+                  on-value-item-changed="[[$listeners.selectValueItem9]]"
+                ></oj-select-single>
+
+            <!-- <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.ArrivingCountry]]"
+              required="true" disabled="[[ $variables.validateFields ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.arriving_country }}"></oj-input-text> -->
+            <!--  -->
+            <!-- ARRIVING CITY SHOWS TRAVELTYPE != OMAN -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type != "OMAN" || $variables.postPkgBookingDetails.ldata.arriving_country != "Oman" ]]'> -->
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.ArrivingCity]]"
+                required="true" disabled="[[ $variables.validateFields ]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.arriving_city }}"></oj-input-text>
+            <!-- </oj-bind-if> -->
+
+            <!-- ARRIVING CITY SHOWS TRAVELTYPE == OMAN -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN" && $variables.postPkgBookingDetails.ldata.arriving_country == "Oman" ]]'> -->
+              <!-- <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_bc08]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.arriving_city }}"
+                data="[[$variables.findbyLookuptypecodeListSDP19]]" item-text="lookup_value_name_disp" required="true"
+                disabled="[[ $variables.validateFields ]]">
+              </oj-select-single> -->
+            <!-- </oj-bind-if> -->
+
+            <!--  -->
+        
+                   
+                
+            <!--  -->
+
+            <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelMode]]"
+              data="[[$variables.findbyLookuptypecodeListSDP9]]" item-text="lookup_value_name_disp"
+              value="{{ $variables.postPkgBookingDetails.ldata.travel_mode }}"
+              disabled="[[ $variables.validateFields ]]" required="true">
+            </oj-select-single>
+            <!--  -->
+            <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.OverNightStay]]"
+              data="[[$variables.findbyLookuptypecodeListSDP10]]" item-text="lookup_value_name_disp" required="true"
+              disabled="[[ $variables.validateFields]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.over_night_stay }}"></oj-select-single>
+            <!-- TRAVEL CLASS -->
+            <oj-bind-if test="[[ ($variables.validate_fin_bind)?false: true ]]">
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.TravelClass]]"
+                required="true" disabled="true" :hidden='[[ $application.variables.appType === "IT" ]]' value="Economy">
+              </oj-input-text>
+            </oj-bind-if>
+            <!-- <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelClass]]"
+            data="[[$variables.findbyLookuptypecodeListSDP15]]" item-text="lookup_value_name_disp"
+            value="{{ $variables.postPkgBookingDetails.ldata.travel_class }}" 
+            required="true"></oj-select-single> -->
+            <!-- ------------------------------ -->
+            <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+              <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelClass]]"
+                data="[[$variables.findbyLookuptypecodeListSDP15]]" item-text="lookup_value_name_disp"
+                value="{{ $variables.postPkgBookingDetails.ldata.travel_class }}" required="true"></oj-select-single>
+            </oj-bind-if>
+            <!-- </oj-bind-if> -->
+            <!-- --------------------------------------------------------------- -->
+            <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.FlightModelPreference]]"
+              disabled="[[ $variables.validateFields ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.in_flight_model_preference }}"></oj-input-text>
+            <!--  -->
+            <oj-input-number id="1025" style="width: 32rem;"
+              label-hint="[[$application.translations.app.DestinationInKM]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.destination_in_kili_meter }}"
+              required='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN"  ]]'
+              validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive number."        }    }] ]]'
+              disabled="true">
+            </oj-input-number>
+            <!--  -->
+            <oj-text-area style="width: 32rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.SpecialRequirement]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.any_other_special_requirement }}" resize-behavior="both"
+              rows="0">
+            </oj-text-area>
+            <!-- "[[$variables.getFindbyCodecombinationlovListSDP3]]"
+             <oj-select-single style="width: 32rem" class="my-field"
+                label-hint="[[$application.translations.app.CodeCombination]]" required="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+                data="[[$variables.getFindbyCodecombinationlovListSDP3]]" item-text="travel_budget_code"
+                placeholder="Select Budget Code" on-value-item-changed="[[$listeners.selectValueItem3]]">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+
+              </oj-select-single> -->
+            <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.TicketVendor]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_vendor }}"></oj-input-text>
+            </oj-bind-if>
+              
+  <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE" && $variables.validate_fin_bind ]]'>
+    <oj-select-single style="width: 32rem" class="my-field"
+      label-hint="[[$application.translations.app.CodeCombination]]" required="true"
+      value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+      data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code" placeholder="Select Budget Code"
+      on-value-item-changed="[[$listeners.selectValueItem3]]">
+                
+      <template slot="collectionTemplate" data-oj-as="collection">
+                  
+        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled" vertical-grid-visible="disabled"
+          selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled","sortable": "disabled"}'
+          class="oj-select-results"
+          columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                
+      </template>
+
+              
+    </oj-select-single>
+  </oj-bind-if>
+              <!-- Training -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE" && $variables.validate_fin_bind ]]'>
+               <oj-select-single style="width: 32rem" class="my-field"
+                label-hint="[[$application.translations.app.CodeCombination]]" required="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+                data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Budget Code" on-value-item-changed="[[$listeners.selectValueItem3]]">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+
+              </oj-select-single>
+              </oj-bind-if>
+              <!-- Audit -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE" && $variables.validate_fin_bind ]]'>
+               <oj-select-single style="width: 32rem" class="my-field"
+                label-hint="[[$application.translations.app.CodeCombination]]" required="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+                data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Budget Code" on-value-item-changed="[[$listeners.selectValueItem3]]">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+
+              </oj-select-single>
+              </oj-bind-if>
+ <oj-bind-if test="[[ $variables.validate_fin_bind ]]"> 
+   
+              <oj-text-area style="width: 32rem;" class="my-field"
+                label-hint="[[$application.translations.app.CodeDescription]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination_desc }}" resize-behavior="both"
+                rows="6" readonly="true"></oj-text-area>
+
+              <oj-input-number id="1063" style="width: 32rem; text-align: right;" class="oj-form-control-text-align-end"
+                label-hint="[[$application.translations.app.BudgetAmount]]" required="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.budget_amt }}" disabled="true"></oj-input-number>
+              <!-- balance_amount -->
+              <oj-input-number id="131" label-hint="[[$application.translations.app.BalanceAmount]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.balance_amount }}"
+                class="oj-form-control-text-align-right" readonly="true"></oj-input-number>
+
+
+              <oj-input-number id="1068" style="width: 32rem;"
+                label-hint="[[$application.translations.app.EstimatedCost]]" class="oj-form-control-text-align-end"
+                required="true" value="{{ $variables.postPkgBookingDetails.ldata.estimated_cost }}" min="0"
+                on-value-changed="[[$listeners._Value4]]"></oj-input-number>
+            </oj-bind-if>
+              <oj-bind-if test="[[ $variables.validate_fin_actual_bind===true ]]">
+                <oj-input-number id="1072" style="width: 32rem;"
+                  label-hint="[[$application.translations.app.ActualCost]]" class="oj-form-control-text-align-end"
+                  required="true" value="{{ $variables.postPkgBookingDetails.ldata.actual_cost }}"
+                  validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive whole number."        }    }] ]]'
+                  max="[[ $variables.postPkgBookingDetails.ldata.balance_amount ]]">
+                </oj-input-number>
+              </oj-bind-if>
+              <!--  -->
+
+          </oj-form-layout>
+        </oj-validation-group>
+      </div>
+
+
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-form-layout direction="column" class="oj-formlayout-full-width oj-form-layoute" columns="1" label-edge="start">
+      <oj-input-text label-hint="[[$application.translations.app.input_text_label_hint_f1e3]]"
+        style="width:12rem;height:.5rem;" value="{{ $variables.attachmentObj.document_name }}" readonly="true">
+      </oj-input-text>
+    </oj-form-layout>
+    <oj-file-picker on-oj-select="[[$listeners.filePickerSelect]]">
+      <oj-button label="[[$application.translations.app.button_label_3ddf22242]]" slot="trigger" chroming="outlined">
+        <img slot="startIcon" :src="[[ $flow.path + 'resources/images/pngwing.com.png' ]]" width="15" height="15">
+      </oj-button>
+
+    </oj-file-picker>
+
+
+
+    <oj-button on-oj-action="[[$listeners.ojButtonClick]]" disabled='[[ $variables.lineNavi == "EDIT" ]]'>Save & Add
+      Another</oj-button>
+
+    <oj-button on-oj-action="[[$listeners.buttonAction41]]"
+      :hidden='[[ $variables.postPkgTravelHeaderDetails.approval_status == "Approved" ]]'>Save & Close</oj-button>
+
+    <oj-button on-oj-action="[[$listeners.buttonAction4]]">Close</oj-button>
+  </div>
+</oj-dialog>
+<oj-dialog dialog-title="About" id="aboutdetail" cancel-behavior="escape" style="width: 430px; height: 520px;">
+  <div slot="body">
+
+    <oj-vb-fragment bridge="[[vbBridge]]" name="aboutdetail">
+      <oj-vb-fragment-param name="p_header_id" value="{{ $variables.ptravelheaderid }}"></oj-vb-fragment-param>
+      <oj-vb-fragment-param name="p_table_name" value="TRAVEL_HEADER"></oj-vb-fragment-param>
+    </oj-vb-fragment>
+
+  </div>
+  <div slot="footer">
+    <oj-button label="[[$application.translations.app.Ok]]" on-oj-action="[[$listeners.buttonAction7]]"></oj-button>
+  </div>
+</oj-dialog>
+<!-- Booking Delete -->
+<oj-dialog dialog-title="Delete" id="Bookingtabledelete">
+  <div slot="body">
+    <div class="oj-flex"> Do you want to delete? </div>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction10]]">Yes</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction9]]">No</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- hotel Booking details -->
+<oj-dialog dialog-title="Hotel Booking" id="HotelBooking" style="width: 1200px;">
+  <div slot="body">
+
+    <div class="oj-panel">
+      <div class="oj-flex">
+        <oj-validation-group id="HotelPopup">
+          <oj-form-layout columns="2" label-edge="start" direction="column" label-width="45%">
+            <!--  -->
+            <!-- <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.PersonName]]"
+            ></oj-input-text> -->
+            <!--  -->
+            <oj-select-single label-hint="Country Name" data="[[$variables.getTravelCountryNameListSDP]]"
+              item-text="country_name" value="{{ $variables.postHotelBooking.country }}"
+              disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_type==="OMAN" ]]'></oj-select-single>
+            <!-- <oj-input-text style="width: 18rem;" disabled="[[ $variables.validateFields||$variables.validate_fin_bind ]]"
+            required="true" label-hint="[[$application.translations.app.Country]]"
+            value="{{ $variables.postHotelBooking.country }}"></oj-input-text> -->
+            <!--  -->
+            <!-- TRAV TYPE NOT OMAN THEN SHOW -->
+
+            <oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type != "OMAN" ]]'>
+              <oj-input-text style="width: 18rem;" disabled="[[ $variables.validateFields ]]" required="true"
+                label-hint="[[$application.translations.app.City]]" value="{{ $variables.postHotelBooking.city }}">
+              </oj-input-text>
+            </oj-bind-if>
+            <!-- TRAV TYPE = OMAN THEN SHOW -->
+            
+  <oj-bind-if
+    test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN" && $variables.postHotelBooking.country ==="Oman" ]]'>
+    <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_f380]]"
+      value="{{ $variables.postHotelBooking.city }}" data="[[$variables.findbyLookuptypecodeListSDP20]]"
+      item-text="lookup_value_name_disp" required="true" disabled="[[ $variables.validateFields ]]">
+            </oj-select-single>
+  </oj-bind-if>
+            <!--  -->
+
+            <oj-input-text style="width: 18rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.SpecialRequirement]]"
+              value="{{ $variables.postHotelBooking.special_requirements }}"></oj-input-text>
+            <!--  -->
+            <oj-input-date style="width: 18rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.FromDate]]"
+              value="{{ $variables.postHotelBooking.from_date }}" required="true"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+            <!--  -->
+            <oj-input-date style="width: 18rem;" disabled="[[ $variables.validateFields ]]" required="true"
+              label-hint="[[$application.translations.app.ToDate]]" value="{{ $variables.postHotelBooking.to_date }}"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+              min="[[ $variables.postHotelBooking.from_date ]]"> </oj-input-date>
+            <!--  -->
+            <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+              <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.RoomCategory]]"
+                value="{{ $variables.postHotelBooking.room_category }}"></oj-input-text>
+              <!--  -->
+              <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.HotelName]]"
+                value="{{ $variables.postHotelBooking.hotel_name }}"></oj-input-text>
+              <!--  -->
+              <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.HotelCategory]]"
+                value="{{ $variables.postHotelBooking.hotel_category_id }}"
+                data="[[$variables.findbyLookuptypecodeListSDP16]]" item-text="lookup_value_name_disp">
+              </oj-select-single>
+            </oj-bind-if>
+              <!--  -->
+              <!-- <oj-select-single style="width: 18rem;" required="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[$variables.getFindbyCodecombinationlovListSDP]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single> -->
+              <!-- OFFICIAL_MISSION_GL_CODE -->
+          <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE" && $variables.validate_fin_bind ]]'>
+               <oj-select-single style="width: 18rem;" required="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single>
+              </oj-bind-if>
+              <!-- TRAINING_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE" && $variables.validate_fin_bind ]]'>
+               <oj-select-single style="width: 18rem;" required="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single>
+              </oj-bind-if>
+              <!-- OFFICIAL_MISSION_AUDIT_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE" && $variables.validate_fin_bind ]]'>
+               <oj-select-single style="width: 18rem;" required="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single>
+              </oj-bind-if>
+              <!-- <oj-input-text style="width: 18rem;" required="true"
+              label-hint="[[$application.translations.app.CodeDescription]]" disabled="true"
+              value="{{ $variables.postHotelBooking.hotel_code_combination_desc }}"></oj-input-text> -->
+              <!-- HOTEL DESCRIPTION -->
+              <oj-bind-if test="[[ $variables.validate_fin_bind ]]">
+              <oj-text-area style="width: 32rem;" class="my-field"
+                label-hint="[[$application.translations.app.HOTELDESC]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination_desc }}" resize-behavior="both" rows="6"
+                readonly="true"></oj-text-area>
+              <!--  -->
+              <oj-input-number id="1198" style="width: 18rem; "
+                label-hint="[[$application.translations.app.BudgetAmount]]"
+                value="{{ $variables.postHotelBooking.budget_amount }}" class="oj-form-control-text-align-end"
+                required="true" disabled="true"></oj-input-number>
+
+              <!-- Balance Amount -->
+              <oj-input-number id="132" style="width: 18rem; "
+                label-hint="[[$application.translations.app.Hotel_balance_amount]]"
+                class="oj-form-control-text-align-right" value="{{ $variables.postHotelBooking.ldata.balance_amount }}"
+                readonly="true"></oj-input-number>
+              <!--  -->
+              <oj-input-number id="1202" style="width: 18rem;" required="true"
+                label-hint="[[$application.translations.app.EstimatedAmount]]"
+                value="{{ $variables.postHotelBooking.estimated_cost }}" class="oj-form-control-text-align-end"
+                validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive number."        }    }] ]]'
+                on-value-changed="[[$listeners._Value3]]">
+              </oj-input-number>
+              </oj-bind-if>
+              <!--  -->
+              <oj-bind-if test="[[ $variables.validate_fin_actual_bind===true ]]">
+                <oj-input-number id="1209" style="width: 18rem;" required="true"
+                  label-hint="[[$application.translations.app.ActualCost]]"
+                  value="{{ $variables.postHotelBooking.actual_cost }}" class="oj-form-control-text-align-end"
+                  max="[[ $variables.postHotelBooking.ldata.balance_amount ]]"></oj-input-number>
+              </oj-bind-if>
+              <!--  -->
+
+          </oj-form-layout>
+
+          <!-- <oj-form-layout columns="2" max-columns="2" label-edge="start" label-width="45%">
+       
+      </oj-form-layout> -->
+
+        </oj-validation-group>
+
+      </div>
+
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-form-layout direction="column" class="oj-formlayout-full-width oj-form-layoute" columns="1" label-edge="start">
+      <oj-input-text label-hint="[[$application.translations.app.input_text_label_hint_f1e3]]"
+        style="width:12rem;height:.5rem;" value="{{ $variables.attachmentObj.document_name }}" readonly="true">
+      </oj-input-text>
+    </oj-form-layout>
+
+    <oj-file-picker on-oj-select="[[$listeners.filePickerSelect]]">
+      <oj-button label="[[$application.translations.app.button_label_3ddf22242]]" slot="trigger" chroming="outlined">
+        <img slot="startIcon" :src="[[ $flow.path + 'resources/images/pngwing.com.png' ]]" width="15" height="15">
+      </oj-button>
+
+    </oj-file-picker>
+    <oj-button on-oj-action="[[$listeners.buttonAction24]]" disabled='[[ $variables.hotelbkNavi === "EDIT" ]]'>Save &amp;
+      Add Another </oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction13]]"
+      disabled='[[ $variables.postPkgTravelHeaderDetails.approval_status === "Pending" && $application.variables.appType === "EMP" ]]'>
+      Save & Close</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction12]]">Close</oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog dialog-title="Delete" id="HotelBookdelete">
+  <div slot="body">
+    <div class="oj-flex"> Do you want to delete? </div>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction21]]">Yes</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction22]]">No</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- ACCOUNT SEGMENT -->
+<oj-dialog dialog-title="Account Segments" id="AccountSegments" style="width: 840px; height: 650px;">
+  <div slot="body">
+    <div class="oj-flex">
+      <oj-form-layout columns="2" label-edge="start" label-width="49%">
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.Governate]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.Geography]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.BusinessActivities]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CostCenter]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.Accounts]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.Assests]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.Intercompany]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.Future1]]">
+        </oj-select-single>
+        <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]">
+        </oj-select-single>
+        <oj-text-area style="width: 18rem;" label-hint="[[$application.translations.app.CodeDescription]]">
+        </oj-text-area>
+
+
+      </oj-form-layout>
+    </div>
+  </div>
+  <div slot="footer">
+    <oj-button>Ok</oj-button>
+    <oj-button>Back</oj-button>
+  </div>
+</oj-dialog>
+
+
+
+<!-- Payment Details -->
+
+<oj-dialog dialog-title="Payment Details" id="PaymentDetails" style="width: 1400px; height: 500px;">
+  <div slot="body">
+
+    <div class="oj-panel">
+      <div class="oj-flex">
+        <oj-validation-group id="PaymentForm">
+          <oj-form-layout label-edge="start" label-width="45%" max-columns="2" columns="2" direction="column">
+
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.PaymentType]]"
+              data="[[$variables.findbyLookuptypecodeListSDP13]]" item-text="lookup_value_name_disp"
+              value="{{ $variables.postTravelPaymentdtl.ldata.payment_type }}" required="true"></oj-select-single>
+
+            <oj-input-number id="1305" style="width: 18rem;"
+              label-hint="[[$application.translations.app.EligiblePerDiemDays]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.eligible_per_diem_days }}"
+              on-value-changed="[[$listeners._Value]]"></oj-input-number>
+
+
+            <oj-input-number id="1310" style="width: 18rem;" class="oj-form-control-text-align-end"
+              label-hint="[[$application.translations.app.EligiblePerDiem]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.eligible_per_diem }}"
+              on-value-changed="[[$listeners.inputNumberValue]]"></oj-input-number>
+
+            <oj-input-number id="1315" style="width: 18rem;" class="oj-form-control-text-align-end"
+              label-hint="[[$application.translations.app.TicketEncashmentAmount]]"
+              class="oj-form-control-text-align-end" value="{{ $variables.postTravelPaymentdtl.ticket_encash_amount }}"
+              disabled="true"></oj-input-number>
+
+            <oj-input-number id="1320" style="width: 18rem;" label-hint="[[$application.translations.app.HotelCharges]]"
+              class="oj-form-control-text-align-end" min="0" value="{{ $variables.postTravelPaymentdtl.hotel_charges }}"
+              disabled="true"></oj-input-number>
+<!-- Old Prod
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[$variables.getFindbyCodecombinationlovListSDP2]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single> -->
+
+
+            <!-- <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.CodeDescription]]"
+              required="true" value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}"
+              disabled="true"></oj-input-text> -->
+
+              <!-- OFFICIAL_MISSION_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE"]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+              </oj-bind-if>
+            <!-- TRAINING_GL_CODE -->
+            <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE" ]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+            </oj-bind-if>
+            <!-- OFFICIAL_MISSION_AUDIT_GL_CODE -->
+             <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE" ]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+             </oj-bind-if>
+            <!-- PAYMENT CODE DESCRIPTION -->
+            <oj-text-area style="width: 32rem;" class="my-field"
+              label-hint="[[$application.translations.app.PAYMENTDESC]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}" resize-behavior="both"
+              rows="6" readonly="true"></oj-text-area>
+
+
+            <oj-input-number id="1348" style="width: 18rem;" label-hint="[[$application.translations.app.BudgetAmount]]"
+              class="oj-form-control-text-align-end" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.budget_amount }}" class="oj-form-control-text-align-end"
+              disabled="true"></oj-input-number>
+
+            <!-- Balance Amount -->
+            <oj-input-number style="width: 18rem;" label-hint="[[$application.translations.app.Payment_Balance_Amount]]"
+              value="{{ $variables.postTravelPaymentdtl.ldata.balance_amount }}"
+              class="oj-form-control-text-align-right" id="133" readonly="true"></oj-input-number>
+
+
+
+            <oj-input-number id="1353" style="width: 18rem;"
+              label-hint="[[$application.translations.app.TotalPayableToEmployee]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.total_amount }}" class="oj-form-control-text-align-end"
+              disabled="true">
+            </oj-input-number>
+
+            <!-- <oj-select-single style="width: 50rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+     required="true" data="[[$variables.getFindbyCodecombinationlovListSDP2]]" item-text="travel_budget_code"
+     placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+     value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" ></oj-select-single>
+
+    
+  <oj-input-text style="width: 50rem;" label-hint="[[$application.translations.app.CodeDescription]]"
+  required="true" value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}" disabled="true"></oj-input-text> -->
+
+            <!-- <oj-input-text 
+  value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}"></oj-input-text> -->
+
+            <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.PaymentRemarks]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_remarks }}"></oj-input-text>
+
+          </oj-form-layout>
+
+          <!-- <oj-form-layout columns="2" max-columns="2" label-edge="start" label-width="45%">
+   
+</oj-form-layout> -->
+
+        </oj-validation-group>
+      </div>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction26]]" disabled='[[ $variables.paymentnavi === "EDIT" ]]'>Save and
+      Add Another</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction25]]">Save & Close</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction16]]">Close</oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog dialog-title="Delete" id="PaymentDelete">
+  <div slot="body">
+    <div class="oj-flex"> Do you want to delete? </div>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction19]]">Yes</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction23]]">No</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- Expenditure detail -->
+
+<oj-dialog dialog-title="Expenditure Detail" id="ExpenditureDetail" style="width: 1200px; height: 550px;">
+  <div slot="body">
+    <div class="oj-panel">
+      <div class="oj-flex">
+        <oj-validation-group id="ExpForm">
+          <oj-form-layout label-edge="start" label-width="50%" columns="2" max-columns="2">
+            <!-- <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.ExpenditureType]]"
+    value="{{ $variables.postExpendituredetail.expenditure_type }}"></oj-select-single> -->
+
+            <oj-input-text style="width: 32rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.ExpenditureType]]"
+              value="{{ $variables.postExpendituredetail.expenditure_type }}" required="true"></oj-input-text>
+
+            <oj-input-text style="width: 32rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.CodeCombination]]" required="true"
+              value="{{ $variables.postExpendituredetail.expenditure_code_combination }}"></oj-input-text>
+
+            <oj-input-number id="1418" style="width: 32rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.BudgetAmount]]"
+              value="{{ $variables.postExpendituredetail.budget_amount }}"></oj-input-number>
+
+            <oj-input-text style="width: 32rem;" disabled="[[ $variables.validateFields ]]"
+              label-hint="[[$application.translations.app.CodeDescription]]"
+              value="{{ $variables.postExpendituredetail.expenditure_code_combination_desc }}"></oj-input-text>
+
+
+            <oj-input-number id="1430" style="width: 32rem;"
+              label-hint="[[$application.translations.app.EstimatedCost]]"
+              value="{{ $variables.postExpendituredetail.estimated_cost }}" disabled="true"></oj-input-number>
+
+            <!-- <oj-bind-if test="[[ $variables.validate_fin_bind ]]"> -->
+            <!-- <oj-input-text style="width: 32rem;" 
+                label-hint="[[$application.translations.app.JVDetailsEstimated]]"
+                value="{{ $variables.postExpendituredetail.jv_details_estimated }}"></oj-input-text> -->
+            <!-- </oj-bind-if> -->
+
+            <oj-input-number id="1434" style="width: 32rem;" label-hint="[[$application.translations.app.ActualCost]]"
+              required="true" value="{{ $variables.postExpendituredetail.actual_cost }}"
+              on-value-changed="[[$listeners.inputNumberValue2]]" disabled="true"></oj-input-number>
+
+            <!-- <oj-input-text style="width: 32rem;" 
+              label-hint="[[$application.translations.app.JVDetailsRemarks]]"
+              value="{{ $variables.postExpendituredetail.jv_details_remarks }}"></oj-input-text> -->
+
+            <oj-input-number id="1456" style="width: 32rem;" label-hint="[[$application.translations.app.Variance]]"
+              value="{{ $variables.postExpendituredetail.variance }}" disabled="true"></oj-input-number>
+
+            <!-- <oj-input-text style="width: 32rem;" 
+              label-hint="[[$application.translations.app.JVDetailsVariance]]"
+              value="{{ $variables.postExpendituredetail.jv_details_variance_estimated }}"></oj-input-text> -->
+
+
+            <!-- <oj-text-area style="width: 32rem;" 
+              label-hint="[[$application.translations.app.JVDetailsVarianceRemarks]]"
+              value="{{ $variables.postExpendituredetail.jv_details_variance_remarks }}"></oj-text-area> -->
+
+
+
+
+          </oj-form-layout>
+        </oj-validation-group>
+      </div>
+    </div>
+  </div>
+  <div slot="footer">
+    <!-- <oj-button disabled='[[ $variables.expenditurenavi == "EDIT" ]]' on-oj-action="[[$listeners.buttonAction35]]">Save
+      and Add Another</oj-button> -->
+    <oj-button on-oj-action="[[$listeners.buttonAction30]]">Save & Close</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction28]]">Close</oj-button>
+  </div>
+</oj-dialog>
+
+
+<!-- Expenditure Delete -->
+<oj-dialog dialog-title="Delete" id="Expendituretabledelete">
+  <div slot="body">
+    <div class="oj-flex"> Do you want to delete? </div>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction32]]">Yes</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction34]]">No</oj-button>
+  </div>
+</oj-dialog>
+
+
+
+<oj-dialog dialog-title="Approve" id="Approvepopup">
+  <div>
+    <oj-text-area id="app-1" label-hint="Comments" placeholder="Comments"
+      value="{{ $variables.responseComment }}" rows="3"></oj-text-area>
+<oj-bind-text style="color: red;font-weight: bold;" value="[[ $variables.errormsg ]]"></oj-bind-text>
+    <!-- <oj-bind-if test='[[ ($variables.validate_approval_group==="TRAVEL_SECTION")?true:false ]]'>
+      <oj-label style="color: red;">Note: Please choose the budget code before approving.</oj-label>
+    </oj-bind-if> -->
+
+    <!-- <oj-bind-if test='[[ ($variables.validate_approval_group==="TRAVEL_SECTION_HEAD_OFFICE")?true:false ]]'>
+      <oj-label style="color: red;">Note: Please choose the budget code before approving.</oj-label>
+    </oj-bind-if> -->
+    <!-- 
+      <oj-bind-if test='[[ ($variables.validate_approval_group==="ADMINISTRATION_HEAD")?true:false ]]'>
+      <oj-label style="color: red;" >Note: Please choose the budget code before approving.</oj-label>
+    </oj-bind-if> -->
+
+
+    <!-- <oj-bind-if test='[[ ($variables.validate_approval_group==="TRAVEL_SECTION2")?true:false ]]'>
+      <oj-label style="color: red;">Note: Please Complete the Expenditure Details.</oj-label>
+    </oj-bind-if> -->
+
+    <!-- <oj-bind-if test='[[ ($variables.validate_approval_group==="TRAVEL_SECTION_HEAD_OFFICE2")?true:false ]]'>
+      <oj-label style="color: red;">Note: Please Complete the Expenditure Details.</oj-label>
+    </oj-bind-if> -->
+
+
+
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction40]]">Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction38]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+
+
+<oj-dialog dialog-title="Reject" id="Rejectpopup">
+  <div>
+    <oj-text-area rows="2" id="app-2" label-hint="[[$application.translations.app.app_2_label_hint]]"
+      placeholder="Comments" value="{{ $variables.responseComment }}" required="true"></oj-text-area>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction42]]">Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction39]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+
+
+<!-- Progress Bar -->
+<oj-dialog dialog-title="Please wait..." id="progressMsg" class="wd200">
+  <div slot="body">
+    <div class="oj-flex full_stretch lg_button_width">
+      <oj-progress-bar class="full_stretch oj-flex-item oj-sm-12 oj-md-12" value="-1"></oj-progress-bar>
+    </div>
+  </div>
+</oj-dialog>
+
+<!-- Return popup -->
+<oj-dialog dialog-title="Return" id="ReturnPopUp">
+  <div>
+    <oj-validation-group id="returndetail">
+      <oj-text-area id="app-1" label-hint="[[$application.translations.app.Commentsreturn]]" placeholder="Comments"
+        value="{{ $variables.responseComment }}" rows="2" required="true"></oj-text-area>
+    </oj-validation-group>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction54]]">Submit</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction66]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+<!-- Require more info -->
+<!-- Return popup -->
+<oj-dialog dialog-title="Require More Information" id="requirePopUp">
+  <div>
+    <oj-validation-group id="returndetail">
+      <oj-text-area id="app-1" label-hint="[[$application.translations.app.Comments]]" placeholder="Comments"
+        value="{{ $variables.responseComment }}" rows="2" required="true"></oj-text-area>
+    </oj-validation-group>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction55]]">Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction56]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+
+<!-- requiremoreedit -->
+<oj-dialog dialog-title="Require More Information" id="requirePopUpedit">
+  <div>
+    <oj-validation-group id="requiredetail">
+      <oj-text-area id="app-12" label-hint="[[$application.translations.app.Comments]]" placeholder="Comments"
+        value="{{ $variables.Requiremoreinfo.p_comment }}" rows="2" required="true"></oj-text-area>
+    </oj-validation-group>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction63]]">Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction64]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+<!-- approvermoreinfoedit -->
+<oj-dialog dialog-title="Require More Information" id="approvermoreinfoedit">
+  <div>
+    <oj-validation-group id="returndetail">
+      <oj-text-area id="app-12" label-hint="[[$application.translations.app.Comments]]" placeholder="Comments"
+        value="{{ $variables.Requiremoreinfo.p_comment }}" rows="2" required="true"></oj-text-area>
+    </oj-validation-group>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction68]]">Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction69]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+
+<!-- requiremorecreate -->
+<oj-dialog dialog-title="Require More Information" id="requiremorecreate">
+  <div>
+    <oj-validation-group id="requirecreate">
+      <oj-text-area id="app-12" label-hint="[[$application.translations.app.Comments]]" placeholder="Comments"
+        value="{{ $variables.Requiremoreinfo.p_comment }}" rows="2" required="true"></oj-text-area>
+    </oj-validation-group>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction62]]">Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction58]]">Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+<!--  -->
+<oj-popup id="requiremoreinfoPopUp" style="height:80px;width:190px">
+  <div id="MissingPage" data-oj-binding-provider="none">
+    <oj-button chroming="borderless" class="oj-button-sm" on-oj-action="[[$listeners.buttonAction59]]">
+      <!-- <img slot="startIcon" :src="[[ $application.path + 'resources/images/xl.png' ]]">    -->
+      Employee More Info
+    </oj-button>
+    <br>
+    <oj-button chroming="borderless" class="oj-button-sm" on-oj-action="[[$listeners.buttonAction60]]">
+      <!-- <img slot="startIcon" :src="[[ $application.path + 'resources/images/pdf.png' ]]"> -->
+      Approver More Info
+    </oj-button>
+  </div>
+</oj-popup>
+
+<!--  -->
+
+<oj-dialog dialog-title="Require More Information" id="requirepopupapprover" style="width: 480px; height: 400px;">
+  <div>
+    <oj-validation-group id="approvermoreinfoedit">
+      <!-- <oj-label for="oj-select-single-1262" ><oj-bind-text >From Approver</oj-bind-text></oj-label> -->
+      <!-- <oj-select-single 
+  id="oj-select-single-1262"
+  item-text="display_name"
+    label-hint=""
+    required="true" data="[[ $variables.fromapproverlov ]]" value="{{ $variables.reassignobj.p_from_perosn_id }}">
+  </oj-select-single> -->
+      <!-- <oj-select-single id="oj-select-single-28918854-1" required="true" item-text="display_name"
+       
+         >
+        <template slot="collectionTemplate" data-oj-as="collection">
+          <br>
+          <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                    class="oj-select-results" 
+                    columns='  [
+                            {"headerText":"Employee Number","field":"person_number"},
+                            {"headerText":"Employee Name","field":"display_name"},
+                            {"headerText":"E-Mail","field":"email_address"}
+                          ]' 
+                    on-oj-row-action="[[collection.handleRowAction]]"
+                    data="[[collection.data]]" selected.row="[[collection.selected]]"
+                    current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+          <template slot="cellTemplate" data-oj-as="cell">
+            <oj-highlight-text text='[[String(cell.data)]]' >
+            </oj-highlight-text>
+          </template>
+          </oj-select-single> -->
+      <!-- Employee  -->
+      <oj-label for="oj-select-single-28918854-1">Approver Name</oj-label>
+      <oj-select-single id="oj-select-single-28918854-1" required="true" item-text="response_user"
+        label-hint="Employee List" data="[[ $variables.approvermoreinfoLOV ]]"
+        value="{{ $variables.Requiremoreinfo.p_moreinfo_user_person_id }}"
+        on-value-item-changed="[[$listeners.ojSelectSingle289188541ValueItem]]">
+        <template slot="collectionTemplate" data-oj-as="collection">
+          <br>
+          <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled" vertical-grid-visible="disabled"
+            selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled","sortable": "disabled"}'
+            class="oj-select-results" columns='  [
+                            {"headerText":"Response User","field":"response_user"},
+                            {"headerText":"Response Name","field":"response_email_address"}
+                          ]' on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+            selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+        </template>
+        <template slot="cellTemplate" data-oj-as="cell">
+          <oj-highlight-text text='[[String(cell.data)]]'>
+          </oj-highlight-text>
+        </template>
+      </oj-select-single>
+      <oj-label for="app-1"></oj-label>
+      <oj-text-area id="app-1" label-hint="Comments" placeholder="Comments" required="true"
+        value="{{ $variables.Requiremoreinfo.p_comment }}"></oj-text-area>
+      <oj-validation-group>
+        <oj-button class="oj-button-sm" chroming="solid" on-oj-action="[[$listeners.buttonAction65]]">Ok</oj-button>
+        <oj-button class="oj-button-sm" chroming="solid" on-oj-action="[[$listeners.buttonAction61]]">Cancel</oj-button>
+      </oj-validation-group>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+<!-- on-first-selected-row-changed="[[$listeners.searchSSTable1FirstSelectedRow]]" -->
+<!-- dependent popup -->
+<oj-dialog dialog-title="Dependent" id="dependent" style="width: 900px; height: 450px;">
+<oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata" selection-mode.row="single"
+  edit-mode="rowEdit" id="searchSSTable1" display="grid" selection-mode.column="single"
+  columns='[{"headerText":"Select","field":"","template":"select","width":100,"sortable":"disabled"},{"headerText":"Name","resizable":"enabled","field":"first_name","width":150},{"headerText":"Contact Type","resizable":"enabled","field":"contact_type","width":150}]'
+  data="[[ $variables.traveldependentPopup ]]"
+  
+   >
+      <template slot="select">
+      <!-- <oj-checkboxset>
+       <oj-option value="option1">Option 1</oj-option>
+      </oj-checkboxset> -->
+      <!-- <oj-checkboxset label-hint="" class="oj-selection-checkbox oj-choice-direction-cloumn oj-checkboxset-no-chrome"
+        on-value-changed="[[$listeners.checkboxSetValue2]]"
+       >
+        <oj-option value="option1"></oj-option>
+      </oj-checkboxset> -->
+      <oj-sample-checkbox-switch class="multiCheckBox" :id="[['checkbox'+$current.index]]"
+        on-value-changed="[[$listeners.checkboxValue]]"> 
+</oj-sample-checkbox-switch> 
+
+    </template>
+<oj-paging-control slot="bottom" data="[[ $variables.traveldependentPopup ]]"  ></oj-paging-control>
+ </oj-table>
+ <br>
+     <oj-validation-group style="display:flex; justify-content:flex-end;">
+        <oj-button class="oj-button-sm" chroming="solid" on-oj-action="[[$listeners.buttonAction72]]" >Save &amp; Close</oj-button>
+        <oj-button class="oj-button-sm" chroming="solid" on-oj-action="[[$listeners.buttonAction71]]" >Close</oj-button>
+      </oj-validation-group>
+  </oj-dialog>
+
+
+  <!-- Travel Dependent Delete -->
+<oj-dialog dialog-title="Delete" id="dependenttraveldelete">
+  <div slot="body">
+    <div class="oj-flex"> Do you want to delete? </div>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction74]]" >Yes</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction75]]" >No</oj-button>
+  </div>
+</oj-dialog>
+<!--  -->
+<oj-dialog dialog-title="Booking Detail" id="BookingDetailadmin" style="width: 1400px; height: 700px;">
+  <div slot="body">
+    <div class="oj-panel oj-flex-item oj-sm-flex-initial">
+      <div class="oj-flex">
+        <oj-validation-group id="bookingdetail">
+          <oj-form-layout columns="2" label-edge="start" direction="column" max-columns="3" class="" label-width="50%">
+            <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelType]]"
+              data="[[$variables.findbyLookuptypecodeListSDP11]]" item-text="lookup_value_name_disp" required="true"
+              value="{{ $variables.postPkgBookingDetails.travel_type }}" disabled="true">
+            </oj-select-single>
+            <!--  -->
+            <oj-input-date style="width: 32rem;" label-hint="[[$application.translations.app.TravelStartDate]]"
+              disabled="true"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+              value="{{ $variables.postPkgBookingDetails.travel_start_date }}" required="true"></oj-input-date>
+            <!--  -->
+            <oj-input-date style="width:  32rem;" label-hint="[[$application.translations.app.TravelEndDate]]"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+              value="{{ $variables.postPkgBookingDetails.travel_end_date }}" required="true"
+              disabled="true" min="[[ $variables.postPkgBookingDetails.travel_start_date ]]">
+            </oj-input-date>
+            <!--  -->
+            <!-- <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.Departingcountry]]"
+              required="true" disabled="[[ $variables.validateFields ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_country }}"></oj-input-text> -->
+
+            <!-- Country LOV -->
+            <!-- <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_country }}" required="true"
+              disabled="true"
+              data="[[$variables.getTravelGetCountryHotelListSDP]]" item-text="country_name"
+              on-value-item-changed="[[$listeners.selectValueItem5]]"></oj-select-single> -->
+
+            <!--  -->
+
+
+            <!-- TRAVEL TYPE != OMAN THEN IT SHOWS    -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type != "OMAN" || $variables.postPkgBookingDetails.ldata.departing_country !="Oman" ]]'>
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.DepartingCity]]"
+                required="true" disabled="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.departing_city }}"></oj-input-text>
+            </oj-bind-if> -->
+
+            <!-- TRAVEL TYPE = OMAN THEN IT SHOWS    -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN" && $variables.postPkgBookingDetails.ldata.departing_country == "Oman" ]]'>
+              <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_63b2]]"
+                item-text="lookup_value_name_disp" value="{{ $variables.postPkgBookingDetails.ldata.departing_city }}"
+                required="true" disabled="true"
+                data="[[$variables.findbyLookuptypecodeListSDP21]]"></oj-select-single>
+            </oj-bind-if> -->
+
+            <!--  -->
+
+            <!-- Arriving Contry -->
+            <!-- <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_17f5]]"
+              required="true"
+              disabled="true"
+              value="{{ $variables.postPkgBookingDetails.ldata.arriving_country }}"
+              data="[[$variables.getTravelGetCountryHotelListSDP2]]" item-text="country_name"></oj-select-single> -->
+
+            <!-- <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.ArrivingCountry]]"
+              required="true" disabled="[[ $variables.validateFields ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.arriving_country }}"></oj-input-text> -->
+            <!--  -->
+            <!-- ARRIVING CITY SHOWS TRAVELTYPE != OMAN -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type != "OMAN" || $variables.postPkgBookingDetails.ldata.arriving_country != "Oman" ]]'>
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.ArrivingCity]]"
+                required="true" disabled="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.arriving_city }}"></oj-input-text>
+            </oj-bind-if> -->
+
+            <!-- ARRIVING CITY SHOWS TRAVELTYPE == OMAN -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN" && $variables.postPkgBookingDetails.ldata.arriving_country == "Oman" ]]'>
+              <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_bc08]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.arriving_city }}"
+                data="[[$variables.findbyLookuptypecodeListSDP19]]" item-text="lookup_value_name_disp" required="true"
+                disabled="true">
+              </oj-select-single>
+            </oj-bind-if> -->
+
+            <!--  -->
+            <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_country }}" required="true"
+              disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_type === "OMAN" ]]'
+              data="[[$variables.getTravelGetCountryHotelListSDP]]" item-text="country_name"
+              on-value-item-changed="[[$listeners.selectValueItem5]]"></oj-select-single>
+
+            <!--  -->
+    <oj-select-single label-hint="[[$application.translations.app.DepartingRegion]]" item-text="region_name"
+              disabled="[[ $variables.validateFields ]]" data="[[ $variables.departingRegLOV ]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.departing_region_id }}"
+              on-value-item-changed="[[$listeners.selectValueItem6]]" required="true"
+                ></oj-select-single>
+<oj-select-single label-hint="[[$application.translations.app.DepartingWilayat]]" item-text="wilayat_name"
+  disabled="[[ $variables.validateFields ]]" data="[[ $variables.departingWilayatLOV ]]" required="true"
+  value="{{ $variables.postPkgBookingDetails.ldata.departing_wilayat_id }}"
+  on-value-item-changed="[[$listeners.selectValueItem7]]"
+                ></oj-select-single>
+            <!-- TRAVEL TYPE != OMAN THEN IT SHOWS    -->
+            <!-- <oj-bind-if
+              test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type != "OMAN" || $variables.postPkgBookingDetails.ldata.departing_country !="Oman" ]]'> -->
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.DepartingCity]]"
+                required="true" disabled="[[ $variables.validateFields ]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.departing_city }}"></oj-input-text>
+				
+				 <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_17f5]]"
+              required="true"
+              disabled='[[ $variables.validateFields || $variables.postPkgTravelHeaderDetails.ldata.travel_type ==="OMAN" ]]'
+              value="{{ $variables.postPkgBookingDetails.ldata.arriving_country }}"
+              data="[[$variables.getTravelGetCountryHotelListSDP2]]" item-text="country_name"></oj-select-single>
+
+               <oj-select-single label-hint="[[$application.translations.app.ArrivingRegion]]" item-text="region_name"
+                 disabled="[[ $variables.validateFields ]]" data="[[ $variables.arrivingReqLOV ]]"
+                 value="{{ $variables.postPkgBookingDetails.ldata.arriving_region_id }}"
+                 on-value-item-changed="[[$listeners.selectValueItem8]]"
+                ></oj-select-single>
+                <oj-select-single label-hint="[[$application.translations.app.ArrivingWilayat]]"
+                  item-text="wilayat_name" disabled="[[ $variables.validateFields ]]"
+                  data="[[ $variables.arrivingWilayatLOV ]]"
+                  value="{{ $variables.postPkgBookingDetails.ldata.arriving_wilayat_id }}"
+                  on-value-item-changed="[[$listeners.selectValueItem9]]"
+                ></oj-select-single>
+				   <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.ArrivingCity]]"
+                required="true" disabled="[[ $variables.validateFields ]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.arriving_city }}"></oj-input-text>
+
+            <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelMode]]"
+              data="[[$variables.findbyLookuptypecodeListSDP9]]" item-text="lookup_value_name_disp"
+              value="{{ $variables.postPkgBookingDetails.ldata.travel_mode }}"
+              disabled="true" required="true">
+            </oj-select-single>
+            <!--  -->
+            <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.OverNightStay]]"
+              data="[[$variables.findbyLookuptypecodeListSDP10]]" item-text="lookup_value_name_disp" required="true"
+              disabled="true"
+              value="{{ $variables.postPkgBookingDetails.ldata.over_night_stay }}"></oj-select-single>
+            <!-- TRAVEL CLASS -->
+            <!-- <oj-bind-if test="[[ ($variables.validate_fin_bind)?false: true ]]"> -->
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.TravelClass]]"
+                required="true" disabled="true" :hidden='[[ $application.variables.appType === "IT" ]]' value="Economy">
+              </oj-input-text>
+            <!-- </oj-bind-if> -->
+            <!-- <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelClass]]"
+            data="[[$variables.findbyLookuptypecodeListSDP15]]" item-text="lookup_value_name_disp"
+            value="{{ $variables.postPkgBookingDetails.ldata.travel_class }}" 
+            required="true"></oj-select-single> -->
+            <!-- ------------------------------ -->
+            <!-- <oj-bind-if test="[[ $variables.validate_fin_bind ]]"> -->
+              <!-- <oj-select-single style="width: 32rem;" label-hint="[[$application.translations.app.TravelClass]]"
+                data="[[$variables.findbyLookuptypecodeListSDP15]]" item-text="lookup_value_name_disp"
+                value="{{ $variables.postPkgBookingDetails.ldata.travel_class }}" required="true" disabled="true"></oj-select-single> -->
+            <!-- </oj-bind-if> -->
+            <!-- </oj-bind-if> -->
+            <!-- --------------------------------------------------------------- -->
+            <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.FlightModelPreference]]"
+              disabled="true"
+              value="{{ $variables.postPkgBookingDetails.ldata.in_flight_model_preference }}"></oj-input-text>
+            <!--  -->
+            <oj-input-number id="1025" style="width: 32rem;" disabled="true"
+              label-hint="[[$application.translations.app.DestinationInKM]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.destination_in_kili_meter }}"
+              required='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type === "OMAN"  ]]'
+              validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive number."        }    }] ]]'>
+            </oj-input-number>
+            <!--  -->
+            <oj-text-area style="width: 32rem;" disabled="true"
+              label-hint="[[$application.translations.app.SpecialRequirement]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.any_other_special_requirement }}" resize-behavior="both"
+              rows="0">
+            </oj-text-area>
+            <!--  -->
+            <!-- <oj-bind-if test="[[ $variables.validate_fin_bind ]]"> -->
+              <oj-input-text style="width: 32rem;" label-hint="[[$application.translations.app.TicketVendor]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_vendor }}" disabled="true"></oj-input-text>
+              <!-- <oj-select-single style="width: 32rem" class="my-field"
+                label-hint="[[$application.translations.app.CodeCombination]]" required="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+                data="[[$variables.getFindbyCodecombinationlovListSDP3]]" item-text="travel_budget_code"
+                placeholder="Select Budget Code" on-value-item-changed="[[$listeners.selectValueItem3]]"
+                disabled="true">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+
+              </oj-select-single> -->
+               <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE"]]'>
+    <oj-select-single style="width: 32rem" class="my-field"
+      label-hint="[[$application.translations.app.CodeCombination]]" 
+      value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+      data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code" placeholder="Select Budget Code"
+      on-value-item-changed="[[$listeners.selectValueItem3]]" disabled="true">
+                
+      <template slot="collectionTemplate" data-oj-as="collection">
+                  
+        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled" vertical-grid-visible="disabled"
+          selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled","sortable": "disabled"}'
+          class="oj-select-results"
+          columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                
+      </template>
+
+              
+    </oj-select-single>
+  </oj-bind-if>
+              <!-- Training -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE"]]'>
+               
+  <!-- <oj-bind-if
+    test='[[ ($application.variables.appType!=="IT") && ($variables.postPkgTravelHeaderDetails.approval_status!=="Approved") && ($variables.postPkgBookingDetails.ldata.no_balance==="N") ]]'> -->
+    <oj-select-single style="width: 32rem" class="my-field"
+      label-hint="[[$application.translations.app.CodeCombination]]"
+      value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+      data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code" placeholder="Select Budget Code"
+      on-value-item-changed="[[$listeners.selectValueItem3]]"
+      disabled="true">
+                
+      <template slot="collectionTemplate" data-oj-as="collection">
+                  
+        <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled" vertical-grid-visible="disabled"
+          selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled","sortable": "disabled"}'
+          class="oj-select-results"
+          columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+          on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+          selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                
+      </template>
+
+              
+    </oj-select-single>
+  <!-- </oj-bind-if> -->
+              </oj-bind-if>
+              <!-- Audit -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE"]]'>
+               <oj-select-single style="width: 32rem" class="my-field"
+                 label-hint="[[$application.translations.app.CodeCombination]]"
+                 value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination }}"
+                 data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+                 placeholder="Select Budget Code" on-value-item-changed="[[$listeners.selectValueItem3]]"
+                 disabled="true">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+
+              </oj-select-single>
+              </oj-bind-if>
+
+              <oj-text-area style="width: 32rem;" class="my-field"
+                label-hint="[[$application.translations.app.CodeDescription]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.ticket_code_combination_desc }}" resize-behavior="both"
+                rows="6" readonly="true" disabled="true"></oj-text-area>
+
+              <oj-input-number id="1063" style="width: 32rem; text-align: right;" class="oj-form-control-text-align-end"
+                label-hint="[[$application.translations.app.BudgetAmount]]" required="true"
+                value="{{ $variables.postPkgBookingDetails.ldata.budget_amt }}" disabled="true"></oj-input-number>
+              <!-- balance_amount -->
+              <oj-input-number id="131" label-hint="[[$application.translations.app.BalanceAmount]]"
+                value="{{ $variables.postPkgBookingDetails.ldata.balance_amount }}"
+                class="oj-form-control-text-align-right" readonly="true" disabled="true"></oj-input-number>
+
+
+              <oj-input-number id="1068" style="width: 32rem;"
+                label-hint="[[$application.translations.app.EstimatedCost]]" class="oj-form-control-text-align-end"
+                required="true" value="{{ $variables.postPkgBookingDetails.ldata.estimated_cost }}" min="0"
+                on-value-changed="[[$listeners._Value4]]" disabled="true"></oj-input-number>
+            <!-- </oj-bind-if> -->
+              <!-- <oj-bind-if test="[[ $variables.validate_fin_actual_bind===true ]]"> -->
+                <oj-input-number id="1072" style="width: 32rem;"
+                  label-hint="[[$application.translations.app.ActualCost]]" class="oj-form-control-text-align-end"
+                  required="true" value="{{ $variables.postPkgBookingDetails.ldata.actual_cost }}"
+                  validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive whole number."        }    }] ]]'
+                  max="[[ $variables.postPkgBookingDetails.ldata.balance_amount ]]" disabled="true">
+                </oj-input-number>
+              <!-- </oj-bind-if> -->
+              <!--  -->
+
+          </oj-form-layout>
+
+      </div>
+
+
+    </div>
+  </div>
+   <div slot="footer">
+    <oj-form-layout direction="column" class="oj-formlayout-full-width oj-form-layoute" columns="1" label-edge="start">
+      
+
+    <oj-button on-oj-action="[[$listeners.buttonAction77]]" >Close</oj-button>
+  </div>
+</oj-dialog>
+<!--  -->
+<!--  -->
+<oj-dialog dialog-title="Hotel Booking" id="HotelBookingAdmin" style="width: 1200px;">
+  <div slot="body">
+
+    <div class="oj-panel">
+      <div class="oj-flex">
+        <oj-validation-group id="HotelPopup">
+          <oj-form-layout columns="2" label-edge="start" direction="column" label-width="45%">
+            <!--  -->
+            <!-- <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.PersonName]]"
+            ></oj-input-text> -->
+            <!--  -->
+            <oj-select-single label-hint="Country Name" data="[[$variables.getTravelCountryNameListSDP]]"
+              item-text="country_name" value="{{ $variables.postHotelBooking.country }}" disabled="true"
+              ></oj-select-single>
+            <!-- <oj-input-text style="width: 18rem;" disabled="[[ $variables.validateFields||$variables.validate_fin_bind ]]"
+            required="true" label-hint="[[$application.translations.app.Country]]"
+            value="{{ $variables.postHotelBooking.country }}"></oj-input-text> -->
+            <!--  -->
+            <!-- TRAV TYPE NOT OMAN THEN SHOW -->
+
+            <oj-bind-if test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type !== "OMAN" ]]'>
+              <oj-input-text style="width: 18rem;" required="true" label-hint="[[$application.translations.app.City]]"
+                value="{{ $variables.postHotelBooking.city }}" disabled="true">
+              </oj-input-text>
+            </oj-bind-if>
+            <!-- TRAV TYPE = OMAN THEN SHOW -->
+            
+  <oj-bind-if
+    test='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type == "OMAN" && $variables.postHotelBooking.country ==="Oman" ]]'>
+    <oj-select-single label-hint="[[$application.translations.app.select_single_label_hint_f380]]"
+      value="{{ $variables.postHotelBooking.city }}" data="[[$variables.findbyLookuptypecodeListSDP20]]"
+      item-text="lookup_value_name_disp" required="true" disabled="true">
+            </oj-select-single>
+  </oj-bind-if>
+            <!--  -->
+
+            <oj-input-text style="width: 18rem;" disabled="true"
+              label-hint="[[$application.translations.app.SpecialRequirement]]"
+              value="{{ $variables.postHotelBooking.special_requirements }}"></oj-input-text>
+            <!--  -->
+            <oj-input-date style="width: 18rem;" disabled="true"
+              label-hint="[[$application.translations.app.FromDate]]"
+              value="{{ $variables.postHotelBooking.from_date }}" required="true"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'></oj-input-date>
+            <!--  -->
+            <oj-input-date style="width: 18rem;" disabled="true" required="true"
+              label-hint="[[$application.translations.app.ToDate]]" value="{{ $variables.postHotelBooking.to_date }}"
+              converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+              min="[[ $variables.postHotelBooking.from_date ]]"> </oj-input-date>
+            <!--  -->
+            <!-- <oj-bind-if test="[[ $variables.validate_fin_bind ]]"> -->
+              <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.RoomCategory]]" disabled="true"
+                value="{{ $variables.postHotelBooking.room_category }}"></oj-input-text>
+              <!--  -->
+              <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.HotelName]]" disabled="true"
+                value="{{ $variables.postHotelBooking.hotel_name }}"></oj-input-text>
+              <!--  -->
+              <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.HotelCategory]]"
+                value="{{ $variables.postHotelBooking.hotel_category_id }}"
+                data="[[$variables.findbyLookuptypecodeListSDP16]]" item-text="lookup_value_name_disp" disabled="true">
+              </oj-select-single>
+              <!--  -->
+              <!-- <oj-select-single style="width: 18rem;" required="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[$variables.getFindbyCodecombinationlovListSDP]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}" disabled="true">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single> -->
+
+               <!-- OFFICIAL_MISSION_GL_CODE -->
+          <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE"]]'>
+               <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.codeCombination]]"
+                 data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code"
+                 placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                 value="{{ $variables.postHotelBooking.hotel_code_combination }}" disabled="true">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single>
+              </oj-bind-if>
+              <!-- TRAINING_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE"]]'>
+               <oj-select-single style="width: 18rem;" disabled="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single>
+              </oj-bind-if>
+              <!-- OFFICIAL_MISSION_AUDIT_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE"]]'>
+               <oj-select-single style="width: 18rem;" disabled="true"
+                label-hint="[[$application.translations.app.codeCombination]]"
+                data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+                placeholder="Select Code Combination" on-value-item-changed="[[$listeners.selectValueItem]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination }}">
+                <template slot="collectionTemplate" data-oj-as="collection">
+                  <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                    columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                    on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                    selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+                </template>
+              </oj-select-single>
+              </oj-bind-if>
+              <!--  -->
+              <!-- <oj-input-text style="width: 18rem;" required="true"
+              label-hint="[[$application.translations.app.CodeDescription]]" disabled="true"
+              value="{{ $variables.postHotelBooking.hotel_code_combination_desc }}"></oj-input-text> -->
+              <!-- HOTEL DESCRIPTION -->
+              <oj-text-area style="width: 32rem;" class="my-field"
+                label-hint="[[$application.translations.app.HOTELDESC]]"
+                value="{{ $variables.postHotelBooking.hotel_code_combination_desc }}" resize-behavior="both" rows="6"
+                readonly="true"></oj-text-area>
+              <!--  -->
+              <oj-input-number id="1198" style="width: 18rem; "
+                label-hint="[[$application.translations.app.BudgetAmount]]"
+                value="{{ $variables.postHotelBooking.budget_amount }}" class="oj-form-control-text-align-end"
+                required="true" disabled="true"></oj-input-number>
+
+              <!-- Balance Amount -->
+              <oj-input-number id="132" style="width: 18rem; "
+                label-hint="[[$application.translations.app.Hotel_balance_amount]]"
+                class="oj-form-control-text-align-right" value="{{ $variables.postHotelBooking.ldata.balance_amount }}"
+                readonly="true"></oj-input-number>
+              <!--  -->
+              <oj-input-number id="1202" style="width: 18rem;" required="true" disabled="true"
+                label-hint="[[$application.translations.app.EstimatedAmount]]"
+                value="{{ $variables.postHotelBooking.estimated_cost }}" class="oj-form-control-text-align-end"
+                validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive number."        }    }] ]]'
+                on-value-changed="[[$listeners._Value3]]">
+              </oj-input-number>
+            <!-- </oj-bind-if> -->
+              <!--  -->
+              <!-- <oj-bind-if test="[[ $variables.validate_fin_actual_bind===true ]]"> -->
+                <oj-input-number id="1209" style="width: 18rem;" required="true" disabled="true"
+                  label-hint="[[$application.translations.app.ActualCost]]"
+                  value="{{ $variables.postHotelBooking.actual_cost }}" class="oj-form-control-text-align-end"
+                  max="[[ $variables.postHotelBooking.ldata.balance_amount ]]"></oj-input-number>
+              <!-- </oj-bind-if> -->
+              <!--  -->
+
+          </oj-form-layout>
+
+          <!-- <oj-form-layout columns="2" max-columns="2" label-edge="start" label-width="45%">
+       
+      </oj-form-layout> -->
+
+        </oj-validation-group>
+
+      </div>
+
+    </div>
+  </div>
+  <div slot="footer">
+    
+    <oj-button on-oj-action="[[$listeners.buttonAction79]]" >Close</oj-button>
+  </div>
+</oj-dialog>
+<!--  -->
+<!--  -->
+<oj-dialog dialog-title="Payment Details" id="PaymentDetailsAdmin" style="width: 1400px; height: 500px;">
+  <div slot="body">
+
+    <div class="oj-panel">
+      <div class="oj-flex">
+        <oj-validation-group id="PaymentForm">
+          <oj-form-layout label-edge="start" label-width="45%" max-columns="2" columns="2" direction="column">
+
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.PaymentType]]"
+              data="[[$variables.findbyLookuptypecodeListSDP13]]" item-text="lookup_value_name_disp"
+              value="{{ $variables.postTravelPaymentdtl.ldata.payment_type }}" required="true" disabled="true"></oj-select-single>
+
+            <oj-input-number id="1305" style="width: 18rem;" disabled="true"
+              label-hint="[[$application.translations.app.EligiblePerDiemDays]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.eligible_per_diem_days }}"
+              on-value-changed="[[$listeners._Value]]"></oj-input-number>
+
+
+            <oj-input-number id="1310" style="width: 18rem;" class="oj-form-control-text-align-end" disabled="true"
+              label-hint="[[$application.translations.app.EligiblePerDiem]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.eligible_per_diem }}"
+              on-value-changed="[[$listeners.inputNumberValue]]"></oj-input-number>
+
+            <oj-input-number id="1315" style="width: 18rem;" class="oj-form-control-text-align-end"
+              label-hint="[[$application.translations.app.TicketEncashmentAmount]]"
+              class="oj-form-control-text-align-end" value="{{ $variables.postTravelPaymentdtl.ticket_encash_amount }}"
+              disabled="true"></oj-input-number>
+
+            <oj-input-number id="1320" style="width: 18rem;" label-hint="[[$application.translations.app.HotelCharges]]"
+              class="oj-form-control-text-align-end" min="0" value="{{ $variables.postTravelPaymentdtl.hotel_charges }}"
+              disabled="true"></oj-input-number>
+
+            <!-- <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[$variables.getFindbyCodecombinationlovListSDP2]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" disabled="true">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single> -->
+             <!-- OFFICIAL_MISSION_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE"]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" disabled="true">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+              </oj-bind-if>
+            <!-- TRAINING_GL_CODE -->
+            <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE" ]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" disabled="true">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+            </oj-bind-if>
+            <!-- OFFICIAL_MISSION_AUDIT_GL_CODE -->
+             <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE" ]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" disabled="true">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+             </oj-bind-if>
+
+
+            <!-- <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.CodeDescription]]"
+              required="true" value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}"
+              disabled="true"></oj-input-text> -->
+
+            <!-- PAYMENT CODE DESCRIPTION -->
+            <oj-text-area style="width: 32rem;" class="my-field" disabled="true"
+              label-hint="[[$application.translations.app.PAYMENTDESC]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}" resize-behavior="both"
+              rows="6" readonly="true"></oj-text-area>
+
+
+            <oj-input-number id="1348" style="width: 18rem;" label-hint="[[$application.translations.app.BudgetAmount]]"
+              class="oj-form-control-text-align-end" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.budget_amount }}" class="oj-form-control-text-align-end"
+              disabled="true"></oj-input-number>
+
+            <!-- Balance Amount -->
+            <oj-input-number style="width: 18rem;" label-hint="[[$application.translations.app.Payment_Balance_Amount]]"
+              value="{{ $variables.postTravelPaymentdtl.ldata.balance_amount }}"
+              class="oj-form-control-text-align-right" id="133" readonly="true"></oj-input-number>
+
+
+
+            <oj-input-number id="1353" style="width: 18rem;"
+              label-hint="[[$application.translations.app.TotalPayableToEmployee]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.total_amount }}" class="oj-form-control-text-align-end"
+              disabled="true">
+            </oj-input-number>
+
+            <!-- <oj-select-single style="width: 50rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+     required="true" data="[[$variables.getFindbyCodecombinationlovListSDP2]]" item-text="travel_budget_code"
+     placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+     value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" ></oj-select-single>
+
+    
+  <oj-input-text style="width: 50rem;" label-hint="[[$application.translations.app.CodeDescription]]"
+  required="true" value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}" disabled="true"></oj-input-text> -->
+
+            <!-- <oj-input-text 
+  value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}"></oj-input-text> -->
+
+            <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.PaymentRemarks]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_remarks }}" disabled="true"></oj-input-text>
+
+          </oj-form-layout>
+
+          <!-- <oj-form-layout columns="2" max-columns="2" label-edge="start" label-width="45%">
+   
+</oj-form-layout> -->
+
+        </oj-validation-group>
+      </div>
+    </div>
+  </div>
+
+  <div slot="footer">
+   <!-- <oj-button on-oj-action="[[$listeners.buttonAction25]]"
+     :hidden='[[ ($variables.postTravelPaymentdtl.ldata.no_balance==="N") || ($variables.postPkgTravelHeaderDetails.approval_status!=="Approved") ]]'>Save & Close</oj-button> -->
+    <oj-button on-oj-action="[[$listeners.buttonAction81]]" >Close</oj-button>
+  </div>
+</oj-dialog>
+<!--  -->
+
+<oj-dialog dialog-title="Require More Information" id="approverrmoreinfoedit">
+  <div>
+    <oj-validation-group id="approverrmoreinfo">
+      <oj-form-layout columns="1" label-edge="start" direction="column" max-columns="1">
+      <oj-text-area id="app-12" label-hint="Requestor Question" placeholder="Comments" style="width: 32rem;" resize-behavior="both"
+        value="{{ $variables.requestor_question }}" rows="5" disabled="true" ></oj-text-area>
+      <oj-text-area id="app-12" label-hint="[[$application.translations.app.Comments]]" style="width: 32rem;min-height: 8rem;"
+        value="{{ $variables.Requiremoreinfo.p_comment }}" rows="5" required="true" resize-behavior="both"></oj-text-area>
+      </oj-form-layout>
+    </oj-validation-group>
+    <br>
+    <oj-validation-group style="display:flex; justify-content:flex-end;">
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction83]]"  >Ok</oj-button>
+      <oj-button chroming="outlined" on-oj-action="[[$listeners.buttonAction84]]"  >Cancel</oj-button>
+    </oj-validation-group>
+  </div>
+</oj-dialog>
+
+
+
+
+<!--  -->
+
+
+<oj-dialog dialog-title="Payment Details" id="PaymentDetailsTotalZero" style="width: 1400px; height: 500px;">
+  <div slot="body">
+
+    <div class="oj-panel">
+      <div class="oj-flex">
+        <oj-validation-group id="PaymentForm">
+          <oj-form-layout label-edge="start" label-width="45%" max-columns="2" columns="2" direction="column">
+
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.PaymentType]]"
+              data="[[$variables.findbyLookuptypecodeListSDP13]]" item-text="lookup_value_name_disp"
+              value="{{ $variables.postTravelPaymentdtl.ldata.payment_type }}" required="true" disabled="true"></oj-select-single>
+
+            <oj-input-number id="1305" style="width: 18rem;" disabled="true"
+              label-hint="[[$application.translations.app.EligiblePerDiemDays]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.eligible_per_diem_days }}"
+              on-value-changed="[[$listeners._Value]]"></oj-input-number>
+
+
+            <oj-input-number id="1310" style="width: 18rem;" class="oj-form-control-text-align-end" disabled="true"
+              label-hint="[[$application.translations.app.EligiblePerDiem]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.eligible_per_diem }}"
+              on-value-changed="[[$listeners.inputNumberValue]]"></oj-input-number>
+
+            <oj-input-number id="1315" style="width: 18rem;" class="oj-form-control-text-align-end"
+              label-hint="[[$application.translations.app.TicketEncashmentAmount]]"
+              class="oj-form-control-text-align-end" value="{{ $variables.postTravelPaymentdtl.ticket_encash_amount }}"
+              disabled="true"></oj-input-number>
+
+            <oj-input-number id="1320" style="width: 18rem;" label-hint="[[$application.translations.app.HotelCharges]]"
+              class="oj-form-control-text-align-end" min="0" value="{{ $variables.postTravelPaymentdtl.hotel_charges }}"
+              disabled="true"></oj-input-number>
+
+            <!-- <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[$variables.getFindbyCodecombinationlovListSDP2]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" disabled="true">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single> -->
+             <!-- OFFICIAL_MISSION_GL_CODE -->
+              <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_GL_CODE"]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.officalcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+              </oj-bind-if>
+            <!-- TRAINING_GL_CODE -->
+            <oj-bind-if test='[[ $variables.approval_gl_code==="TRAINING_GL_CODE" ]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.trainingcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+            </oj-bind-if>
+            <!-- OFFICIAL_MISSION_AUDIT_GL_CODE -->
+             <oj-bind-if test='[[ $variables.approval_gl_code==="OFFICIAL_MISSION_AUDIT_GL_CODE" ]]'>
+            <oj-select-single style="width: 18rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+              required="true" data="[[ $variables.auditcodecombinationLOV ]]" item-text="travel_budget_code"
+              placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}">
+
+              <template slot="collectionTemplate" data-oj-as="collection">
+                <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                  vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+                  columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+                  columns=' [ {"headerText":"Code Combination","field":"travel_budget_code"}, {"headerText":"Code Description","field":"travel_budget_description"}]'
+                  on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+                  selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+              </template>
+            </oj-select-single>
+             </oj-bind-if>
+
+
+            <!-- <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.CodeDescription]]"
+              required="true" value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}"
+              disabled="true"></oj-input-text> -->
+
+            <!-- PAYMENT CODE DESCRIPTION -->
+            <oj-text-area style="width: 32rem;" class="my-field" disabled="true"
+              label-hint="[[$application.translations.app.PAYMENTDESC]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}" resize-behavior="both"
+              rows="6" readonly="true"></oj-text-area>
+
+
+            <oj-input-number id="1348" style="width: 18rem;" label-hint="[[$application.translations.app.BudgetAmount]]"
+              class="oj-form-control-text-align-end" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.budget_amount }}" class="oj-form-control-text-align-end"
+              disabled="true"></oj-input-number>
+
+            <!-- Balance Amount -->
+            <oj-input-number style="width: 18rem;" label-hint="[[$application.translations.app.Payment_Balance_Amount]]"
+              value="{{ $variables.postTravelPaymentdtl.ldata.balance_amount }}"
+              class="oj-form-control-text-align-right" id="133" readonly="true"></oj-input-number>
+
+
+
+            <oj-input-number id="1353" style="width: 18rem;"
+              label-hint="[[$application.translations.app.TotalPayableToEmployee]]" min="0" required="true"
+              value="{{ $variables.postTravelPaymentdtl.total_amount }}" class="oj-form-control-text-align-end"
+              disabled="true">
+            </oj-input-number>
+
+            <!-- <oj-select-single style="width: 50rem;" label-hint="[[$application.translations.app.CodeCombination]]"
+     required="true" data="[[$variables.getFindbyCodecombinationlovListSDP2]]" item-text="travel_budget_code"
+     placeholder="Select Travel Budget Code" on-value-item-changed="[[$listeners.selectValueItem2]]"
+     value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}" ></oj-select-single>
+
+    
+  <oj-input-text style="width: 50rem;" label-hint="[[$application.translations.app.CodeDescription]]"
+  required="true" value="{{ $variables.postTravelPaymentdtl.payment_code_combination_desc }}" disabled="true"></oj-input-text> -->
+
+            <!-- <oj-input-text 
+  value="{{ $variables.postTravelPaymentdtl.payment_code_combination }}"></oj-input-text> -->
+
+            <oj-input-text style="width: 18rem;" label-hint="[[$application.translations.app.PaymentRemarks]]"
+              value="{{ $variables.postTravelPaymentdtl.payment_remarks }}" disabled="true"></oj-input-text>
+
+          </oj-form-layout>
+
+          <!-- <oj-form-layout columns="2" max-columns="2" label-edge="start" label-width="45%">
+   
+</oj-form-layout> -->
+
+        </oj-validation-group>
+      </div>
+    </div>
+  </div>
+
+  <div slot="footer">
+   <oj-button on-oj-action="[[$listeners.buttonAction25]]">Save & Close</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction87]]"  >Close</oj-button>
+  </div>
+</oj-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
