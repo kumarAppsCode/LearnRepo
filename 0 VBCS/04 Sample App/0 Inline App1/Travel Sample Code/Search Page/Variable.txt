@@ -10,8 +10,8 @@
 ========
 checkLinks : Param: $chain.results.callRestGetTravelSearchTravelrequestdtlNew.body.links
 
-disableextoff: $chain.results.callFunctionCheckLinks.hasNext
-disableextoff:: $chain.results.callFunctionCheckLinks.hasPrev
+disablenextoff: $chain.results.callFunctionCheckLinks.hasNext
+disablepreoff:: $chain.results.callFunctionCheckLinks.hasPrev
 
 {
  "firstoff": "{{ $chain.results.callFunctionCheckLinks.lfirstoffset }}",
