@@ -1,0 +1,54 @@
+<!--More Data Load  -->
+<oj-paging-control 
+id="paging" 
+class="oj-sm-width-full" 
+page-size="31" 
+slot="bottom" 
+data="[[ $variables.search_table ]]">
+        <!-- <oj-button label='[[ "First Page==>"+ $variables.off_team_obj.off_first_team ]]'
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined">
+        <oj-bind-text value="[[ $variables.off_team_obj.off_first_team ]]"></oj-bind-text>
+        </oj-button>
+        <oj-button label='[[ "Previous Page==>"+ $variables.off_team_obj.off_previ_team ]]'
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined"
+          disabled="[[ $variables.off_team_obj.disable_pre_btn ]]">
+          <oj-bind-text value="[[ $variables.off_team_obj.off_previ_team ]]"></oj-bind-text>
+          <span slot="startIcon" class="oj-ux-ico-rewind"></span>
+        </oj-button>
+        <oj-button label='[[ "Current Page=>" + $variables.off_team_obj.off_curr_team ]]'
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined">
+          <oj-bind-text ></oj-bind-text>
+          <span slot="startIcon" class="oj-ux-ico-back-parent"></span>
+        </oj-button>
+        <oj-button label='[[ "Next Page==>" +$variables.off_team_obj.off_next_team ]]'
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined"
+          disabled="[[ $variables.off_team_obj.disable_next_btn ]]">
+        <oj-bind-text value="[[ $variables.off_team_obj.off_next_team ]]"></oj-bind-text>
+        <span class="oj-ux-ico-fast-forward" slot="endIcon"></span>
+        </oj-button> -->
+        <!--  -->
+        <oj-button label="First Page"
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined" on-oj-action="[[$listeners.buttonAction22]]">
+        <oj-bind-text value="[[ $variables.off_team_obj.off_first_team ]]"></oj-bind-text>
+        </oj-button>
+        <!--  -->
+        <oj-button label="Previous Page"
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined"
+          disabled="[[ $variables.off_team_obj.disable_pre_btn ]]" on-oj-action="[[$listeners.buttonAction23]]">
+          <oj-bind-text value="[[ $variables.off_team_obj.off_previ_team ]]"></oj-bind-text>
+          <span slot="startIcon" class="oj-ux-ico-rewind"></span>
+        </oj-button>
+        <!--  -->
+        <oj-button label="Current Page"
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined" on-oj-action="[[$listeners.buttonAction24]]">
+          <oj-bind-text ></oj-bind-text>
+          <span slot="startIcon" class="oj-ux-ico-back-parent"></span>
+        </oj-button>
+        <!--  -->
+        <oj-button label="Next Page"
+          style="margin-left: 6px;height: 1.8em;" chroming="outlined"
+          disabled="[[ $variables.off_team_obj.disable_next_btn ]]" on-oj-action="[[$listeners.buttonAction25]]">
+        <oj-bind-text value="[[ $variables.off_team_obj.off_next_team ]]"></oj-bind-text>
+        <span class="oj-ux-ico-fast-forward" slot="endIcon"></span>
+        </oj-button>
+</oj-paging-control>
