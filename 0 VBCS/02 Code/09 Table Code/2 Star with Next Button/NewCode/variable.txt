@@ -1,0 +1,15 @@
+    "off_team_obj": {
+      "type": {
+        "disable_next_btn": "boolean",
+        "disable_pre_btn": "boolean",
+        "off_curr_team": "number",
+        "off_first_team": "number",
+        "off_next_team": "number",
+        "off_previ_team": "number",
+        "off_team": "number"
+
+      },
+      "defaultValue": {
+        "off_team": 0
+      }
+    }
