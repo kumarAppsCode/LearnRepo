@@ -1,0 +1,7 @@
+            <oj-input-number id="1025" style="width: 32rem;"
+              label-hint="[[$application.translations.app.DestinationInKM]]"
+              value="{{ $variables.postPkgBookingDetails.ldata.destination_in_kili_meter }}"
+              required='[[ $variables.postPkgTravelHeaderDetails.ldata.travel_type === "OMAN"  ]]'
+              validators='[[ [    {        "type": "regexp",        "options": {            "pattern": "^[0-9]+$",            "hint": "Enter a positive number.",            "messageDetail": "Value must be a positive number."        }    }] ]]'
+              disabled="true">
+            </oj-input-number>
