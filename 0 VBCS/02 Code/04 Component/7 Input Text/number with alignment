@@ -1,0 +1,7 @@
+          <template slot="wht_amt">
+            <oj-input-number 
+            style="text-align: right;"
+            value="[[$current.data]]" readonly="true"></oj-input-number>
+         </template>
+
+text-align: left|right|center|justify|initial|inherit;
