@@ -1,0 +1,14 @@
+JSON.stringify(json,null,2)
+JSON.stringify(value, replacer, space);
+
+value: It is the value that is to be converted into a JSON string.
+=============================================================================
+replacer: 
+It is an optional parameter. This parameter value can be an altering function or an array used as a selected filter for the stringify.
+If the value is empty or null then all properties of an object are included in a string.
+=============================================================================
+space: 
+It is also an optional parameter. 
+This argument is used to control spacing in the final string generated using the JSON.stringify() function.
+It can be a number or a string if it is a number then the specified number of spaces are indented to the final string and 
+if it is a string then that string is (up to 10 characters) used for indentation.
