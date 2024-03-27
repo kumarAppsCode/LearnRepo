@@ -1,0 +1,10 @@
+<div class="oj-flex">
+  <oj-input-search class="oj-flex-item oj-sm-12 oj-md-6" placeholder="Department Name"
+    suggestions="[[$variables.departmentsListSDP]]" suggestion-item-text="departmentCode" id="serchbox"
+    aria-label="abc">
+    <template slot="suggestionItemTemplate">
+      <oj-highlight-text text='[[$current.data.departmentCode + " : "+ $current.data.departmentName]]'>
+      </oj-highlight-text>
+    </template>
+  </oj-input-search>
+</div>
