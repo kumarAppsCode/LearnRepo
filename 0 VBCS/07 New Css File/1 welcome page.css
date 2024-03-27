@@ -1,0 +1,11 @@
+oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-image-panel {
+    position: relative;
+    width: 50%;
+    background-color: #681949;
+}
+
+oj-sp-welcome-page.oj-sp-responsive-paddings-on .oj-sp-template-wrapper {
+    padding-left: var(--oj-sp-template-padding-horizontal) !important;
+    padding-right: var(--oj-sp-template-padding-horizontal) !important;
+    background-color: #681949;
+}
