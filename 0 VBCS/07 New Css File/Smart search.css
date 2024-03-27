@@ -1,0 +1,118 @@
+/**
+ * To theme your application, just override the variable values you want to change. To find which variables can be changed,
+ * see the JET documentation at https://www.oracle.com/webfolder/technetwork/jet/jsdocs/CssVariablesOverview.html
+ * In general, we recommend using the Stable theme, as it reduces the chances of being impacted by changes over time.
+ */
+ 
+ :root {
+    /* --oj-html-font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; */
+    /* --oj-html-font-size:   1em; */
+
+--oj-form-layout-margin-bottom: -0.5rem;
+--oj-form-layout-column-gutter: 0.5rem;
+--oj-label-required-char-font-size:  0.3rem; 
+--oj-form-layout-start-edge-label-to-value-padding: 0.5rem;
+--oj-form-layout-top-edge-label-to-value-padding: 0rem; 
+--oj-collection-grid-cell-padding: 0rem;
+
+
+
+--oj-typography-body-md-line-height:0
+
+--oj-collection-grid-row-height:1.375;
+--oj-collection-grid-header-height:0.25rem;
+--oj-collection-grid-cell-padding: 0rem;
+
+
+  --oj-core-spacing-12x: 1rem;
+	--oj-core-spacing-6x :0.5rem
+
+ }
+
+/* Template Bar image */
+oj-sp-header-general-overview .oj-sp-header-general-overview-header-strip {
+    background-image: var(--oj-sp-theme-page-header-strip, url(''));
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    height: 12px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: #681949;
+}
+
+/* Template Top Color Change */
+oj-sp-smart-search-page .oj-sp-checkbox-template-wrapper, oj-sp-smart-search-page .oj-sp-template-wrapper {
+    padding-left: var(--oj-sp-template-padding-horizontal)!important;
+    padding-right: var(--oj-sp-template-padding-horizontal)!important;
+    background-color: #681949;
+}
+/*Add Edit Page  */
+oj-sp-general-overview-page.oj-sp-responsive-paddings-on .oj-sp-template-wrapper {
+    padding-left: var(--oj-sp-template-padding-horizontal)!important;
+    padding-right: var(--oj-sp-template-padding-horizontal)!important;
+        background-color: #681949;
+}
+
+
+/* Table Css Start */
+
+.oj-collection-grid-header{
+  height: 0rem !important;
+}
+
+
+.oj-table-column-header {
+    font-size: initial;
+    position: relative;
+    float: none;
+    text-overflow: inherit;
+    overflow: inherit;
+    white-space: normal;
+    display: inline-flex;
+    align-items: center;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+ }
+
+.oj-table-grid-display .oj-table-header {
+    background-color: var(--oj-collection-header-bg-color);
+    border-bottom: 1px solid var(--oj-collection-border-color);
+    /* background-color: #740b40; */
+    background-color:#681949;
+    color: white;
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    /* font-size: 12px;
+    border: 1px solid #D6DFE6;
+    font-weight: bold;
+    border-radius: 2px;
+    background-repeat: no-repeat; */
+}
+
+/* Table Css End  */
+
+/* Label Start */
+ .oj-label-group {
+    font-size: initial;
+    position: relative;
+    float: none;
+    text-overflow: inherit;
+    overflow: inherit;
+    white-space: normal;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: black;
+}
+/* Label End */
+
+
+/* input field-read only  */
+.oj-form-layout .oj-form.oj-enabled .oj-text-field.oj-read-only .oj-text-field-container {
+    border-width: var(--oj-text-field-border-width);
+    /* border-color: var(--oj-text-field-border-color-disabled); */
+    background-color: transparent;
+    height: var(--oj-text-field-height);
+    border-color: transparent;
+}
+/* input field-read only  end */
