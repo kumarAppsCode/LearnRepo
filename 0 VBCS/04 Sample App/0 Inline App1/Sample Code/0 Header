@@ -1,0 +1,165 @@
+<!--  -->
+      <oj-toolbar style="display:flex; justify-content:flex-end;">
+         <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Draft"||$variables.postPkgTravelHeaderDetails.approval_status==="Return for Correction"||$variables.ptravelmethod==="CREATE")?true:false ]]'>
+          <!-- <oj-bind-if test="  ">  condition-->
+          <oj-bind-if test="true">
+            <oj-bind-for-each data="[[ $variables.ToolDraftADP ]]">
+              <template>
+                <div>
+                  <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction]]">
+                    <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  </oj-button>
+                </div>
+              </template>
+            </oj-bind-for-each>
+          </oj-bind-if>
+        </oj-bind-if>
+         </oj-bind-if>
+        <!-- PENDING -->
+        <!-- <oj-bind-if test="true"> -->
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info")?false:true ]]'>
+          <oj-bind-for-each data="[[ $variables.ToolPendingADP]]">
+            <template>
+              <div :hidden="[[ ($variables.taskId!=null)?false:true ]]">
+                <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction37]]">
+                  <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+        <!-- ----------------------------SUBMIT BUTTON--------------------- -->
+        <!-- <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status=="Draft"||$variables.postPkgTravelHeaderDetails.approval_status=="Rejected"||$variables.ptravelheaderid!=0)?true:false ]]'><oj-button label="[[$application.translations.app.Submit]]" chroming="outlined"
+            :hidden='[[ $variables.postPkgTravelHeaderDetails.approval_status=="Approved" || $variables.postPkgTravelHeaderDetails.approval_status == "Pending" ]]'
+            on-oj-action="[[$listeners.buttonAction43]]"></oj-button></oj-bind-if> -->
+        <!-- ---------------------SUBMIT BUTTON END------------------------ -->
+        <!-- APPROVED -->
+        <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'> 
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approved"||$variables.postPkgTravelHeaderDetails.approval_status==="Rejected"||$variables.postPkgTravelHeaderDetails.approval_status==="Pending"||$variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info"||$variables.postPkgTravelHeaderDetails.approval_status==="Employee More Info")?true:false ]]'>
+          <!--approved  -->
+          <oj-bind-for-each data="[[ $variables.ToolApprovedADP ]]">
+            <template>
+              <div :hidden="[[ ($variables.taskId!=null)?true:false ]]">
+                <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction36]]">
+                  <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+        </oj-bind-if>
+        <oj-bind-if test='[[ $application.variables.userAccess==="VIEW" ]]'>
+      <oj-button style="margin-right:5px;" chroming="outlined" label="Close"
+        on-oj-action="[[$listeners.buttonAction85]]"
+        ></oj-button>
+</oj-bind-if>
+      </oj-toolbar>
+      <!-- tool bar end -->
+      <!-- </div> -->
+       <oj-bind-if
+        test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info" && $variables.taskId!=null)?true:false ]]'>
+      <oj-button style="margin-right:5px;" chroming="outlined" label="Approver More Info"
+        on-oj-action="[[$listeners.buttonAction82]]">
+        <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+      </oj-button>
+      </oj-bind-if>
+<!--  -->
+
+<div class="oj-lg-down-web-padding-vertical">
+  <header style="background-color: white;" role="banner"
+    class="oj-sm-flex-initial vb-web-applayout-header oj-sm-only-hide fixed-header">
+    <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+      <div class="oj-flex-bar-middle oj-sm-margin-4x-horizontal oj-sm-align-items-center">
+        <h1 style="color: #01474d; font-size: larger; font-weight: bold;" title="Travel Application ">
+          <oj-bind-text value='[[ "Travel Application" +" - " +$variables.ptravelheaderid ]]'></oj-bind-text>
+        </h1>
+      </div>
+      <!-- tool bar start -->
+      <!-- ||$variables.postPkgTravelHeaderDetails.approval_status=="Rejected" -->
+      <oj-toolbar>
+         <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Draft"||$variables.postPkgTravelHeaderDetails.approval_status==="Return for Correction"||$variables.ptravelmethod==="CREATE")?true:false ]]'>
+          <!-- <oj-bind-if test="  ">  condition-->
+          <oj-bind-if test="true">
+            <oj-bind-for-each data="[[ $variables.ToolDraftADP ]]">
+              <template>
+                <div>
+                  <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction]]">
+                    <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  </oj-button>
+                </div>
+              </template>
+            </oj-bind-for-each>
+          </oj-bind-if>
+        </oj-bind-if>
+         </oj-bind-if>
+        <!-- PENDING -->
+        <!-- <oj-bind-if test="true"> -->
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info")?false:true ]]'>
+          <oj-bind-for-each data="[[ $variables.ToolPendingADP]]">
+            <template>
+              <div :hidden="[[ ($variables.taskId!=null)?false:true ]]">
+                <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction37]]">
+                  <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+        <!-- ----------------------------SUBMIT BUTTON--------------------- -->
+        <!-- <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status=="Draft"||$variables.postPkgTravelHeaderDetails.approval_status=="Rejected"||$variables.ptravelheaderid!=0)?true:false ]]'><oj-button label="[[$application.translations.app.Submit]]" chroming="outlined"
+            :hidden='[[ $variables.postPkgTravelHeaderDetails.approval_status=="Approved" || $variables.postPkgTravelHeaderDetails.approval_status == "Pending" ]]'
+            on-oj-action="[[$listeners.buttonAction43]]"></oj-button></oj-bind-if> -->
+        <!-- ---------------------SUBMIT BUTTON END------------------------ -->
+        <!-- APPROVED -->
+        <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'> 
+        <oj-bind-if
+          test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approved"||$variables.postPkgTravelHeaderDetails.approval_status==="Rejected"||$variables.postPkgTravelHeaderDetails.approval_status==="Pending"||$variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info"||$variables.postPkgTravelHeaderDetails.approval_status==="Employee More Info")?true:false ]]'>
+          <!--approved  -->
+          <oj-bind-for-each data="[[ $variables.ToolApprovedADP ]]">
+            <template>
+              <div :hidden="[[ ($variables.taskId!=null)?true:false ]]">
+                <oj-button style="margin-right:5px;" chroming="outlined" on-oj-action="[[$listeners.buttonAction36]]">
+                  <!-- <span :class="[[$current.data.iconClass]]" slot="startIcon"></span> -->
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                  <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+                </oj-button>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+        </oj-bind-if>
+        <oj-bind-if test='[[ $application.variables.userAccess==="VIEW" ]]'>
+      <oj-button style="margin-right:5px;" chroming="outlined" label="Close"
+        on-oj-action="[[$listeners.buttonAction85]]"
+        ></oj-button>
+</oj-bind-if>
+      </oj-toolbar>
+      <!-- tool bar end -->
+      <!-- </div> -->
+       <oj-bind-if
+        test='[[ ($variables.postPkgTravelHeaderDetails.approval_status==="Approver More Info" && $variables.taskId!=null)?true:false ]]'>
+      <oj-button style="margin-right:5px;" chroming="outlined" label="Approver More Info"
+        on-oj-action="[[$listeners.buttonAction82]]">
+        <!-- <oj-bind-text value="[[ $current.data.id ]]"></oj-bind-text> -->
+      </oj-button>
+      </oj-bind-if>
+    </div>
+  </header>
+</div>
+<!-- </div> -->
+<br>
