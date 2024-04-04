@@ -1,0 +1,95 @@
+<h6 style="font-size: larger; font-weight: bold;text-align: center;">Submit Job</h6>
+<oj-validation-group id="CreateFormS" valid="pending" >
+  <oj-form-layout max-columns="1" columns="1" label-edge="start" direction="row" label-width="25%"
+    colspan-wrap="nowrap" label-wrapping="truncate">
+    <oj-label for="oj-input-text-651077415-44" style="font-weight: bold;" class="oj-label-nowrap">Interface Name</oj-label>
+    <div>
+    <oj-select-single style="width: 350px;" label-hint="Interface Name" value="{{ $variables.JobID }}"
+          item-text="name" on-value-item-changed="[[$listeners.selectValueItem2]]"
+          data="[[$variables.manageGroupJobsListSDP]]" id="oj-input-text-651077415-44"></oj-select-single>
+    <oj-bind-if test='[[ $variables.InputAssignment ]]'>
+          <img slot="end" :src="[[ $application.path + 'resources/images/information-button.png' ]]" on-click="[[$listeners.imageClick2]]">
+    </oj-bind-if>
+  </div>
+            <oj-bind-if test="[[ $variables.fileNameVar ]]">
+              <oj-input-text 
+              style="width: 350px;"
+              label-hint="File Name" required="true" value="{{ $variables.CreateSubJobVar.fileName }}">
+                <!--oj-bind-if test='[[ $variables.InputAssignment ]]'>
+                <img slot="end" :src="[[ $application.path + 'resources/images/information-button.png' ]]"
+                  on-click="[[$listeners.imageClick2]]">
+              </oj-bind-if-->
+              </oj-input-text>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.directoryNameVar]]">
+              <oj-input-text 
+              style="width: 350px;"
+              label-hint="Directory Name" value="{{ $variables.CreateSubJobVar.directoryName }}">
+              </oj-input-text>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.dateVar]]">
+              <oj-input-date 
+              style="width: 350px;"
+              label-hint="Date" value="{{ $variables.CreateSubJobVar.date1 }}" required="true"
+                converter='{"type": "datetime", "options": {"pattern":"yyyy-MM-dd"}}'>
+              </oj-input-date>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.startDateTimeVar ]]">
+              <oj-input-date-time 
+              style="width: 350px;"
+              label-hint="Start Date" value="{{ $variables.CreateSubJobVar.startDateTime }}"
+                required="true"></oj-input-date-time>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.endDateTimeVar ]]">
+              <oj-input-date-time 
+              style="width: 350px;"
+              label-hint="End Date" value="{{ $variables.CreateSubJobVar.endDateTime }}"
+                required="true"></oj-input-date-time>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.providerNameVar ]]">
+              <oj-select-many 
+              style="width: 350px;"
+              label-hint="Provider Name" value="{{ $variables.ProviderNameTestVar }}"
+                maximum-result-count="50" options-keys.value="pname" options-keys.label="pname"
+                on-value-changed="[[$listeners.selectValue]]" options="[[$variables.providerNameBOListSDP2]]"
+                id="provider">
+              </oj-select-many>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.businessUnitVar ]]">
+              <oj-select-single 
+              style="width: 350px;"
+              label-hint="Business Unit" 
+              value="{{ $variables.CreateSubJobVar.businessUnit }}" data="[[$variables.businessUnitBOListSDP]]" item-text="bu">
+              </oj-select-single>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.statementPeriodVar ]]">
+              <oj-input-text 
+              style="width: 350px;"
+              label-hint="StatementPeriod" 
+              value="{{ $variables.CreateSubJobVar.statementPeriod }}" required="true" placeholder="Enter MMM - YY (FEB - 23)">
+              </oj-input-text>
+            </oj-bind-if>
+            <oj-bind-if test="[[ $variables.channelNameVar ]]">
+              <oj-input-text 
+              style="width: 350px;"
+              label-hint="ChannelName" 
+              value="{{ $variables.CreateSubJobVar.channelName }}" disabled="[[ $variables.disableFlag ]]"></oj-input-text>
+            </oj-bind-if>
+  </oj-form-layout>
+</oj-validation-group>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12 bg-light" style="padding-left:2%" ;>
+                  <oj-bind-if test="[[ $variables.btnvalidate ]]">
+                    <oj-button label="Adhoc Run" id="save" style="height:50px;" class="oj-md-6 oj-lg-2 oj-success "
+                      on-oj-action="[[$listeners.savebuttonAction]]" chroming="solid"
+                      disabled="[[ $variables.disableButton ]]"></oj-button>
+                  </oj-bind-if>
+                  <oj-bind-if test="[[ $variables.btnvalidate ]]">
+                    <oj-button label="Adhoc Run" id="save" style="height:50px; margin-left: 10px;" class="oj-md-6 oj-lg-2 oj-success "
+                      on-oj-action="[[$listeners.savebuttonAction]]" chroming="solid"
+                      disabled="[[ $variables.disableButton ]]"></oj-button>
+                  </oj-bind-if>
+                </div>
+              </div>
+            </div
