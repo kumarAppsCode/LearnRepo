@@ -1,0 +1,100 @@
+okButton
+
+style="height:650px;font-size: 12px;width:100%;margin-top:0.5%;"
+
+    {"headerText":"Select Header","width":70,"template":"select"},
+    {"headerText":"Select Line","width":70,"template":"selectLine"},
+
+<template slot="select">
+<oj-sample-checkbox-switch style="margin-left:30%;" 
+on-value-changed="[[$listeners.booleanCheckboxComponentValue]]"
+readonly="[[$current.row.status_flag ==='Y']]"></oj-sample-checkbox-switch>
+</template>
+
+VCL:
+true:
+AddRemoveIdfromArray
+
+id		: primary key
+type	: ADD
+array	: selectedInvoice
+
+ASSIGN tO selectedInvoice selectedInvoice --> Array-->String
+
+  PageModule.prototype.AddRemoveIdfromArray = function (id, type, array) {
+    var arr = [];
+    arr = array;
+    console.error("bef oper");
+    console.error(arr);
+   
+    if (type == "ADD") {
+       if(! array.includes(id)){
+          arr.push(id);
+       }
+    }
+    else {
+      var index = arr.indexOf(id);
+      if (index > -1) {
+        arr.splice(index, 1);
+      }
+
+    } 
+    console.error("after oper");
+    console.error(arr);
+    console.error("len"+arr.length);
+    return arr;
+  };
+
+FALSE : 
+id		: primary key
+type	: DELETE
+array	: selectedInvoice
+
+ASSIGN to selectedInvoice selectedInvoice --> Array-->String
+
+
+
+
+<template slot="selectLine">
+<oj-sample-checkbox-switch style="margin-left:30%;"
+readonly="[[$current.row.status_flag_line_level ==='Y']]"
+on-value-changed="[[$listeners.booleanCheckboxComponentValue2]]"></oj-sample-checkbox-switch>
+</template>
+=================================
+
+
+oK BUTTON 
+IF CONDITION : $functions.getSizeOfOneArray($page.variables.selectedInvoice)
+getSizeOfOneArray
+
+  PageModule.prototype.getSizeOfOneArray = function (array) {
+if (array.length > 0 ){
+      return true;
+    }else{
+      return false;
+    }
+  };
+===========
+  PageModule.prototype.finalSelectInvCmpr = function (invId, array) {
+    // console.log("invId==>"+invId);
+    // console.log("lineId==>"+lineId);
+    // console.log("array==>"+array);
+    console.error("invId==" + array.includes(invId));
+    return array.includes(invId);
+  };
+
+
+================================
+  PageModule.prototype.finalSelectInvCmpr = function (invId, array) {
+
+    // console.log("invId==>"+invId);
+    // console.log("lineId==>"+lineId);
+    // console.log("array==>"+array);
+    console.error("invId==" + array.includes(invId));
+    return array.includes(invId);
+  };
+
+
+================
+save button validation 
+$functions.getSizeOfArray($variables.selectedInvoice, $variables.selectedInvoiceForLine)
