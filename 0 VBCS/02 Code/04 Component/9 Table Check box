@@ -6,7 +6,7 @@ style="height:650px;font-size: 12px;width:100%;margin-top:0.5%;"
     {"headerText":"Select Line","width":70,"template":"selectLine"},
 
 <template slot="select">
-<oj-sample-checkbox-switch style="margin-left:30%;" 
+<oj-sample-checkbox-switch style="margin-left:30%;" -
 on-value-changed="[[$listeners.booleanCheckboxComponentValue]]"
 readonly="[[$current.row.status_flag ==='Y']]"></oj-sample-checkbox-switch>
 </template>
@@ -98,3 +98,27 @@ if (array.length > 0 ){
 ================
 save button validation 
 $functions.getSizeOfArray($variables.selectedInvoice, $variables.selectedInvoiceForLine)
+
+
+  PageModule.prototype.getSizeOfArray = function (array, array2) {
+    console.error("size of array==" + array.length);
+    console.error("size of array22==" + array2.length);
+    
+    // if (array.length > 0 && array2.length > 0) {
+    //   return false;
+    // }
+    if (array.length > 0 || array2.length > 0){
+      return false;
+    }else{
+      return true;
+    }
+  };
+
+  PageModule.prototype.getSizeOfOneArray = function (array) {
+if (array.length > 0 ){
+      return true;
+    }else{
+      return false;
+    }
+  };
+
