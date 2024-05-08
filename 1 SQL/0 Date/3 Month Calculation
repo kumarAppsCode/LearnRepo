@@ -1,0 +1,7 @@
+SELECT 
+to_date(rd.REQUEST_DATA.aal_end_date, 'YYYY-MM-DD') as from_date, 
+to_date(rd.REQUEST_DATA.aal_from_date, 'YYYY-MM-DD') as to_date,
+trunc(months_between(to_date(rd.REQUEST_DATA.aal_end_date, 'YYYY-MM-DD'), to_date(rd.REQUEST_DATA.aal_from_date, 'YYYY-MM-DD')))mths
+FROM fs_request_details rd
+where rd.REQUEST_TYPE like '%ACTING_ALLOWANCE%'
+and REQUEST_ID=80603
