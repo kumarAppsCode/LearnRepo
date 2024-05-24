@@ -1,11 +1,20 @@
 oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-image-panel {
     position: relative;
     width: 50%;
-    background-color: #681949;
+    background-color: #013315 !important;
 }
 
-oj-sp-welcome-page.oj-sp-responsive-paddings-on .oj-sp-template-wrapper {
-    padding-left: var(--oj-sp-template-padding-horizontal) !important;
-    padding-right: var(--oj-sp-template-padding-horizontal) !important;
-    background-color: #681949;
+oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-container {
+    position: relative;
+    width: 100%;
+    min-height: 7.00rem;
+    background-color: #013315 !important;
 }
+
+.oj-sp-typography-display-6 {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    font-size: 1.75rem !important;
+    font-weight: 400 !important;
+    line-height: 0.2858 !important;
+}
+
