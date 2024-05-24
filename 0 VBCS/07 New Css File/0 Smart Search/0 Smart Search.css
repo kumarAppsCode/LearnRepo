@@ -1,0 +1,83 @@
+/**
+ * To theme your application, just override the variable values you want to change. To find which variables can be changed,
+ * see the JET documentation at https://www.oracle.com/webfolder/technetwork/jet/jsdocs/CssVariablesOverview.html
+ * In general, we recommend using the Stable theme, as it reduces the chances of being impacted by changes over time.
+ */
+ 
+:root {
+    /* --oj-html-font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+    --oj-html-font-size:   1em; */
+
+
+ } 
+
+/*===================================================*/
+/* sp-welcome-page */
+oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-image-panel {
+    position: relative;
+    width: 50%;
+    background-color: #055023 !important;
+}
+oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-container {
+    position: relative;
+    width: 100%;
+    min-height: 7.00rem;
+    background-color: #055023 !important;
+}
+
+oj-sp-header-welcome-banner.oj-sp-header-welcome-banner-sm .oj-sp-header-welcome-banner-main-panel {
+    width: 100%;
+    /* background-color: var(--oj-sp-header-welcome-banner-background-color-darker-shade); */
+    background-color: #055023 !important;
+}
+
+.oj-sp-typography-display-6 {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    font-size: 1.75rem !important;
+    font-weight: 400 !important;
+    line-height: 0.2858 !important;
+}
+/*===================================================*/
+/* oj-sp-smart-search-page */
+.oj-color-invert.oj-sp-color-invert-bg {
+	background-color: #055023 !important;
+}
+
+oj-sp-header-general-overview .oj-sp-header-general-overview-header-strip {
+    background-image: var(--oj-sp-theme-page-header-strip, url(header-general-overview/resources/img/colorstrip_redwood_desktop.png));
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    /* height: 12px; */
+    height: 0px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+/*===================================================*/
+
+oj-sp-header-general-overview .oj-sp-header-general-overview-page-title{
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    /* white-space: nowrap; */
+    /* color: red; */
+    /* display: inline-block; */
+    font-size: 14px;
+    color: white;
+}
+
+oj-sp-header-general-overview .oj-sp-header-general-overview-padded-container {
+    transition: padding .15s;
+    pointer-events: auto;
+    height: 80px;
+}
+
+.oj-typography-body-xs, .oj-typography-caption-1 {
+    font-size: var(--oj-typography-body-xs-font-size) !important;
+    font-weight: 400 !important;
+    line-height: var(--oj-typography-body-xs-line-height) !important;
+    /* background-color: red; */
+    /* margin-top: 11px; */
+    margin-top: -30px;
+}
+/*===================================================*/
+
