@@ -1,14 +1,21 @@
+/*===================================================*/
+/* sp-welcome-page */
 oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-image-panel {
     position: relative;
     width: 50%;
-    background-color: #013315 !important;
+    background-color: #055023 !important;
 }
-
 oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-container {
     position: relative;
     width: 100%;
     min-height: 7.00rem;
-    background-color: #013315 !important;
+    background-color: #055023 !important;
+}
+
+oj-sp-header-welcome-banner.oj-sp-header-welcome-banner-sm .oj-sp-header-welcome-banner-main-panel {
+    width: 100%;
+    /* background-color: var(--oj-sp-header-welcome-banner-background-color-darker-shade); */
+    background-color: #055023 !important;
 }
 
 .oj-sp-typography-display-6 {
@@ -17,4 +24,3 @@ oj-sp-header-welcome-banner .oj-sp-header-welcome-banner-container {
     font-weight: 400 !important;
     line-height: 0.2858 !important;
 }
-
