@@ -1,0 +1,47 @@
+https://fa-***-test-***.fa.ocs.oraclecloud.com/hcmRestApi/resources/11.13.18.05/businessProcessApprovalDelegationRules
+
+Request:
+{
+ "PersonId": "456",
+ "IsSelfApprovalEnabled": "true",
+ "DelegateTo": "456",
+ "FieldValue": "GlobalAbsenceApproval",
+ "RuleName": "Dinesh Delegation - insert from api",
+ "DelegateToDisplayName": "******",
+ "Field": "category",
+ "StartDate": "6/24/24 10:05 AM",
+ "EndDate": "6/26/24 10:05 AM",
+ "Action": "create",
+ "RuleId": "USER_momar2505202416"  
+}
+
+==============
+Response
+{
+    "PersonId": "456",
+    "FieldOperation": null,
+    "IsSelfApprovalEnabled": "true",
+    "DelegateTo": "123",
+    "FieldValue": "GlobalAbsenceApproval",
+    "RuleName": "dinesh Delegation - insert from api",
+    "RuleId": "USER_mQ64QqiaQ46Qqa_jaznQ46Qcom.PramodQ32QDelegationQ32QQ45QQ32QinsertQ32QfromQ32Qapi",
+    "DelegateToDisplayName": "abc",
+    "Field": "category",
+    "StartDate": "6/24/24 10:05 AM",
+    "EndDate": "6/26/24 10:05 AM",
+    "Action": null,
+    "links": [
+        {
+            "rel": "self",
+            "href": "https://fa-***-test-***.fa.ocs.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/businessProcessApprovalDelegationRules/1404",
+            "name": "businessProcessApprovalDelegationRules",
+            "kind": "item"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://fa-***-test-***.fa.ocs.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/businessProcessApprovalDelegationRules/1404",
+            "name": "businessProcessApprovalDelegationRules",
+            "kind": "item"
+        }
+    ]
+}
