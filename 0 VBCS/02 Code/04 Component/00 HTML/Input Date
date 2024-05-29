@@ -1,0 +1,5 @@
+<oj-input-date 
+          value="{{ $variables.postGenericRequest.ldata.per_date }}" label-hint="Date"
+          disabled='[[ ($variables.postGenericRequest.request_status==="Draft"||$variables.postGenericRequest.request_status==="Rejected")?false:true ]]'
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' placeholder="Date" required="true">
+        </oj-input-date>
