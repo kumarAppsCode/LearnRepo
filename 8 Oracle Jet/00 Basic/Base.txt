@@ -1,0 +1,62 @@
+Step 1: Download Visual Studio Code
+Step 2: VS Extendtion: Goodle: oracle jet for visual studio code--> https://marketplace.visualstudio.com/items?itemName=Oracle.oracle-jet-core
+Step 3: Node Js
+        C:\Users\DineshkumarP>node -v
+        v12.18.2
+        C:\Users\DineshkumarP>npm -v
+        6.13.7
+        C:\Users\DineshkumarP>
+1. Node Js upgrad: npm install npm@latest -g
+or
+2. Run PowerShell as Administrator
+   Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+   npm install -g npm-windows-upgrade
+   npm-windows-upgrade
+or
+3.required: { node: '>=12.21.0' }, google and install it new node
+
+
+Step 4: OJET CMD
+        Goodle: Install Oracle JET
+        https://www.oracle.com/webfolder/technetwork/jet-420/globalGetStarted.html
+        Step A CMD: npm -g install @oracle/ojet-cli
+        Step A CMD: ojet -help
+                            add .................................. Adds platforms, plugins and more to a JET app
+                            build | b ............................ Builds a JET app
+                            clean ................................ Cleans build output from a JET app
+                            configure ............................ Configures tooling parameters for a JET app
+                            create ............................... Creates a new JET app, custom theme, or component
+                            help ................................. Displays command line help Commands: [add|build|clean|configure|create|list|remove|restore|serve|strip]
+                            list | ls ............................ Lists platforms, plugins and more within a JET app
+                            package .............................. Prepares archive of a component or a pack
+                            publish .............................. Publishes components to the Exchange
+                            remove | rm .......................... Removes platforms, plugins and more from a JET app
+                            restore .............................. Restores missing dependencies, plugins, and libraries to a JET app
+                            search ............................... Searches for a component in the Exchange based on the specified keyword
+                            serve | s ............................ Serves a JET app to an emulator, device or the browser
+                            strip ................................ Strips all non source files from a JET app
+                        Global options:
+                            --global | g ......................... Global setting
+                            --help | h ........................... Print help for the command
+                            --verbose ............................ Print details
+                            --version | v ........................ Print CLI version
+                        Detailed help:
+                            ojet help <command> [<scope>]
+================================================================================================================================================
+create ............................... Creates a new JET app, custom theme, or component
+restore .............................. Restores missing dependencies, plugins, and libraries to a JET app
+================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+

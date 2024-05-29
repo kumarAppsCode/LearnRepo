@@ -1,0 +1,11 @@
+From Cookbook table table code
+html code 
+js 
+css
+data
+******************
+html code : [[]]- binding
+js: required and libary
+******************
+Css in app.css
+******************

@@ -1,0 +1,9 @@
+To Change application name in index.html log next line 
+
+<h1 class="oj-sm-only-hide oj-web-applayout-header-title" title="Application Name"><oj-bind-text value="[[appName]]"></oj-bind-text></h1>
+
+It was bind with Java Script [[Bind: appName]]
+
+Index.html bind Js [appController.js] 
+
+copy [[appName]] and search in appController.js then u change the application name

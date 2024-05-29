@@ -1,0 +1,67 @@
+  <div>
+    <oj-table id='table' aria-label='Departments Table'
+    data='[[servicedataprovider]]'
+    selection-mode='{"row": "multiple", "column": "multiple"}'
+    dnd='{"reorder": {"columns": "enabled"}}'
+    scroll-policy='loadMoreOnScroll'
+    scroll-policy-options='{"fetchSize": 10}'
+    columns='[{"headerText": "Department Id", 
+               "field": "DepartmentId",
+               "headerClassName": "oj-sm-only-hide",
+               "className": "oj-sm-only-hide",
+               "resizable": "enabled"},
+              {"headerText": "Department Name", 
+               "field": "DepartmentName",
+               "resizable": "enabled"},
+              {"headerText": "Location Id", 
+               "field": "LocationId",
+               "headerClassName": "oj-sm-only-hide",
+               "className": "oj-sm-only-hide",
+               "resizable": "enabled"},
+              {"headerText": "Manager Id", 
+               "field": "ManagerId",
+               "resizable": "enabled"},
+              {"headerText": "Employee Count", 
+               "field": "EmployeeCount",
+               "headerClassName": "oj-md-down-hide",
+               "className": "oj-md-down-hide",
+               "resizable": "enabled"}]'
+    class='demoservice-table-container oj-bg-body'>
+</oj-table>
+  </div>
+******************************************************************************************
+define(['../accUtils',"require", "exports", "knockout", "ojs/ojbootstrap", 
+"ojs/ojarraydataprovider", 
+"text!../Json/departmentData.json", 
+"ojs/ojtable", "ojs/ojknockout"
+],
+ function(accUtils,require, exports, ko, ojbootstrap_1, 
+         ArrayDataProvider, deptData
+         ) {
+    // Connect  
+    function ServicesViewModel() {
+      this.connected = () => {
+        accUtils.announce('Services page loaded.', 'assertive');
+        document.title = "Services";
+      };
+
+      this.deptArray = JSON.parse(deptData);
+      this.servicedataprovider = new ArrayDataProvider(this.deptArray, {
+          keyAttributes: "DepartmentId",
+          implicitSort: [{ attribute: "DepartmentId", direction: "ascending" }],
+      });
+      
+
+
+
+
+
+    }
+    return ServicesViewModel;
+  }
+);
+*********************************************************
+  .demoservice-table-container {
+    width: 100%; 
+    height: 27rem;
+}

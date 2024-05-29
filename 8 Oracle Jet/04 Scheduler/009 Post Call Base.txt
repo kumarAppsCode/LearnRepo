@@ -1,0 +1,36 @@
+var UTIL ={
+    server_url : "https://jcs.****/ojet/ScheduleServices/",
+}
+
+
+*************************************************************************************
+  async function callPostServiceReturnString(serviceName, input) {
+    return new Promise(function(resolve, reject) {
+      var headers = {};
+      headers['Content-Type'] = 'application/json';
+
+      var bodyPart = JSON.stringify(input);
+
+      fetch(UTIL.server_url + serviceName, {
+        method: 'POST',
+        headers: headers,
+        mode: 'cors',
+        body:  bodyPart
+      })
+      .then(resp => resp.text())
+      .then((data) =>  {
+        resolve(data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+    })
+  }
+*************************************************************************************
+callPostServiceReturnString('service/insertService', serviceInput)
+          .then((response) =>{
+            
+          })
+          .catch((error) =>{
+            console.log("Error while calling service");
+          })

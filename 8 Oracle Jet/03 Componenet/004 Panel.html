@@ -1,0 +1,50 @@
+<!-- oj-panel oj-bg-success-10 -->
+
+<div class="oj-flex">
+<!-- Pie -->
+  <div class="
+  oj-flex-item 
+oj-sm-12 oj-md-12 oj-lg-6  oj-xl-6 
+oj-panel oj-bg-success-10
+">
+    <!-- Pie -->
+    <oj-chart id="pieChart"
+    type="pie" 
+    data="[[dataProvider]]"
+    animation-on-display="auto"
+    animation-on-data-change="auto"
+    style-defaults.three-d-effect="[[threeDValue]]"
+    hover-behavior="dim">
+
+    <template slot='itemTemplate' data-oj-as='item'>
+        <oj-chart-item 
+          value='[[item.data.value]]'
+          group-id='[[ [item.data.group] ]]'
+          series-id='[[item.data.series]]'> 
+        </oj-chart-item>
+    </template>
+</div>
+<!-- pyramidChart -->
+<div class="
+oj-flex-item 
+oj-sm-12 oj-md-12 oj-lg-5  oj-xl-5 
+oj-panel oj-bg-info-30
+">
+  <oj-chart 
+    id="pyramidChart"
+    type="pyramid"
+    data="[[dataProvider2]]"
+    animation-on-display="auto"
+    animation-on-data-change="auto"
+    tooltip.renderer="[[tooltipFunc]]"
+    style-defaults.three-d-effect="[[threeDValue]]">
+    <template slot='itemTemplate' data-oj-as='item'>
+        <oj-chart-item 
+          value='[[item.data.revenue]]' 
+          group-id='[[ [item.data.year] ]]' 
+          series-id='[[item.data.product]]'> 
+        </oj-chart-item>
+    </template>
+    </oj-chart>
+</div>
+</div>

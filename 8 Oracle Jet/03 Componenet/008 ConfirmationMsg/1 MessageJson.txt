@@ -1,0 +1,24 @@
+{
+                          severity: "error",
+                          summary: "Error message summary",
+                          detail: "Message timeout set to: " + this.errorMessageTimeout(),
+                          autoTimeout: parseInt(this.errorMessageTimeout(), 10),
+                      },
+                      {
+                          severity: "warning",
+                          summary: "Warning message summary",
+                          detail: "Message timeout set to: " + this.warningMessageTimeout(),
+                          autoTimeout: parseInt(this.warningMessageTimeout(), 10),
+                      },
+                      {
+                          severity: "info",
+                          summary: "Information message summary",
+                          detail: "Message timeout set to: " + this.infoMessageTimeout(),
+                          autoTimeout: parseInt(this.infoMessageTimeout(), 10),
+                      },
+                      {
+                          severity: "confirmation",
+                          summary: "Confirmation message summary",
+                          detail: "Message timeout set to: " + this.confirmationMessageTimeout(),
+                          autoTimeout: parseInt(this.confirmationMessageTimeout(), 10),
+                      }

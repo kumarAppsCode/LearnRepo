@@ -1,0 +1,29 @@
+cookbook-->control-msg--Auto Type out
+HTML and JS libary ["ojs/ojmessages"]
+---------------------------------------------------------------------------------------------------------------------------------------
+<!-- Confrim Message -->
+<oj-messages id="oj-messages-id" messages="[[serviceMessagesDataprovider]]" display="notification"
+  display-options.category="none"
+  position='{"my":{"vertical" :"top", "horizontal": "end"}, 
+             "at": {"vertical": "top", "horizontal": "end"},
+             "of": "window"}'>
+</oj-messages>
+---------------------------------------------------------------------------------------------------------------------------------------
+JS:
+      var self=this;
+      // confirmation msg 
+      this.serviceMessagesDataprovider=ko.observableArray([]);
+
+----------------------------------
+        this.serviceSave=function(){
+          document.getElementById("modalDialog1").close();
+      
+        self.serviceMessagesDataprovider.push(
+          {
+            severity: "confirmation",
+            summary: "New Services",
+            detail: "New Services Saved Successfully",
+            autoTimeout: 4000  // 4000-4sec
+          });
+      }
+---------------------------------------------------------------------------------------------------------------------------------------      

@@ -1,0 +1,55 @@
+  <div>
+    <oj-chart id="pieChart"
+    type="pie" 
+    data="[[dataProvider]]"
+    animation-on-display="auto"
+    animation-on-data-change="auto"
+    style-defaults.three-d-effect="[[threeDValue]]"
+    hover-behavior="dim">
+
+    <template slot='itemTemplate' data-oj-as='item'>
+        <oj-chart-item 
+          value='[[item.data.value]]'
+          group-id='[[ [item.data.group] ]]'
+          series-id='[[item.data.series]]'> 
+        </oj-chart-item>
+    </template>
+</oj-chart>
+
+  </div>
+************************************************************************************************************
+ define(['../accUtils',
+"require", "exports", "knockout", "ojs/ojbootstrap", 
+"text!../singleItemData.json", 
+"ojs/ojarraydataprovider", "ojs/ojknockout", "ojs/ojchart"
+],
+ function(accUtils, require, exports, ko, ojbootstrap_1, data, ArrayDataProvider) {
+    function DashboardViewModel() {
+
+      this.threeDValue = ko.observable("off");
+      /* chart data */
+      this.dataProvider = new ArrayDataProvider(JSON.parse(data), {
+          keyAttributes: "id",
+      });
+
+    }
+
+    return DashboardViewModel;
+  }
+);
+************************************************************************************************************
+[
+    {
+        "id": 0,
+        "series": "Series 1",
+        "group": "Group A",
+        "value": 42
+    },
+    {
+        "id": 1,
+        "series": "Series 2",
+        "group": "Group A",
+        "value": 55
+    }
+]    
+************************************************************************************************************

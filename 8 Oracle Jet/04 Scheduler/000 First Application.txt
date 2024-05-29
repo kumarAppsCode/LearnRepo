@@ -1,0 +1,10 @@
+Step 1: ojet create SchedulerService --template=navdrawer
+
+Step 2: Run the Application [ojet serv]
+
+Step 3: In index.html Remove the foot code [<footer]
+
+Step 4: 
+  Need to Set Page full width
+  To set the Page Full width in index.html remove [oj-web-applayout-max-width ] width class 
+  After remove you not see the different but screen width it adjust

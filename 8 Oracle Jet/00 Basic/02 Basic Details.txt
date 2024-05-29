@@ -1,0 +1,27 @@
+************************************************
+Structure
+node module: All Library
+Script:
+		config
+		hooks
+Scr:
+	css:app.css
+	js:Js for each screen and View--ViewModel
+	App conteroller.js: Navigation			
+	Main.js:Library
+	Path Mapping:3rd part lib
+index.html
+Web: regenerate Web
+************************************************
+
+Why Html and Js--When binding come into the picture
+************************************************
+view model 
+and return view model
+pre define-life cycle
+connected
+disconnected
+Transaction Completed
+define---accUtils --component
+simple code try
+---------------

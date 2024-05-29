@@ -1,0 +1,6 @@
+Need to change file name: incident.html and incident.js
+scheduler.html and scheduler.js
+in scheduler.js--change the Function name [SchedulerViewModel]
+Next: Go to appController [let navData] Change the incident to Scheduler
+Re-run the Application
+

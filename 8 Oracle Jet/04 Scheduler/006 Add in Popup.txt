@@ -1,0 +1,37 @@
+HTML
+Js
+Libray-Required ("ojs/ojbutton", "ojs/ojdialog")
+----------------------------------------------------------------------------------------------------------
+    <!--Add Popup-->
+    <oj-dialog id="modalDialog1" dialog-title="Modal Dialog">
+      <div slot="body">
+        This is the dialog content.
+        User can change dialog resize behavior, cancel behavior and drag behavior by setting attributes.
+        Default attribute value depends on the theme.
+      </div>
+      <div slot="footer">
+        <oj-button id="saveButton" on-oj-action="[[serviceSave]]">Save
+        </oj-button>
+        <oj-button id="closeButton" on-oj-action="[[serviceClose]]">Close
+        </oj-button>
+      </div>
+    </oj-dialog>
+----------------------------------------------------------------------------------------------------------
+    <!--Service Add Button-->
+    <oj-button id="servicebuttonAdd" on-oj-action="[[serviceOpen]]">Add
+    </oj-button>
+----------------------------------------------------------------------------------------------------------
+JS:
+//--------------------------------
+      this.serviceSave=function(){
+        document.getElementById("modalDialog1").close();
+      }
+
+      this.serviceClose=function(){
+        document.getElementById("modalDialog1").close();
+      }
+
+      this.serviceOpen=function(){
+        document.getElementById("modalDialog1").open();
+      }
+//--------------------------------

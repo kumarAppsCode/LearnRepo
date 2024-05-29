@@ -1,0 +1,2 @@
+It hide if small
+class="oj-sm-only-hide"

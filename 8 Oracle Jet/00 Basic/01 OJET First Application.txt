@@ -1,0 +1,15 @@
+
+ojet create <project name> --template=navdrawer|navbar|basic|blank
+
+ojet create OjetNavDraw --template=navdrawer
+
+ojet create OjetnavbarApps --template=navbar
+
+ojet create OjetBaseApps --template=basic
+
+ojet create OjetBlankApps --template=blank
+
+open folder to build: ojet build 
+open folder to run  : ojet serve
+index page open: 
+************************************************

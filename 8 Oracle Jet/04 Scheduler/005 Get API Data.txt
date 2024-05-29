@@ -1,0 +1,42 @@
+var UTIL ={
+    server_url : "http://127.0.0.1:7101/Schedule/jersey/ScheduleServices/"
+}
+
+------------------------------------------------------------------------------------------
+
+async function callGetService(serviceName) {
+    return new Promise(function(resolve, reject) {
+      var headers = {};
+      headers['Content-Type'] = 'application/json';
+
+      fetch(UTIL.server_url + serviceName, {
+        method: 'GET',
+        headers: headers,
+        mode: 'cors'
+      })
+      .then(resp => resp.json())
+      .then((data) =>  {
+        resolve(data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+    })
+  }
+
+------------------------------------------------------------------------------------------
+
+this.serviceArray = ko.observableArray([]);
+
+callGetService('getServices')
+      .then((response) =>{
+        this.serviceArray(response.servciesTableInputs);
+      })
+      .catch((error) =>{
+        console.log("Error while calling service");
+      })
+      
+    this.dataprovider = new ArrayDataProvider(this.serviceArray, {
+        keyAttributes: "serviceName",
+        implicitSort: [{ attribute: "serviceName", direction: "ascending" }],
+    });

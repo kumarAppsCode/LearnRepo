@@ -1,0 +1,28 @@
+Search logo in google [png type] in images choose: type and select transparent lov then save the logo
+
+Paste the logo in [SchedulerService\src\css\images] image folder
+
+Index.html Search [logo]--[<span role="img" class="oj-icon demo-oracle-icon" title="Oracle Logo" alt="Oracle Logo"></span>] command it
+
+Add below line
+<img src="css/images/logo.png" width="300" height="60"/>
+
+Run the application: No logo show so stop and re-run the application 
+
+If need adjust the size [<img src="css/images/logo.png" width="190" height="60"/>]
+
+If Screen small you need to hide logo, So you need to call hide class:
+<img src="css/images/logo.png" width="190" height="60" class="oj-sm-only-hide"/>
+
+If screen small logo in navDrawer. So copy the img code and paste in <navDrawer next line 
+
+<div id="navDrawer" role="navigation" class="oj-contrast-marker oj-web-applayout-offcanvas oj-offcanvas-start">
+<oj-navigation-list id="navDrawerList" data="[[navDataProvider]]"
+                            edge="start"
+                            item.renderer="[[KnockoutTemplateUtils.getRenderer('navTemplate', true)]]"
+                            on-click="[[toggleDrawer]]"
+                            selection="{{selection.path}}">
+</oj-navigation-list>
+  <img src="css/images/logo.png" width="190" height="60"/>
+</div>
+

@@ -1,0 +1,20 @@
+HTML/JS/Libray ["ojs/ojinputtext"]
+
+        <oj-input-text id="serviceNametext-input" value="{{serviceName}}"
+        label-hint="Service Name" label-edge="inside"></oj-input-text>
+        <br></br>
+        <oj-input-text id="serviceDescriptiontext-input" value="{{serviceDescription}}"
+            label-hint="Service Description" label-edge="inside"></oj-input-text>
+      </div>
+**********************************************************************************************
+      self.serviceName=ko.observable();
+      self.serviceDescription=ko.observable();
+-----------------------------------------------------------------------
+        console.log("Service Name==>"+self.serviceName());
+        console.log("Service Description==>"+self.serviceDescription());
+-----------------------------------------------------------------------
+self.serviceName()== undefined||self.serviceDescription()== undefined
+-----------------------------------------------------------------------
+        self.serviceName('');
+        self.serviceDescription('');
+-----------------------------------------------------------------------        

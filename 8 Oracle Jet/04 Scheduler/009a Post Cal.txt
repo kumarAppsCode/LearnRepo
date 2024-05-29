@@ -1,0 +1,47 @@
+          var serviceInput={
+            serviceName:self.serviceName(),
+            serviceDescription:self.serviceDescription()
+          };
+
+          callPostServiceReturnString('service/insertService', serviceInput)
+          .then((response) =>{
+            //check response
+            if(response=="Y"){
+              document.getElementById("modalDialog1").close();
+              // Get Services Start
+                console.log("GET call");
+                callGetService('service/getServices')
+                .then((response) =>{
+                  self.serviceArray(response.service);
+                })
+                .catch((error) =>{
+                  console.log("Error while calling service");
+                })
+              // Get Services End 
+              
+              // Confirmation message
+                self.serviceMessagesDataprovider.push(
+                  {
+                    severity: "confirmation",
+                    summary: "New Services",
+                    detail: "New Services Saved Successfully",
+                    autoTimeout: UTIL.message_timeout,
+                    timestamp: isoTimeNow
+                  });
+              // 
+            } else{
+                //Error
+              self.serviceMessagesDataprovider.push(
+                {
+                  severity: "error",
+                  summary: "Add New Services Error",
+                  detail: "Error in Response",
+                  autoTimeout: UTIL.message_timeout,
+                  timestamp: isoTimeNow
+                }); 
+            }
+
+          })
+          .catch((error) =>{
+            console.log("Error while calling service");
+          })

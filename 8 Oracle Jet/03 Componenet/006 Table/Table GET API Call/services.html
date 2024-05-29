@@ -1,0 +1,25 @@
+  <div>
+    <oj-table id='table' aria-label='Service Table'
+    data='[[servicedataprovider]]'
+    selection-mode='{"row": "single", "column": "single"}'
+    dnd='{"reorder": {"columns": "enabled"}}'
+    scroll-policy='loadMoreOnScroll'
+    scroll-policy-options='{"fetchSize": 10}'
+    columns='[
+              {"headerText": "Service Description", 
+               "field": "serviceDescription",
+               "headerClassName": "oj-sm-only-hide",
+               "className": "oj-sm-only-hide",
+               "resizable": "enabled"},
+              {"headerText": "Service Name", 
+               "field": "serviceName",
+               "resizable": "enabled"},
+              {"headerText": "Service Description", 
+               "field": "serviceDescription",
+               "headerClassName": "oj-sm-only-hide",
+               "className": "oj-sm-only-hide",
+               "resizable": "enabled"}
+             ]'
+    class='demoservice-table-container oj-bg-body'>
+</oj-table>
+  </div>
