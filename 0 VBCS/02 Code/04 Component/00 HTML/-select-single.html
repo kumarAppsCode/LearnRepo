@@ -1,0 +1,6 @@
+<oj-select-single id="oj-input-text-651077415-1"
+        value="{{ $variables.postGenericRequest.ldata.edu_child_name }}" label-hint="Child Name"
+         disabled="[[ $variables.validateFields ]]"
+        data="[[$page.variables.getStgDependPersonListSDP]]" item-text="dependent_name_disp"
+        on-value-item-changed="[[$listeners.ojSelectSingleValueItem2]]" required="true">
+      </oj-select-single>
