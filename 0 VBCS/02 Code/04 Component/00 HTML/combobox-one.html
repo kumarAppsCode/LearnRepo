@@ -1,0 +1,7 @@
+    <oj-combobox-one id="oj-input-text-651077415-1"
+        style="width: 30rem; border: solid 1px #7F949F; border-radius:7px;"
+        value="{{ $variables.postGenericRequest.ldata.edu_child_name }}" label-hint="Child Name"
+        disabled="[[ $variables.validateFields ]]" options="[[$variables.getDependPersonListListSDP]]"
+        options-keys.value="dependent_name" options-keys.label="dependent_name"
+        on-value-changed="[[$listeners.ojInputText6510774151Value3]]"
+        ></oj-combobox-one>
