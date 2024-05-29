@@ -1,0 +1,27 @@
+          <oj-select-single id="oj-input-text-651077415-1"
+            disabled="[[ $variables.validateFields ]]"
+            value="{{ $variables.postGenericRequest.ldata.edu_Academic_Year }}" label-hint="Academic Year"
+            data="[[$page.variables.getLookUpListSDP4]]" item-text="lookup_value_name_dis" required="true"
+            on-value-item-changed="[[$listeners.ojInputText6510774151ValueItem3]]">
+      <!--  -->
+        <template slot="collectionTemplate" data-oj-as="collection">
+					<br>
+					<oj-input-text id="oj-input-text-651077415-1" label-hint="Search Academic Year" placeholder="Search Academic Year"
+       value="{{ $variables.varAcademyYear }}"  ></oj-input-text>
+					<oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+								vertical-grid-visible="disabled" selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled",
+								"sortable": "disabled"}' class="oj-select-results" 
+								columns=' [
+								  {"headerText":"Name","field":"lookup_value_name_dis"},
+								  {"headerText":"Description","field":"lookup_value_name_dis"}
+								  ]' 
+								on-oj-row-action="[[collection.handleRowAction]]"
+								data="[[collection.data]]" selected.row="[[collection.selected]]"
+								current-row="{{collection.currentRow}}"></oj-table>
+        </template>
+        <template slot="cellTemplate" data-oj-as="cell">
+              <oj-highlight-text text='[[String(cell.data)]]' >
+              <!-- match-text='[[collection.searchText]]' -->
+              </oj-highlight-text>
+        </template>
+      </oj-select-single>      
