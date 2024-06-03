@@ -1,0 +1,7 @@
+<template slot="Amount">
+<oj-input-number  value="[[$current.data]]" style="text-align: right;"
+virtual-keyboard="number"
+converter='{"options":{"minimumFractionDigits":2,"maximumFractionDigits":2},"type":"number"}'
+readonly="true">
+</oj-input-number>
+</template>
