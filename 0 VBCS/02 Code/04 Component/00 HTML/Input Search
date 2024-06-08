@@ -1,0 +1,22 @@
+<div class="oj-flex-bar" slot="search">
+  <oj-input-search class="oj-form-control-width-md oj-flex-bar-start" placeholder="Travel Request"
+    suggestion-item-text="application_number"
+    id="serchbox" aria-label="abc" value="{{ $variables.searchObj.p_travelNumber }}"
+    suggestions="[[$variables.getTravelListListSDP]]" on-oj-value-action="[[$listeners.serchboxValueAction]]">
+    <template slot="suggestionItemTemplate">
+      <oj-highlight-text text='[[$current.data.application_number + " : "+ $current.data.emp_number + " : "+ $current.data.emp_name]]'>
+      </oj-highlight-text>
+    </template>
+  </oj-input-search>
+
+  <div style="margin-left: 2%;" class="oj-flex-bar-middle">
+    <oj-button id="restBtn" label="[[$application.translations.appBundle.resetBtn]]"
+    on-oj-action="[[$listeners.restBtnAction]]"></oj-button>
+  </div>
+
+  <!-- <div style="margin-left: 4%;" class="oj-flex-bar-end">
+    <oj-button id="restBtn1"  label="[[$application.translations.appBundle.History]]"
+   on-oj-action="[[$listeners.restBtnAction]]">
+   </oj-button>
+</div> -->
+  </div>
