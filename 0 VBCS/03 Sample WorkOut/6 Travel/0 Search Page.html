@@ -1,0 +1,345 @@
+<!-- search panel start -->
+<div class="oj-panel oj-panel-shadow-md oj-selected">
+  <oj-collapsible expanded="true">
+    <oj-form-layout label-edge="start" columns="2" direction="column" label-width="43%">
+      <!--Travel Request Number  -->
+      <oj-bind-if test='[[ $application.variables.appType==="IT" || $application.variables.appType==="MAN" ]]'>
+        <!-- <oj-select-single label-hint="[[$application.translations.app.TravelRequestNumber]]" style="width: 45rem;"
+          placeholder="Select Travel Number" value="{{ $variables.searchObj.ptravel_number }}"
+          data="[[$variables.searchTravelnumberlovListSDP]]" item-text="travel_number">
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+              vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+              columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+              columns=' [ {"headerText":"Travel Number","field":"travel_number"}, {"headerText":"Employee Number","field":"employee_number"}, {"headerText":"Employee Name","field":"full_name"} ]'
+              on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+              selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+        </oj-select-single> -->
+        <oj-input-text label-hint="[[$application.translations.app.TravelRequestNumber]]" style="width: 45rem;"
+        value="{{ $variables.searchObj.ptravel_number }}">
+      </oj-input-text>
+      </oj-bind-if>
+      <oj-bind-if test='[[ $application.variables.appType==="EMP" ]]'>
+        <!-- <oj-select-single label-hint="[[$application.translations.app.TravelRequestNumber]]" style="width: 45rem;"
+          value="{{ $variables.searchObj.ptravel_number }}" item-text="travel_number"
+          data="[[$variables.searchTravelnumberlovListSDP2]]">
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+              vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+              columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+              columns=' [ {"headerText":"Travel Number","field":"travel_number"}, {"headerText":"Employee Number","field":"employee_number"}, {"headerText":"Employee Name","field":"full_name"} ]'
+              on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+              selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+        </oj-select-single> -->
+         <oj-input-text label-hint="[[$application.translations.app.TravelRequestNumber]]" style="width: 45rem;"
+        value="{{ $variables.searchObj.ptravel_number }}">
+      </oj-input-text>
+      </oj-bind-if>
+      <!--Travel Request Status-->
+      <oj-bind-if test='[[ $application.variables.appType==="IT" ]]'>
+        <oj-select-single label-hint="[[$application.translations.app.EmployeeNamee]]" item-text="full_name"
+          style="width: 45rem;" placeholder="Select Employee" value="{{ $variables.searchObj.pemployee_number }}"
+          data="[[$variables.findbyEmployeelovListSDP]]" >
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+              vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+              columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+              columns=' [ {"headerText":"Employee Name","field":"display_name"}, {"headerText":"Employee Number","field":"person_number"}, {"headerText":"Email Address","field":"email_address"} ]'
+              on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+              selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+        </oj-select-single>
+      </oj-bind-if>
+      <!-- <oj-select-single label-hint="[[$application.translations.app.TravelRequeststatus]]"
+           data="[[ $variables.searchObj.travel_request_status ]]"></oj-select-single> -->
+      <!--Employee Number -->
+ <oj-bind-if test='[[ $application.variables.appType==="MAN" ]]'>
+        <oj-select-single label-hint="[[$application.translations.app.EmployeeNamee]]" item-text="full_name"
+          style="width: 45rem;" placeholder="Select Employee" value="{{ $variables.searchObj.pemployee_number }}"
+          data="[[ $variables.manLov ]]"
+           >
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+              vertical-grid-visible="disabled" selection-mode='{"row": "single"}'
+              columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results"
+              columns=' [ {"headerText":"Employee Name","field":"display_name"}, {"headerText":"Employee Number","field":"person_number"}, {"headerText":"Email Address","field":"email_address"} ]'
+              on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]"
+              selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+        </oj-select-single>
+      </oj-bind-if>
+      <!--From Date -->
+      <oj-bind-if test='[[ $application.variables.appType === "IT" ]]'>
+        <oj-input-date label-hint="[[$application.translations.app.FromDate]]" style="width: 18rem;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.searchObj.pdate_from }}" placeholder="[[$application.translations.app.FromDateFormat]]"></oj-input-date>
+      </oj-bind-if>
+      <!-- ---------------------------- -->
+      <oj-bind-if test='[[ $application.variables.appType == "EMP" ]]'>
+        <oj-input-date label-hint="[[$application.translations.app.FromDate]]" style="width: 45rem;"
+          converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+          value="{{ $variables.searchObj.pdate_from }}"
+          placeholder="[[$application.translations.app.input_date_placeholder]]"></oj-input-date>
+      </oj-bind-if>
+      <!--To Date -->
+      <oj-input-date label-hint="[[$application.translations.app.ToDate]]" style="width: 18rem;"
+        converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}'
+        value="{{ $variables.searchObj.pdate_to }}" min="[[ $variables.searchObj.pdate_from ]]"
+        placeholder="[[$application.translations.app.ToDateFormat]]"></oj-input-date>
+    </oj-form-layout>
+    <!--search button  -->
+    <div style="display:flex; justify-content:flex-end;">
+      <oj-button style="searchBtn margin-left:0.5%;margin-right:0.5%;" label="[[$application.translations.app.Search]]" on-oj-action="[[$listeners.buttonAction]]">
+        <!-- <oj-bind-text></oj-bind-text -->
+      </oj-button>
+      <!-- reset button  -->
+      <oj-button style="resetBtn margin-left:0.5%;margin-right:0.5%;" label="[[$application.translations.app.Reset]]" on-oj-action="[[$listeners.buttonAction2]]">
+        <oj-bind-text></oj-bind-text>
+      </oj-button>
+          <!-- Home Button -->
+      <oj-bind-if test='[[ $application.variables.devMode==="true" ]]'>
+        <oj-button style="resetBtn margin-left:0.5%;margin-right:0.5%;" label="[[$application.translations.app.Home]]"
+          on-oj-action="[[$listeners.buttonAction10]]">
+          <oj-bind-text></oj-bind-text>
+        </oj-button>
+      </oj-bind-if>    
+
+    </div>
+    <h6 class="oj-header" slot="header">
+      <oj-bind-text value="[[$application.translations.app.SearchTravelRequest]]"></oj-bind-text>
+    </h6>
+  </oj-collapsible>
+</div>
+<!-- search panel end-->
+<br>
+
+<div id="sampleDemo" style="" class="demo-padding demo-container">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    <div id="mainContent">
+      <!-- :hidden='[[ ($application.variables.appType=="EMP")?false:true ]]' -->
+      <!-- Button Self -->
+
+<oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+      <oj-button on-oj-action="[[$listeners.buttonAction5]]" >
+        <oj-bind-text value="[[$application.translations.app.Create]]"></oj-bind-text>
+        <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ovr.png' ]]">
+      </oj-button>
+      <!--  -->
+      <oj-button label="OnBehalf" on-oj-action="[[$listeners.buttonAction13]]">
+        <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ovr.png' ]]">
+      </oj-button>
+      <!-- Onbehalf button -->
+      <oj-bind-if test='[[ $application.variables.appType== "IT" ]]'>
+        <oj-button on-oj-action="[[$listeners.buttonAction3]]">
+          <oj-bind-text value="[[$application.translations.app.NewRequest]]"></oj-bind-text>
+          <img slot="startIcon" :src="[[ $flow.path + 'resources/images/add_sm_ovr.png' ]]" width="12" height="12">
+        </oj-button>
+      </oj-bind-if>
+
+      <!--Report Button -->
+      <oj-bind-if test='[[ $application.variables.appType=== "IT" ]]'>
+        <oj-button on-oj-action="[[$listeners.buttonAction16]]">
+          <oj-bind-text value="[[$application.translations.app.report]]"></oj-bind-text>
+          <img slot="startIcon" :src="[[ $application.path + 'resources/images/MicrosoftTeams-image (17).png' ]]"
+            width="12" height="12">
+        </oj-button>
+      </oj-bind-if>
+
+
+</oj-bind-if>  
+       
+     
+      <!-- table start -->
+      
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-sm-width-full oj-bg-body tablerowdata" selection-mode.row="single" edit-mode="rowEdit" display="grid" selection-mode.column="single" data="[[ $variables.travelTable ]]" columns="{{ $variables.Column }}" horizontal-grid-visible="enabled" vertical-grid-visible="enabled">
+        <template slot="TravelDate">
+          <oj-input-date value="[[$current.data]]" readonly="true" converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' label-hint="[[$application.translations.app.input_date_label_hint]]"></oj-input-date>
+        </template>
+        <!-- Date of approval -->
+         <template slot="ApproveDate">
+          <oj-input-date value="[[$current.data]]" readonly="true" converter='{"type": "datetime", "options": {"pattern":"dd-MMM-yyyy"}}' label-hint="[[$application.translations.app.input_date_label_hint]]"></oj-input-date>
+        </template>
+        <template slot="Edit">
+          <a target="_blank" on-click="[[$listeners.hyperlinkClick]]">
+            <oj-bind-text value="[[$current.data]]"></oj-bind-text>
+          </a>
+        </template>
+        <template slot="delete">
+          <oj-bind-if
+              test="[[ $current.row.approval_status === 'Draft']]"  >
+          <oj-bind-if test='[[ $application.variables.userAccess==="NORMAL" ]]'>
+            <oj-button label="" on-oj-action="[[$listeners.buttonAction7]]" chroming="borderless">
+              <img slot="startIcon" :src="[[ $flow.path + 'resources/images/MicrosoftTeams-image_(13).png' ]]">
+            </oj-button>
+          </oj-bind-if>
+          </oj-bind-if>
+        </template>
+
+        <!-- APPROVER LIST -->
+         <template slot="pending">
+          <!-- <oj-bind-if test='[[ $current.row.approval_status == "Pending" ]]'> -->
+            <oj-button on-oj-action="[[$listeners.buttonAction12]]" chroming="borderless"
+              class="oj-button-sm">
+            <img :src="[[ $flow.path + 'resources/images/order-history.png' ]]" width="25" height="25">
+              </oj-button>
+          <!-- </oj-bind-if> -->
+        </template>
+        <!-- ---------------------------- -->
+         <template slot="pending_With">
+          <oj-text-area value="[[ $current.data ]]" rows="3" readonly="true"></oj-text-area>     
+         </template>
+        <!-- <template slot="pending">
+           <a target="_blank" on-click="[[$listeners.buttonAction12]]">
+            <oj-bind-text value="[[$application.translations.app.bind_text_value]]"></oj-bind-text>
+          </a>
+        </template> -->
+        <template slot="concatname">
+          <oj-input-text
+            value='{{ $application.variables.saasGetLogin.person_number+"-"+$application.variables.saasGetLogin.full_name }}'
+            label-hint="[[ $application.translations.app.input_text_label_hint_ed6d ]]"></oj-input-text>
+        </template>
+        <!--  -->
+        <template slot="status">
+          <oj-bind-if test='[[ $current.data==="Approved" ]]'>
+          <oj-bind-text style="color: green;font-weight: bold;">Approved<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Pending" ]]'>
+            <oj-bind-text style="color: blue;font-weight: bold;">Pending<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Draft" ]]'>
+            <oj-bind-text style="color: black;font-weight: bold;">Draft<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Rejected" ]]'>
+            <oj-bind-text style="color: red;font-weight: bold;">Rejected<oj-bind-text>
+          </oj-bind-if>
+          <!--  -->
+          <oj-bind-if test='[[ $current.data==="Return for Correction" ]]'>
+            <oj-bind-text style="color: black;font-weight: bold;">Return for Correction<oj-bind-text>
+          </oj-bind-if>
+            <!--  -->
+          <oj-bind-if test='[[ $current.data==="Employee More Info" ]]'>
+            <oj-bind-text style="color: red;font-weight: bold;">Employee More Info<oj-bind-text>
+          </oj-bind-if>
+             <!--  -->
+          <oj-bind-if test='[[ $current.data==="Approver More Info" ]]'>
+            <oj-bind-text style="color: black;font-weight: bold;">Approver More Info<oj-bind-text>
+          </oj-bind-if>
+        </template>
+        <oj-paging-control id="paging" class="oj-sm-width-full" page-size="10" slot="bottom" data="[[ $variables.travelTable ]]"></oj-paging-control>
+      </oj-table>
+    </div>
+  </div>
+</div>
+<!-- table end -->
+
+<!-- Onbehalf Employee -->
+<oj-dialog dialog-title="Create Employee" id="TravelCreate">
+  <div slot="body">
+    <!-- Validation Start -->
+    <oj-validation-group id="requestdetail">
+      <oj-form-layout label-edge='start'>
+        <!-- Employee Lov -->
+        <oj-select-single label-hint="[[$application.translations.app.Employee]]" style="width: 16rem;" value="{{ $variables.employeeDetailObj.emp_name }}" data="[[ $variables.findbyEmployeelovListSDP ]]" item-text="full_name" on-value-item-changed="[[$listeners.selectValueItem]]" required="true">
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled" vertical-grid-visible="disabled" selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results" columns=' [ {"headerText":"Employee Name","field":"full_name"}, {"headerText":"Employee Number","field":"person_number"}, {"headerText":"Email Address","field":"email_address"} ]' on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]" selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+        </oj-select-single>
+
+        <!-- Employee Number -->
+        <oj-input-text style="width: 16rem;" label-hint="Employee Number"
+          value="{{ $variables.employeeDetailObj.employee_number }}" disabled="true"></oj-input-text>
+        <!-- TEXT Department -->
+        <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.Department]]" value="{{ $variables.employeeDetailObj.emp_deparment }}" disabled="true" required="true"></oj-input-text>
+        <!-- Positon -->
+        <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.Position]]" value="{{ $variables.employeeDetailObj.emp_position }}" disabled="true" required="true"></oj-input-text>
+        <!-- Grade -->
+        <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.Grade]]" value="{{ $variables.employeeDetailObj.emp_grade }}" disabled="true" required="true"></oj-input-text>
+        
+        <oj-input-text virtual-keyboard="email" style="width: 16rem;"
+          validators='[{"type":"regexp", "options":{"pattern":"([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})", "hint":"Enter an email address.", "messageDetail": "Value must be of the form xxx@xxx.xx"}}]'
+          label-hint="Email Id" value="{{ $variables.employeeDetailObj.email_id }}" disabled="true"></oj-input-text>
+      </oj-form-layout>
+    </oj-validation-group>
+    <!-- Validation End -->
+  </div>
+  <div slot="footer">
+    <oj-button style="create margin-left:0.5%;margin-right:1.5%;" label="Ok" on-oj-action="[[$listeners.buttonAction6]]"></oj-button>
+    <oj-button style="create margin-left:0.5%;margin-right:1.5%;" label="Cancel" on-oj-action="[[$listeners.buttonAction4]]"></oj-button>
+  </div>
+</oj-dialog>
+<!-- Onbehalf Dialog End -->
+
+<!-- DELETE DIALOG -->
+<oj-dialog dialog-title="Delete" id="Deletedialog">
+  <div slot="body">
+    <div class="oj-flex"> Do you want to delete? </div>
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction9]]">Yes</oj-button>
+    <oj-button on-oj-action="[[$listeners.buttonAction8]]">No</oj-button>
+  </div>
+</oj-dialog>
+
+<!-- PENDING LIST -->
+<oj-dialog dialog-title="Approver List" id="PendingApprover" style="width: 80%;">
+  <div slot="body">
+   
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12"
+        columns='[{"headerText":"Category","field":"appr_category_name"},{"headerText":"Version","field":"transaction_num"},{"headerText":"Approval Group","field":"role_name"},{"headerText":"Level","field":"appr_level"},{"headerText":"Approver Name","field":"response_user"},{"headerText":"Action","field":"new_action_type"},{"headerText":"Action Date","field":"approver_action_date"},{"headerText":"Comments","field":"approver_action_comments"}]'
+        horizontal-grid-visible="enabled" vertical-grid-visible="enabled" display="grid" selection-mode.row="single"
+        data="[[$variables.pendingApproverlistListSDP]]"></oj-table>
+      
+
+  </div>
+  <div slot="footer">
+    <oj-button on-oj-action="[[$listeners.buttonAction11]]">Close</oj-button>
+  </div>
+</oj-dialog>
+
+
+<!-- New On-behalf Dialog -->
+<oj-dialog dialog-title="Create Employee" id="Create">
+  <div slot="body">
+    <!-- Validation Start -->
+    <oj-validation-group id="requestdetail">
+      <oj-form-layout label-edge='start'>
+        <!-- Employee Lov -->
+        <oj-select-single label-hint="[[$application.translations.app.Employee]]" style="width: 16rem;"
+          value="{{ $variables.employeeDetailObj.emp_name }}" data="[[$variables.getRequestOnbehalfListSDP]]"
+          item-text="full_name" on-value-item-changed="[[$listeners.selectValueItem]]" required="true">
+          <template slot="collectionTemplate" data-oj-as="collection">
+            <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled" vertical-grid-visible="disabled" selection-mode='{"row": "single"}' columns-default='{"resizable": "disabled","sortable": "disabled"}' class="oj-select-results" columns=' [ {"headerText":"Employee Name","field":"full_name"}, {"headerText":"Employee Number","field":"person_number"}, {"headerText":"Email Address","field":"email_address"} ]' on-oj-row-action="[[collection.handleRowAction]]" data="[[collection.data]]" selected.row="[[collection.selected]]" current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+        </oj-select-single>
+
+        <!-- Employee Number -->
+        <oj-input-text style="width: 16rem;" label-hint="Employee Number"
+          value="{{ $variables.employeeDetailObj.employee_number }}" disabled="true"></oj-input-text>
+        <!-- TEXT Department -->
+        <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.Department]]" value="{{ $variables.employeeDetailObj.emp_deparment }}" disabled="true" required="true"></oj-input-text>
+        <!-- Positon -->
+        <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.Position]]" value="{{ $variables.employeeDetailObj.emp_position }}" disabled="true" required="true"></oj-input-text>
+        <!-- Grade -->
+        <oj-input-text style="width: 16rem;" label-hint="[[$application.translations.app.Grade]]" value="{{ $variables.employeeDetailObj.emp_grade }}" disabled="true" required="true"></oj-input-text>
+        
+        <oj-input-text virtual-keyboard="email" style="width: 16rem;"
+          validators='[{"type":"regexp", "options":{"pattern":"([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})", "hint":"Enter an email address.", "messageDetail": "Value must be of the form xxx@xxx.xx"}}]'
+          label-hint="Email Id" value="{{ $variables.employeeDetailObj.email_id }}" disabled="true"></oj-input-text>
+      </oj-form-layout>
+    </oj-validation-group>
+    <!-- Validation End -->
+  </div>
+  <div slot="footer">
+    <oj-button style="create margin-left:0.5%;margin-right:1.5%;" label="Ok"
+      on-oj-action="[[$listeners.buttonAction15]]"></oj-button>
+    <oj-button style="create margin-left:0.5%;margin-right:1.5%;" label="Cancel"
+      on-oj-action="[[$listeners.buttonAction14]]"></oj-button>
+  </div>
+</oj-dialog>
+
+ 
