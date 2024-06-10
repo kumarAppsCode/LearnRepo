@@ -25,3 +25,50 @@
               </oj-highlight-text>
         </template>
       </oj-select-single>      
+
+
+
+// 
+
+
+      <oj-bind-if test='[[ ($application.variables.appType=="MAN")?true:false ]]'>
+          <oj-label for="oj-select-single-28918854-1" style="font-weight: bold;">Employee Name</oj-label>
+          <oj-select-single style="width: 250px; border: solid 1px #7F949F; border-radius:7px;"
+            id="oj-select-single-28918854-1" data="[[ $variables.emplov ]]" item-text="onbehalf_person_name"
+            value="{{ $variables.search.teamUserId }}" >
+          <!--  -->
+          <template slot="collectionTemplate" data-oj-as="collection">
+          <br>
+          <oj-table scroll-policy="loadMoreOnScroll" horizontal-grid-visible="disabled"
+                    vertical-grid-visible="disabled" selection-mode='{"row": "single"}' 
+                    columns-default='{"resizable": "disabled","sortable": "disabled"}' 
+                    class="oj-select-results" 
+                    columns='  [
+                            {"headerText":"Person Number","field":"onbehalf_person_number"},
+                            {"headerText":"Employee Name","field":"onbehalf_person_name"},
+                            {"headerText":"E-Mail","field":"email_address"}
+                          ]' 
+                    on-oj-row-action="[[collection.handleRowAction]]"
+                    data="[[collection.data]]" selected.row="[[collection.selected]]"
+                    current-row="{{collection.currentRow}}"></oj-table>
+          </template>
+          <template slot="cellTemplate" data-oj-as="cell">
+            <oj-highlight-text text='[[String(cell.data)]]' >
+            </oj-highlight-text>
+        </template>
+          </oj-select-single>
+      </oj-bind-if>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
