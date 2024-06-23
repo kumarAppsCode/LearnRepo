@@ -1,0 +1,38 @@
+AppModule.prototype.getGreetingBasedOnUtcTime =  function () {
+let message;
+    const now = new Date();
+    const utcHour = now.getHours();
+  //  const utcHour1 = now.setUTCHours();
+ console.log("utcHour==>"+utcHour);
+    if (utcHour >= 5 && utcHour < 12) {
+        message= "Good Morning!";
+		
+    } else if (utcHour >= 12 && utcHour < 17) {
+        message= "Good Afternoon!";
+		
+    } else if (utcHour >= 17 && utcHour < 21) {
+        message= "Good Evening!";
+		
+    } else {
+        message= "Good Night!";
+		
+    }
+	return message;
+};
+
+<div style="display:flex; justify-content:flex-start;">
+   <oj-bind-if test="[[$application.variables.Greetings === 'Good Morning!']]">
+  <img style="margin-left:10px;margin-top:15px;" :src="[[ $flow.path + 'resources/images/sunrise_gif.gif' ]]" width="40"
+    height="40" style="object-fit: cover;"></oj-bind-if>
+   <oj-bind-if test="[[$application.variables.Greetings === 'Good Afternoon!']]">
+  <img style="margin-left:10px;margin-top:15px;" :src="[[ $flow.path + 'resources/images/sunnoon_gif.gif' ]]" width="40"
+    height="40" style="object-fit: cover;"></oj-bind-if>
+   <oj-bind-if test="[[$application.variables.Greetings === 'Good Evening!']]">
+  <img style="margin-left:10px;margin-top:15px;" :src="[[ $flow.path + 'resources/images/sunset_gif.gif' ]]" width="40"
+    height="40" style="object-fit: cover;"></oj-bind-if>
+   <oj-bind-if test="[[$application.variables.Greetings === 'Good Night!']]">
+  <img style="margin-left:10px;margin-top:15px;" :src="[[ $flow.path + 'resources/images/moonnight_gif.gif' ]]"
+    width="40" height="40" style="object-fit: cover;"></oj-bind-if>
+        <h5 style="margin-left:10px;"class="oj-header"><oj-bind-text value="[[ $application.variables.Greetings ]]"></oj-bind-text></h5>
+</div>
+
