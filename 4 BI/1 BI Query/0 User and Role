@@ -1,0 +1,30 @@
+SELECT pu.username,prdt.role_id,
+prdt.role_name,
+prd.role_common_name
+FROM per_user_roles pur,
+per_users pu,
+per_roles_dn_tl prdt,
+per_roles_dn prd
+WHERE pu.user_id = pur.user_id
+AND pu.username = <:P_USERNAME>
+AND prdt.role_id = pur.role_id
+AND prdt.role_id = prd.role_id
+AND prdt.language = USERENV (‘lang’)
+AND pu.active_flag = ‘Y’
+ORDER BY pu.username, prdt.role_name
+/
+
+SELECT pu.username,prdt.role_id,
+prdt.role_name,
+prd.role_common_name
+FROM per_user_roles pur,
+per_users pu,
+per_roles_dn_tl prdt,
+per_roles_dn prd
+WHERE pu.user_id = pur.user_id
+AND pu.username = '****r'
+AND prdt.role_id = pur.role_id
+AND prdt.role_id = prd.role_id
+AND prdt.language = USERENV ('lang')
+AND pu.active_flag = 'Y'
+ORDER BY pu.username, prdt.role_name
