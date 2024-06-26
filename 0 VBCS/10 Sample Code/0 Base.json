@@ -47,7 +47,7 @@
 	},
 	{
 		"headerText": "Invoice Creation Date",
-		"field": "last_update_date",
+		"field": "creation_date",
 		"template": "cDate",
 		"width": 160,
 		"resizable": "enabled"
@@ -123,12 +123,6 @@
 		"resizable": "enabled"
 	},
 	{
-		"headerText": "Record Status",
-		"field": "record_status",
-		"width": 158,
-		"resizable": "enabled"
-	},
-	{
 		"headerText": "Payment Status",
 		"field": "payment_status",
 		"width": 171,
@@ -138,6 +132,12 @@
 		"headerText": "Approval Status",
 		"field": "approval_status",
 		"width": 175,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Virtual Card Status",
+		"field": "record_status",
+		"width": 158,
 		"resizable": "enabled"
 	},
 	{
