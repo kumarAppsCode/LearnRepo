@@ -1,0 +1,170 @@
+[
+	{
+		"headerText": "Select",
+		"width": 172,
+		"resizable": "enabled",
+		"template": "selectApprove",
+		"headerTemplate": "hdrtemp"
+	},
+	{
+		"headerText": "Invoice Number",
+		"field": "invoice_num",
+		"width": 238,
+		"template": "invnum",
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Invoice Amount",
+		"field": "invoice_amount",
+		"width": 180,
+		"template": "invamt",
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Invoice Currency",
+		"field": "invoice_currency",
+		"width": 184,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Invoice Date",
+		"field": "invoice_date",
+		"template": "invdate",
+		"width": 152,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Supplier Name",
+		"field": "supplier_name",
+		"width": 164,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Vendor Site Code",
+		"field": "vendor_site_code",
+		"width": 183,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Invoice Creation Date",
+		"field": "last_update_date",
+		"template": "cDate",
+		"width": 160,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Supplier Email ID",
+		"field": "supplier_email",
+		"template": "supplierEmailid",
+		"width": 350,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Card Id",
+		"field": "card_id",
+		"width": 123,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Card Digit",
+		"field": "card_digit",
+		"width": 131,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Unpaid Amount",
+		"field": "unpaid_amount",
+		"width": 180,
+		"template": "invamt",
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Approver Notes",
+		"field": "approver_notes",
+		"template": "clobData",
+		"width": 173,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Approved By",
+		"field": "approved_by",
+		"width": 180,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Approval Date",
+		"field": "approval_date",
+		"template": "appdate",
+		"width": 152,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Payment Method",
+		"field": "payment_method",
+		"width": 179,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Invoice Type",
+		"field": "invoice_type",
+		"width": 152,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Invoice Description",
+		"field": "invoice_description",
+		"width": 200,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Card Status",
+		"field": "card_status",
+		"width": 142,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Record Status",
+		"field": "record_status",
+		"width": 158,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Payment Status",
+		"field": "payment_status",
+		"width": 171,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Approval Status",
+		"field": "approval_status",
+		"width": 175,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Payment Date",
+		"field": "payment_date",
+		"template": "paymentDate",
+		"width": 160,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Error Message",
+		"field": "error_message",
+		"width": 160,
+		"template": "emsg",
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Changed Date",
+		"field": "last_update_date",
+		"template": "cDate",
+		"width": 160,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Changed By",
+		"field": "last_updated_by",
+		"width": 160,
+		"resizable": "enabled"
+	}
+]
