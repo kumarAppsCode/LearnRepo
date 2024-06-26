@@ -123,12 +123,6 @@
 		"resizable": "enabled"
 	},
 	{
-		"headerText": "Payment Status",
-		"field": "payment_status",
-		"width": 171,
-		"resizable": "enabled"
-	},
-	{
 		"headerText": "Approval Status",
 		"field": "approval_status",
 		"width": 175,
@@ -137,7 +131,13 @@
 	{
 		"headerText": "Virtual Card Status",
 		"field": "record_status",
-		"width": 170,
+		"width": 200,
+		"resizable": "enabled"
+	},
+	{
+		"headerText": "Payment Status",
+		"field": "payment_status",
+		"width": 171,
 		"resizable": "enabled"
 	},
 	{
