@@ -30,7 +30,7 @@
 		"headerText": "Invoice Date",
 		"field": "invoice_date",
 		"template": "invdate",
-		"width": 152,
+		"width": 190,
 		"resizable": "enabled"
 	},
 	{
@@ -62,13 +62,13 @@
 	{
 		"headerText": "Card Id",
 		"field": "card_id",
-		"width": 123,
+		"width": 250,
 		"resizable": "enabled"
 	},
 	{
 		"headerText": "Card Digit",
 		"field": "card_digit",
-		"width": 131,
+		"width": 147,
 		"resizable": "enabled"
 	},
 	{
@@ -137,14 +137,14 @@
 	{
 		"headerText": "Virtual Card Status",
 		"field": "record_status",
-		"width": 158,
+		"width": 170,
 		"resizable": "enabled"
 	},
 	{
 		"headerText": "Payment Date",
 		"field": "payment_date",
 		"template": "paymentDate",
-		"width": 160,
+		"width": 170,
 		"resizable": "enabled"
 	},
 	{
