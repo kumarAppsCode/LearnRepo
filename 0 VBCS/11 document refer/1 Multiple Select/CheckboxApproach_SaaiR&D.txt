@@ -1,0 +1,135 @@
+1] isChecked  -> string variable
+ 
+2]  {
+      "headerTemplate": "headerCheckbox",
+       "template": "dataCheckbox"
+     },
+3] <template slot="headerCheckbox">
+<oj-checkboxset class="oj-selection-checkbox oj-choice-direction-cloumn oj-checkboxset-no-chrome"
+        value="{{ $variables.isChecked }}" id="checkboxSetID">
+<oj-option value="checked"></oj-option>
+</oj-checkboxset>
+</template>
+<template slot="dataCheckbox">
+<oj-sample-checkbox-switch class="multiCheckBox" :id="[['checkbox'+$current.index]]"> 
+</oj-sample-checkbox-switch> 
+</template>
+ 
+4] headerCheckbox event parameters:
+ 
+   updatedFrom -> array -> not mapping
+ 
+   value -> updatedFrom mapping
+5] dataCheckbox event parameters:
+ 
+   updatedFrom -> any -> map updatedFrom
+ 
+6] inside headerCheckbox event:
+6.1] if (value !== 'external')
+ 
+6.2] under true side
+ 
+6.3] call function selectall -> flag: isChecked, array: ._currentPageData
+ 
+6.4] if selectall function returns 1, assign table var into checkboxadp var
+7] inside dataCheckbox event:
+7.1] if(value)
+ 
+7.2] if true -> js call-checktracker
+ 
+7.3] if false -> js call-unchecktracker
+ 
+7.4] both side if ($variables.updatedFrom !== 'external')
+ 
+7.5] both true side -> fire data provider(add, remove)
+
+8] paging control onclick event (pageHeaderSelectionListener)
+
+======================================
+
+Javascript:
+==========
+
+selectAll(flag, array) {
+    if (flag == 'checked') {
+        console.log("XX2---->if");
+        for (var i = 0; i < array.length; i++) {
+            document.getElementById('checkbox' + i).value = true;
+            array[i].select_flag = 'Y';
+        }
+        return '1';
+    } else {
+        console.log("XX2---->else");
+
+        for (var j = 0; j < array.length; j++) {
+            document.getElementById('checkbox' + j).value = false;
+            array[j].select_flag = 'N';
+        }
+        return '2';
+    }
+};
+
+uncheckTracker(arg1) {
+    if (document.getElementsByName('checkboxSetID')[0].classList.contains('oj-selected')) {
+        document.getElementById('checkboxSetID').setProperty('value', ['']);
+        return 1;
+    } else {
+        if (document.querySelectorAll("input[type='checkbox'][value='true']")) {
+            var selected = 0;
+            var notselected = 0;
+            var arr = document.querySelectorAll("input[type='checkbox'][value='true']");
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].classList.contains('oj-selected')) {
+                    selected = selected + 1;
+                } else {
+                    notselected = notselected + 1;
+                }
+            }
+
+            if (notselected == arr.length) {
+                return 2;
+            }
+
+        }
+    }
+};
+
+checkTracker() {
+    if (document.querySelectorAll("input[type='checkbox'][value='true']")) {
+        var selected = 0;
+        var notselected = 0;
+        var arr = document.querySelectorAll("input[type='checkbox'][value='true']");
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].classList.contains('oj-selected')) {
+                selected = selected + 1;
+            } else {
+                notselected = notselected + 1;
+            }
+        }
+
+        if (selected == arr.length) {
+            document.getElementById('checkboxSetID').setProperty('value', ['checked']);
+            return 1;
+        } else {
+            document.getElementById('checkboxSetID').setProperty('value', ['']);
+            return 2;
+        }
+    }
+};
+
+
+pageHeaderSelectionListener() {
+    if (document.getElementsByName('checkboxSetID')[0].classList.contains('oj-selected')) {
+        document.getElementById('checkboxSetID').setProperty('value', ['']);
+        //return 1;
+    }
+};
+
+
+fetchItems(arg1) {
+    let finalArray = [];
+    finalArray.push(arg1.map(item => item.data));
+    return finalArray;
+};
+
+==============================================================
