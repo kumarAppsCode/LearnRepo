@@ -1437,7 +1437,7 @@ return {
       let processName=null;
       let applicationVersion=null;
 
-      if(window.location.href === "https://fa-ewnk-saasfaprod1.fa.ocs.oraclecloud.com"){
+      if(window.location.href === "https://fa-*******.oraclecloud.com"){
          console.log("---PROD Approver--");
         processDefinitionId="1223";
         applicationName="SelfService";
